@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:55:08 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/19 20:30:19 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/20 15:14:13 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	minishell()
 	char	*prompt;
 	t_lexer  *lex;
 
-	lex = malloc(sizeof(t_lexer));
-	if (!lex)
-		return;
+	lex = NULL;
 	while (1)
 	{
+		// ft_lstclear(&lex);
 		prompt = readline("minishell$ ");
+		if (prompt[0] == '\0')
+			return ;
 		if (!prompt)
 			return ;
 		valid_prompt(prompt);
@@ -37,13 +38,17 @@ void	minishell()
 		}
 		free(prompt);
 	}
-	
 }
 
 int	main(int ac, char *av[])
 {
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
+	(void) av;
 	minishell();
+	char *p = ft_malloc(1000, 0);
+	p[0] = 'k';
+	// ft_malloc(0, 1);
+	return (0);
 }
   

@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:58:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 09:30:02 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/20 14:23:31 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ typedef struct s_data
 	struct s_data	*prev;
 	
 }	t_data;
+typedef struct s_leaks
+{
+    void *add;
+    struct s_leaks *next;
+}t_leaks;
+t_leaks	*free_lstlast(t_leaks *lst);
+void *ft_malloc(int size, int flag);
 void	ft_error(char *msg, int ext);
 void	valid_prompt(char *prompt);
 void	lexer(char *prompt, t_lexer **lex);
