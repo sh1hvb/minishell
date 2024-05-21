@@ -10,7 +10,7 @@ LIBFT_PATH = libft/
 
 SRC = main.c parcing/syntax.c  helpers/errors.c lexer/lexer.c lexer/lexer_helper.c \
 	lexer/lexer_split.c lexer/lexer_strchr.c lexer/lexer_functions.c memory_handling/memory_handling.c\
-	memory_handling/memory_helpers.c
+	memory_handling/memory_helpers.c execution/myenv.c
 
 OBJ = $(SRC:.c=.o)
 

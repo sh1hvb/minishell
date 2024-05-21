@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:55:08 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 17:10:43 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:36:34 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	minishell()
 	lex = NULL;
 	while (1)
 	{
-		ft_lstclear(&lex);
+		// ft_lstclear(&lex);
 		prompt = readline("minishell$ ");
 		if (prompt[0] == '\0')
 			return ;
@@ -40,14 +40,28 @@ void	minishell()
 		free(prompt);
 	}
 }
-
-int	main(int ac, char *av[])
+void print_env_list(t_envp *env_list)
 {
+    t_envp *current = env_list;
+    while (current)
+    {
+        printf("%s=%s\n", current->key, current->value);
+        current = current->next;
+    }
+}
+int	main(int ac, char *av[], char *envp[])
+{
+	t_envp *env;
+	env = NULL;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
 	(void) av;
+	handle_env(&env, envp);
 	minishell();
+	// print_env_list(env);
 	ft_malloc(0, 1);
+	ft_lstclear_env(&env);
 	return (0);
 }
-  
+
+

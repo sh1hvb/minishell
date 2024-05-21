@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:14:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 17:17:36 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:39:13 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,67 +37,4 @@ void	skip_quotes(char *target, char delimiter, int *index)
 	if (target[i] == delimiter)
 		i++;
 	*index = i;
-}
-
-void	get_cmds(char *prompt, t_data **data, int *index)
-{
-	int	i;
-
-	(void) data;
-	i = *index;
-	if (prompt[i] && in_delimiters(prompt[i], " \t\n\v\v\f\r"))
-	{
-		printf("%c", prompt[i]);
-		i++;
-	}
-	while (prompt[i] && !in_delimiters(prompt[i], " \t\n\v\v\f\r"))
-	{
-		printf("%c", prompt[i]);
-		i++;
-	}
-	*index = i;
-}
-
-void	get_quotes(char *prompt, t_data **data, int *index)
-{
-	char	c;
-	int		i;
-
-	(void) data;
-	i = *index;
-	c = prompt[i];
-	printf("%c", c);
-	i++;
-	while (prompt[i] && c != prompt[i])
-	{
-		printf("%c", prompt[i]);
-		i++;
-	}
-	if (c == prompt[i])
-		printf("%c", prompt[i++]);
-	printf("\n");
-	*index = i;
-}
-
-int	in_quotes(char prompt, int *flag_sq, int *flag_dq)
-{
-	if (prompt == '\"' && !*flag_sq)
-	{
-		if (*flag_dq == 0)
-			*flag_dq = 1;
-		else
-			*flag_dq = 0;
-	}
-	else if (prompt == '\'' && !*flag_dq)
-	{
-		if (*flag_sq == 0)
-			*flag_sq = 1;
-		else
-			*flag_sq = 0;
-	}
-	if (*flag_sq == 1)
-		return (2);
-	if (*flag_dq == 1)
-		return (1);
-	return (0);
 }
