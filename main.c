@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 17:55:08 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:07:35 by mchihab          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 t_data  *data;
@@ -33,7 +21,8 @@ void	minishell()
 		printf("========= end lexer\n");
 		while (lex)
 		{
-			printf("value is :%s, type is : %c\n", lex->value, lex->type);
+			printf("value is :%s, type is : %c, in_quotes : %d\n", \
+			lex->value, lex->type, lex->in_quotes);
 			lex = lex->next;
 		}
 		free(prompt);
@@ -52,9 +41,10 @@ int	main(int ac, char *av[], char *envp[])
 {
 	t_envp *env;
 	env = NULL;
+
+	(void) av;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
-	(void) av;
 	handle_env(&env, envp);
 	minishell();
 	// print_env_list(env);

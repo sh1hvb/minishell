@@ -1,44 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 06:51:09 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 12:05:51 by smarsi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
-void	is_redirection(char *prompt, t_lexer **lex, int *index);
-void	is_string(char *prompt, t_lexer **lex, int *index);
-void	is_withspace(char *prompt, t_lexer **lex, int *index);
-void	is_string(char *prompt, t_lexer **lex, int *index);
-void	is_pipe(char *prompt, t_lexer **lex, int *index);
-void	is_quotes(char *prompt, t_lexer **lex, int *index);
+void	is_redirection(char *prompt, t_lexer **lex, int *index, int flag);
+void	is_string(char *prompt, t_lexer **lex, int *index, int flag);
+void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag);
+void	is_string(char *prompt, t_lexer **lex, int *index, int flag);
+void	is_pipe(char *prompt, t_lexer **lex, int *index, int flag);
+void	is_quotes(char *prompt, t_lexer **lex, int *index, int flag);
+int	in_quotes(char prompt, int *flag_sq, int *flag_dq);
 
 void	lexer(char *prompt, t_lexer **lex)
 {	
 	int	i;
-	int	flag[2];
+	int	flag_sq;
+	int	flag_dq;
+	int	flag;
 
-	flag[0] = 0;
-	flag[1] = 0;
+	flag_sq = 0;
+	flag_dq = 0;
 	i = 0;
 	while (prompt[i])
 	{
+		flag = in_quotes(prompt[i], &flag_dq, &flag_sq);
 		if (in_delimiters(prompt[i], "<>"))
-			is_redirection(prompt, lex, &i);
+			is_redirection(prompt, lex, &i, flag);
 		else if (prompt[i] == '|')
-			is_pipe(prompt, lex, &i);
+			is_pipe(prompt, lex, &i, flag);
 		else if (in_delimiters(prompt[i], " \t\n"))
-			is_withspace(prompt, lex, &i);
+			is_withspace(prompt, lex, &i, flag);
 		else if (prompt[i] == '\'' || prompt[i] == '\"')
-			is_quotes(prompt, lex, &i);
+			is_quotes(prompt, lex, &i, flag);
+		else if (prompt[i] ==  '$')
+			is_dollar(prompt, lex, &i, flag);
 		else
-			is_string(prompt, lex, &i);
+			is_string(prompt, lex, &i, flag);
 	}
 }
 

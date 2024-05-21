@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 11:58:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:05:30 by mchihab          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -42,11 +30,12 @@ enum token
 	IN_FILE = 'I',
 	OUT_FILE = 'O',
 	PIPE = 'P',
-	D_QUOTES = 'D',
-	S_QUOTES = 'Q',
+	D_QUOTES = '\"',
+	S_QUOTES = '\'',
 	HEREDOC = 'H',
 	IN_A_FILE = 'A',
 	WITH_SPACE = 'W',
+	DOLLAR = '$',
 };
 
 typedef struct s_lexer
@@ -60,7 +49,7 @@ typedef struct s_lexer
 
 typedef struct s_data
 {
-	char			*cmd;
+	char			*cmd ;
 	char			**args;
 	char			redir_in;
 	char			redir_out;
@@ -91,4 +80,6 @@ t_envp 	*get_env(char **env);
 void 	ft_freed(char **p);
 void 	handle_env(t_envp **env , char *envp[]);
 char	**lexer_split(char *s, char *delimiters);
+void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
+void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
 #endif

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   memory_handling.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 14:14:13 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 16:08:21 by mchihab          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 void	free_lstadd_back(t_leaks **lst, t_leaks *new)
@@ -67,8 +55,8 @@ void *ft_malloc(int size, int flag)
         free_lstclear(&address);
     else
     {
-        p = (void *)malloc(size);
+        p = malloc(size);
         free_lstadd_back(&address, free_lstnew(p));
     }
-    return (p);
+	return (p);
 }
