@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_data  *data;
+t_envp *env = NULL;
 
 void	minishell()
 {
@@ -28,25 +28,15 @@ void	minishell()
 		free(prompt);
 	}
 }
-void print_env_list(t_envp *env_list)
-{
-    t_envp *current = env_list;
-    while (current)
-    {
-        printf("%s=%s\n", current->key, current->value);
-        current = current->next;
-    }
-}
+
 int	main(int ac, char *av[], char *envp[])
 {
-	t_envp *env;
-	env = NULL;
-
-	(void) av;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
+	(void)av;
 	handle_env(&env, envp);
 	minishell();
+	// ft_export(&data,env);
 	// print_env_list(env);
 	ft_malloc(0, 1);
 	ft_lstclear_env(&env);

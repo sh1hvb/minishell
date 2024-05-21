@@ -1,6 +1,6 @@
 # CC = cc 
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 NAME = minishell
 
@@ -10,7 +10,7 @@ LIBFT_PATH = libft/
 
 SRC = main.c parcing/syntax.c  helpers/errors.c lexer/lexer.c lexer/lexer_helper.c \
 	lexer/lexer_split.c lexer/lexer_strchr.c lexer/lexer_functions.c memory_handling/memory_handling.c\
-	memory_handling/memory_helpers.c execution/myenv.c
+	memory_handling/memory_helpers.c execution/myenv.c execution/ft_export.c execution/utils_env.c
 
 OBJ = $(SRC:.c=.o)
 
