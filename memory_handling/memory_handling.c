@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:14:13 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 15:18:06 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 09:31:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void *ft_malloc(int size, int flag)
         p = malloc(size);
         free_lstadd_back(&address, free_lstnew(p));
     }
-    return (p);
+	return (p);
 }

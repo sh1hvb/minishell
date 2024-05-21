@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:58:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 14:23:31 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 12:21:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ enum token
 	IN_FILE = 'I',
 	OUT_FILE = 'O',
 	PIPE = 'P',
-	D_QUOTES = 'D',
-	S_QUOTES = 'Q',
+	D_QUOTES = '\"',
+	S_QUOTES = '\'',
 	HEREDOC = 'H',
 	IN_A_FILE = 'A',
 	WITH_SPACE = 'W',
+	DOLLAR = '$',
 };
 
 typedef struct s_lexer
@@ -78,4 +79,6 @@ void	get_cmds(char *prompt, t_data **data, int *index);
 void	get_quotes(char *prompt, t_data **data, int *index);
 void	skip_quotes(char *target, char delimiter, int *index);
 char	**lexer_split(char *s, char *delimiters);
+void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
+void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
 #endif

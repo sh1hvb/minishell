@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:14:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 10:27:46 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/20 17:17:36 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,27 @@ void	get_quotes(char *prompt, t_data **data, int *index)
 		printf("%c", prompt[i++]);
 	printf("\n");
 	*index = i;
+}
+
+int	in_quotes(char prompt, int *flag_sq, int *flag_dq)
+{
+	if (prompt == '\"' && !*flag_sq)
+	{
+		if (*flag_dq == 0)
+			*flag_dq = 1;
+		else
+			*flag_dq = 0;
+	}
+	else if (prompt == '\'' && !*flag_dq)
+	{
+		if (*flag_sq == 0)
+			*flag_sq = 1;
+		else
+			*flag_sq = 0;
+	}
+	if (*flag_sq == 1)
+		return (2);
+	if (*flag_dq == 1)
+		return (1);
+	return (0);
 }

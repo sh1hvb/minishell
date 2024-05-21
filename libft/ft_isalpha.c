@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_strchr.c                                     :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 06:00:12 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 12:25:32 by smarsi           ###   ########.fr       */
+/*   Created: 2024/05/21 10:14:06 by smarsi            #+#    #+#             */
+/*   Updated: 2024/05/21 10:14:36 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	lexer_strchr(char *str, char *dlmtrs, int *ind, int f)
+int	ft_isalpha(int c)
 {
-	int	i;
-
-	i = *ind;
-	while (str[i] && in_delimiters(str[i], dlmtrs) == f)
-		i++;
-	*ind = i;
-}
-
-void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f)
-{
-	int	i;
-
-	i = *ind;
-	while (str[i] && ((in_delimiters(str[i], dlmtrs) == f) || ft_isalpha(str[i]) || ft_isdigit(str[i])))
-		i++;
-	*ind = i;
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }
