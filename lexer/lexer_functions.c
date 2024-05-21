@@ -30,7 +30,7 @@ void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
         return;
 	i = *index;
 	(*index)++;
-	lexer_strchr_d(prompt, " \t\n<>|", index, 1);
+	lexer_strchr_d(prompt, " \t\n", index, 0);
 	value = ft_malloc(*index - i + 1, 0);
 	if (!value)
 		return;
@@ -51,7 +51,7 @@ void	is_string(char *prompt, t_lexer **lex, int *index, int flag)
 	i = *index;
 	if (in_delimiters(prompt[i], "$+-"))
 		(*index)++;
-	lexer_strchr(prompt, " \t<>|\n\'\"$", index, 0);
+	lexer_strchr(prompt, " \t<>|\n\'\"$+-", index, 0);
 	value = ft_malloc(*index - i + 1, 0);
 	if (!value)
 		return;
