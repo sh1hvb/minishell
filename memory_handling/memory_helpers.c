@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   memory_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 06:45:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 11:25:25 by mchihab          ###   ########.fr       */
+/*   Created: 2024/05/20 14:21:24 by smarsi            #+#    #+#             */
+/*   Updated: 2024/05/20 14:34:57 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_error(char *msg, int ext)
+int	free_lstsize(t_leaks *lst)
 {
-	printf("%s", msg);
-	exit(ext);
+	int	count;
+
+	if (!lst)
+		return (0);
+	count = 0;
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }
 
-void ft_freed(char **p)
+t_leaks	*free_lstlast(t_leaks *lst)
 {
-	int i = 0;
-	while(p[i])
-	{
-		free(p[i++]);
-	}
-	free(p);
+	int	last;
+
+	last = free_lstsize(lst);
+	while (last-- > 1)
+		lst = lst->next;
+	return (lst);
 }

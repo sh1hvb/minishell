@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:58:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/20 09:30:02 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:05:30 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@
 // 	struct s_data	*next;
 // }	t_data;
 
-// tokenization :
+
+typedef struct s_envp
+{
+	char *key;
+	char *value;
+	struct s_envp *next;
+	struct s_envp *prev;
+} t_envp;
 
 enum token
 {
@@ -62,6 +69,16 @@ typedef struct s_data
 	struct s_data	*prev;
 	
 }	t_data;
+typedef struct s_leaks
+{
+    void *add;
+    struct s_leaks *next;
+}t_leaks;
+t_leaks	*free_lstlast(t_leaks *lst);
+void	ft_lstclear_env(t_envp **lst);
+// void	ft_lstdelone_env(t_envp *lst);
+
+void	*ft_malloc(int size, int flag);
 void	ft_error(char *msg, int ext);
 void	valid_prompt(char *prompt);
 void	lexer(char *prompt, t_lexer **lex);
@@ -70,5 +87,8 @@ int		in_delimiters(char target, char *delimiters);
 void	get_cmds(char *prompt, t_data **data, int *index);
 void	get_quotes(char *prompt, t_data **data, int *index);
 void	skip_quotes(char *target, char delimiter, int *index);
+t_envp 	*get_env(char **env);
+void 	ft_freed(char **p);
+void 	handle_env(t_envp **env , char *envp[]);
 char	**lexer_split(char *s, char *delimiters);
 #endif

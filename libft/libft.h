@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 12:56:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/19 19:03:04 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/20 17:42:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 long long	ft_atoi(char *str);
 void		*ft_memset(void *b, int c, size_t len);
 void		ft_bzero(void *s, size_t n);
-void		*ft_calloc(size_t count, size_t size);
+void	*ft_calloc(int count, int size);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+
 typedef struct s_lexer t_lexer;
 typedef struct s_list
 {
@@ -42,6 +44,8 @@ typedef struct s_list
 }	t_stack;
 t_lexer		*ft_lstnew(char *value, int type, int quotes);
 void		ft_lstadd_front(t_lexer **lst, t_lexer *new);
+void		*ft_malloc(int size, int flag);
+
 int			ft_lstsize(t_lexer *lst);
 t_lexer		*ft_lstlast(t_lexer *lst);
 void		ft_lstadd_back(t_lexer **lst, t_lexer *new);
