@@ -14,8 +14,10 @@ void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f)
 {
 	int	i;
 
+	(void) dlmtrs;
+	(void) f;
 	i = *ind;
-	while (str[i] && ((in_delimiters(str[i], dlmtrs) == f) || ft_isalpha(str[i]) || ft_isdigit(str[i])))
+	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])))
 		i++;
 	*ind = i;
 }
