@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 06:00:18 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/19 18:43:46 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/21 10:00:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	void	ft_free(char **s)
+void	ft_free(char **s)
 {
 	int	i;
 
@@ -109,7 +109,9 @@ char	**lexer_split(char *s, char *delimiters)
 	int		count;
 
     if (!s || !delimiters)
-        return (NULL);
+	{
+    	return (NULL);
+	}
 	count = count_word(s, delimiters);
 	dst = ft_calloc(count + 1, sizeof(char *));
 	if (!dst)

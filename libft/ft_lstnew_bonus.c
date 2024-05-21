@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:04:47 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/19 17:05:05 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/20 14:31:29 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_lexer	*ft_lstnew(char *value, int type, int quotes)
 {
 	t_lexer	*head;
 
-	head = malloc(sizeof(t_lexer));
+	head = ft_malloc(sizeof(t_lexer), 0);
 	if (!head)
 		return (NULL);
 	head->value = value;
