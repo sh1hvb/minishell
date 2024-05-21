@@ -1,3 +1,4 @@
+
 #include "../minishell.h"
 
 void	valid_prompt(char *prompt)
