@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer_functions.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 06:28:24 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:38:04 by smarsi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
-void	is_withspace(char *prompt, t_lexer **lex, int *index)
+void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag)
 {
 	t_lexer *new;
 	char	*value;
@@ -27,31 +15,11 @@ void	is_withspace(char *prompt, t_lexer **lex, int *index)
 	if (!value)
 		return;
 	ft_strlcpy(value, prompt + i, *index - i + 1);
-	new = ft_lstnew(value, 'W', 0);
+	new = ft_lstnew(value, 'W', flag);
 	ft_lstadd_back(lex, new);
 }
 
-
-void	is_string(char *prompt, t_lexer **lex, int *index)
-{
-	t_lexer *new;
-	char	*value;
-	int		i;
-
-	new = NULL;
-	if (!prompt || !lex || !index)
-        return;
-	i = *index;
-	lexer_strchr(prompt, " \t<>|\n", index, 0);
-	value = ft_malloc(*index - i + 1, 0);
-	if (!value)
-		return;
-	ft_strlcpy(value, prompt + i, *index - i + 1);
-	new = ft_lstnew(value, 'S', 0);
-	ft_lstadd_back(lex, new);
-}
-
-void	is_quotes(char *prompt, t_lexer **lex, int *index)
+void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
 {
 	t_lexer *new;
 	char	*value;
@@ -62,35 +30,86 @@ void	is_quotes(char *prompt, t_lexer **lex, int *index)
         return;
 	i = *index;
 	(*index)++;
-	if (prompt[i] == '\'')
+	lexer_strchr_d(prompt, " \t\n<>|", index, 1);
+	value = ft_malloc(*index - i + 1, 0);
+	if (!value)
+		return;
+	ft_strlcpy(value, prompt + i, *index - i + 1);
+	new = ft_lstnew(value, '$', flag);
+	ft_lstadd_back(lex, new);
+}
+
+void	is_string(char *prompt, t_lexer **lex, int *index, int flag)
+{
+	t_lexer *new;
+	char	*value;
+	int		i;
+
+	new = NULL;
+	if (!prompt || !lex || !index)
+        return;
+	i = *index;
+	if (in_delimiters(prompt[i], "$+-"))
+		(*index)++;
+	lexer_strchr(prompt, " \t<>|\n\'\"$", index, 0);
+	value = ft_malloc(*index - i + 1, 0);
+	if (!value)
+		return;
+	ft_strlcpy(value, prompt + i, *index - i + 1);
+	new = ft_lstnew(value, 'S', flag);
+	ft_lstadd_back(lex, new);
+}
+
+void	s_quotes(char *prompt, int *index, int flag)
+{
+	if (flag == 1)
+		(*index)++;
+	else
+	{
+		(*index)++;
 		lexer_strchr(prompt, "\'", index, 0);
+		(*index)++;
+	}
+}
+
+void	is_quotes(char *prompt, t_lexer **lex, int *index, int flag)
+{
+	t_lexer *new;
+	char	*value;
+	int		i;
+
+	new = NULL;
+	if (!prompt || !lex || !index)
+        return;
+	i = *index;
+	if (prompt[i] == '\'')
+		s_quotes(prompt, index, flag);
 	else
-		lexer_strchr(prompt, "\"", index, 0);
-	(*index)++;
+		(*index)++;
 	value = ft_malloc(*index - i + 1, 0);
 	if (!value)
 		return;
 	ft_strlcpy(value, prompt + i, *index - i + 1);
 	if (prompt[i] == '\'')
-		new = ft_lstnew(value, 'S', 1);
+		new = ft_lstnew(value, '\'', flag);
 	else
-		new = ft_lstnew(value, 'S', 2);
+		new = ft_lstnew(value, '\"', flag);
 	ft_lstadd_back(lex, new);
 }
 
-void	is_pipe(char *prompt, t_lexer **lex, int *index)
+void	is_pipe(char *prompt, t_lexer **lex, int *index, int flag)
 {
 	t_lexer *new;
 
 	new = NULL;
 	if (!prompt || !lex || !index)
         return;
-	new = ft_lstnew("|", 'P', 0);
+	new = ft_lstnew("|", 'P', flag);
 	(*index)++;
 	ft_lstadd_back(lex, new);
 }
 
-void	is_redirection(char *prompt, t_lexer **lex, int *index)
+void	is_redirection(char *prompt, t_lexer **lex, int *index, int flag)
 {
 	t_lexer *new;
 	int		i;
@@ -101,22 +120,22 @@ void	is_redirection(char *prompt, t_lexer **lex, int *index)
 	i = *index;
 	if (prompt[i] == '<' && prompt[i + 1] == '<')
 	{
-		new = ft_lstnew(ft_strdup("<<"), 'H', 0);
+		new = ft_lstnew(ft_strdup("<<"), 'H', flag);
 		i += 2;
 	}
 	else if (prompt[i] == '<')
 	{
-		new = ft_lstnew(ft_strdup("<"), 'I', 0);
+		new = ft_lstnew(ft_strdup("<"), 'I', flag);
 		i++;
 	}
 	else if (prompt[i] == '>' && prompt[i + 1] == '>')
 	{
-		new = ft_lstnew(ft_strdup(">>"), 'A', 0);
+		new = ft_lstnew(ft_strdup(">>"), 'A', flag);
 		i += 2;
 	}
 	else
 	{
-		new = ft_lstnew(ft_strdup(">"), 'O', 0);
+		new = ft_lstnew(ft_strdup(">"), 'O', flag);
 		i++;
 	}
 	*index = i;

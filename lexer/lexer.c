@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 06:51:09 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:39:47 by smarsi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 void	is_redirection(char *prompt, t_lexer **lex, int *index, int flag);
@@ -19,12 +7,6 @@ void	is_string(char *prompt, t_lexer **lex, int *index, int flag);
 void	is_pipe(char *prompt, t_lexer **lex, int *index, int flag);
 void	is_quotes(char *prompt, t_lexer **lex, int *index, int flag);
 int	in_quotes(char prompt, int *flag_sq, int *flag_dq);
-void	is_redirection(char *prompt, t_lexer **lex, int *index);
-void	is_string(char *prompt, t_lexer **lex, int *index);
-void	is_withspace(char *prompt, t_lexer **lex, int *index);
-void	is_string(char *prompt, t_lexer **lex, int *index);
-void	is_pipe(char *prompt, t_lexer **lex, int *index);
-void	is_quotes(char *prompt, t_lexer **lex, int *index);
 
 void	lexer(char *prompt, t_lexer **lex)
 {	

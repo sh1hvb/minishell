@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 17:55:08 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:36:34 by smarsi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 t_data  *data;
@@ -53,9 +41,10 @@ int	main(int ac, char *av[], char *envp[])
 {
 	t_envp *env;
 	env = NULL;
+
+	(void) av;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
-	(void) av;
 	handle_env(&env, envp);
 	minishell();
 	// print_env_list(env);

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 11:58:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 14:37:20 by smarsi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -61,7 +49,7 @@ typedef struct s_lexer
 
 typedef struct s_data
 {
-	char			*cmd;
+	char			*cmd ;
 	char			**args;
 	char			redir_in;
 	char			redir_out;
