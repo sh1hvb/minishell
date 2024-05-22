@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 15:05:11 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:15:03 by smarsi           ###   ########.fr       */
+/*   Created: 2023/11/15 11:17:32 by smarsi            #+#    #+#             */
+/*   Updated: 2024/05/22 11:03:59 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
+void	ft_lstclear(t_data **lst)
 {
-	t_lexer	*head;
+	t_data	*next;
 
 	if (!lst)
 		return ;
-	if (!*lst)
-		*lst = new;
-	else
+	while (*lst)
 	{
-		head = ft_lstlast(*lst);
-		new->prev = head;
-		head->next = new;
+		next = (*lst)->next;
+		ft_lstdelone(*lst);
+		*lst = next;
 	}
 }

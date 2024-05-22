@@ -6,15 +6,16 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:05:11 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:15:03 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:03:54 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
+void	ft_lstadd_back(t_data **lst, t_data *new)
 {
-	t_lexer	*head;
+	t_data	*head;
+	int		i;
 
 	if (!lst)
 		return ;
