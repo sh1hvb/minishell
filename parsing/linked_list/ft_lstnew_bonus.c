@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 15:05:11 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:15:03 by smarsi           ###   ########.fr       */
+/*   Created: 2023/11/14 11:04:47 by smarsi            #+#    #+#             */
+/*   Updated: 2024/05/22 11:09:26 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
+t_data	*ft_lstnew(char *value, int type, int quotes, char *in, char *out)
 {
-	t_lexer	*head;
+	t_data	*head;
 
-	if (!lst)
-		return ;
-	if (!*lst)
-		*lst = new;
-	else
-	{
-		head = ft_lstlast(*lst);
-		new->prev = head;
-		head->next = new;
-	}
+	head = ft_malloc(sizeof(t_data), 0);
+	if (!head)
+		return (NULL);
+	head->cmd = value;
+	head->args = NULL;
+	head->in_quotes = quotes;
+	head->redir_in = in;
+	head->redir_out = out;
+	head->next = NULL;
+	head->prev = NULL;
+	return (head);
 }
+

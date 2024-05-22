@@ -82,4 +82,5 @@ void 	handle_env(t_envp **env , char *envp[]);
 char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
+void    expand(char *prompt, t_lexer **lex);
 #endif

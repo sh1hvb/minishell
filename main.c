@@ -18,6 +18,7 @@ void	minishell()
 			return ;
 		valid_prompt(prompt);
 		lexer(prompt, &lex);
+		expand(prompt, &lex);
 		printf("========= end lexer\n");
 		while (lex)
 		{
