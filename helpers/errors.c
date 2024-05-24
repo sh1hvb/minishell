@@ -12,7 +12,9 @@ void ft_freed(char **p)
 	int i = 0;
 	while(p[i])
 	{
-		free(p[i++]);
+		free(p[i]);
+		p[i++] = NULL;
 	}
 	free(p);
+	p = NULL;
 }

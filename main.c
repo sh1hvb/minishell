@@ -34,12 +34,24 @@ int	main(int ac, char *av[], char *envp[])
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
 	(void)av;
+	t_data data;
+	char *p="export a+=das  s+='sss' a+=habibia s=1 s";
+	char **arr = ft_split(p,' ');
+	// printf("%s", arr[3]);
+	data.cmd = arr[0];
+	data.args = arr;
+
+	// exit(0);
 	handle_env(&env, envp);
-	minishell();
-	// ft_export(&data,env);
-	// print_env_list(env);
+	// minishell();
+	handle_builts(&data);
+    // env = sort_list(env , ascending);
+	print_env_list(env,"ex");
+
 	ft_malloc(0, 1);
+	// exit(0); 
 	ft_lstclear_env(&env);
+	ft_freed(arr);
 	return (0);
 }
 

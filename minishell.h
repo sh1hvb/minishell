@@ -21,6 +21,7 @@ typedef struct s_envp
 {
 	char *key;
 	char *value;
+	int flag;
 	struct s_envp *next;
 	struct s_envp *prev;
 } t_envp;
@@ -69,13 +70,17 @@ typedef struct s_leaks
 // made by mchihab
 void	ft_lstclear_env(t_envp **lst);
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
-void	print_env_list(t_envp *env_list);
+void	print_env_list(t_envp *env_list ,char *x);
 void	ft_export(t_data *data , t_envp *env);
 int		ft_lstsize_env(t_envp *lst);
 void	ft_lstadd_back_env(t_envp **lst, t_envp *new);
 t_envp	*ft_lstlast_env(t_envp *lst);
-t_envp	*ft_lstnew_env(char *value, t_envp *env);
+t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag);
 int		check_string(char *s);
+void	handle_builts(t_data *data);
+int		ascending(int a, int b);
+void	ft_env(t_envp *env);
+
 
 
 

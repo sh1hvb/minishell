@@ -22,15 +22,20 @@ int check_string(char *s)
         return 0;
     while (s[i])
     {
-        if(s[i]=='=')
+        if(s[i]=='=' )
             return 1;
         if(!ft_isalnum(s[i]))
+		{
+			if(s[i] == '+' && s[i + 1] == '=')
+            	return 2;
             return 0;
+		}
         i++;
     }
     return 1;
     
 }
+
 int	ft_lstsize_env(t_envp *lst)
 {
 	int	count;
@@ -68,19 +73,23 @@ t_envp	*ft_lstlast_env(t_envp *lst)
 		lst = lst->next;
 	return (lst);
 }
-t_envp	*ft_lstnew_env(char *value, t_envp *env)
+t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag)
 {
 	t_envp	*head;
     char **splited;
     t_envp *last;
+
+	splited = NULL;
     last = ft_lstlast_env(env);
-    splited = ft_split(value ,'=');
+    splited = lexer_split(value ,"+=");
 	head = malloc(sizeof(t_envp));
 	if (!head)
 		return (NULL);
     head->key = splited[0];
     head->value = splited[1];
+	head->flag = flag;
     head->next = NULL;
 	head->prev = last;
+	free(splited);
 	return (head);
 }

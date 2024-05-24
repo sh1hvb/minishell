@@ -1,28 +1,7 @@
 #include "../minishell.h"
 
 
-void handle_builts(t_data *data)
-{
-    t_envp *envtmp;
-    envtmp = env;
-    if(!check_builts(data))
-        ft_error("cmd not found",127);
-    if(check_builts(data)== 1)
-        ft_echo(data , envtmp);
-    if(check_builts(data)== 2)
-        ft_cd(data , envtmp);
-    if(check_builts(data)== 3)
-        ft_pwd(data ,envtmp);
-    if(check_builts(data) == 4)
-        ft_export(data, envtmp);
-    if(check_builts(data) == 5)
-        ft_unset(data , envtmp);
-    if(check_builts(data) == 6)
-        ft_env(data , envtmp);
-    if(check_builts(data) == 7)
-        ft_exit(data , envtmp);
-}   
-int check_builts(t_data *data )
+static int check_builts(t_data *data )
 {
     if(!data)
         return (0);
@@ -42,3 +21,24 @@ int check_builts(t_data *data )
         return 7;
     return 0;
 }
+void handle_builts(t_data *data)
+{
+    t_envp *envtmp;
+    envtmp = env;
+    if(!check_builts(data))
+        ft_error("cmd not found",127);
+    // if(check_builts(data)== 1)
+    //     ft_echo(data , envtmp);
+    // if(check_builts(data)== 2)
+    //     ft_cd(data , envtmp);
+    // if(check_builts(data)== 3)
+    //     ft_pwd(data ,envtmp);
+    if(check_builts(data) == 4)
+        ft_export(data, envtmp);
+    // if(check_builts(data) == 5)
+    //     ft_unset(data , envtmp);
+    if(check_builts(data) == 6)
+        ft_env(envtmp);
+    // if(check_builts(data) == 7)
+    //     ft_exit(data , envtmp);
+}   
