@@ -106,6 +106,8 @@ void	is_pipe(char *prompt, t_lexer **lex, int *index, int flag)
         return;
 	new = ft_lstnew("|", 'P', flag);
 	(*index)++;
+	if (!flag)
+		lexer_strchr(prompt, " \t\n", index, 1);
 	ft_lstadd_back(lex, new);
 }
 
@@ -139,5 +141,7 @@ void	is_redirection(char *prompt, t_lexer **lex, int *index, int flag)
 		i++;
 	}
 	*index = i;
+	if (!flag)
+		lexer_strchr(prompt, " \t\n", index, 1);
 	ft_lstadd_back(lex, new);
 }

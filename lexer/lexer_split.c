@@ -68,7 +68,7 @@ static	char	*get_word(char *dst, char  *src, char *delimiters, int	*index)
         	skip_quotes(src, '\'', &i);	
 		}
 	len = (i - start) + 1;
-	dst = ft_calloc(len, sizeof(char));
+	dst = my_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);
@@ -101,7 +101,7 @@ char	**lexer_split(char *s, char *delimiters)
     	return (NULL);
 	}
 	count = count_word(s, delimiters);
-	dst = ft_calloc(count + 1, sizeof(char *));
+	dst = my_calloc(count + 1, sizeof(char *));
 	if (!dst)
 		return (NULL);
 	dst = fill_array(dst, s, delimiters, count);

@@ -1,16 +1,20 @@
 #include "minishell.h"
 
-t_data  *data;
+t_data	*pars_lstnew(char *value, int quotes);
+void	pars_lstclear(t_data **lst);
 
 void	minishell()
 {
 	char	*prompt;
 	t_lexer  *lex;
+	t_data	*data;
 
-	lex = NULL;
 	while (1)
 	{
 		// ft_lstclear(&lex);
+		// pars_lstclear(&data);
+		lex = NULL;
+		data = pars_lstnew(NULL, 0);
 		prompt = readline("minishell$ ");
 		if (prompt[0] == '\0')
 			return ;
@@ -18,13 +22,38 @@ void	minishell()
 			return ;
 		valid_prompt(prompt);
 		lexer(prompt, &lex);
-		expand(prompt, &lex);
+		t_lexer  *lex_tmp = lex;
+		// while (lex_tmp)
+		// {
+		// 	printf("##########################\nvalue is :%s, type is : %c, in_quotes : %d\n", \
+		// 	lex_tmp->value, lex_tmp->type, lex_tmp->in_quotes);
+		// 	lex_tmp = lex_tmp->next;
+		// }
 		printf("========= end lexer\n");
-		while (lex)
+		expand(prompt, &lex);
+		// while (lex_tmp)
+		// {
+			// printf("##########################\nvalue is :%s, type is : %c, in_quotes : %d\n", \
+			// lex_tmp->value, lex_tmp->type, lex_tmp->in_quotes);
+			// lex_tmp = lex_tmp->next;
+		// }
+		(void) lex_tmp;
+		printf("========= end expand\n");
+		parsing(prompt, &lex, &data);
+		printf("========= end parsing\n");
+		while (data)
 		{
-			printf("value is :%s, type is : %c, in_quotes : %d\n", \
-			lex->value, lex->type, lex->in_quotes);
-			lex = lex->next;
+			// int i = 0;
+			printf("##########################\n value is :%s\n", data->cmd);
+			// while (data->args[i])
+			// {
+			// 	printf(" args[%d] : \n", data->args[i]);
+			// 	i++;
+			// }
+			printf("in_quotes : %d, in_file : %s, out_file : %s\n", \
+			data->in_quotes, data->redir_in, data->redir_out);
+			printf("##########################\n");
+			data = data->next;
 		}
 		free(prompt);
 	}
