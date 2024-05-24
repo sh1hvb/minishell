@@ -56,6 +56,8 @@ void *ft_malloc(int size, int flag)
     else
     {
         p = malloc(size);
+		if (!p)
+			ft_malloc(0, 1);
         free_lstadd_back(&address, free_lstnew(p));
     }
 	return (p);
