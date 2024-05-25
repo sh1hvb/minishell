@@ -2,6 +2,11 @@
 
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstclear(t_data **lst);
+void	heredoc_lstadd_back(t_herdoc **lst, t_herdoc *new);
+t_herdoc	*heredoc_lstnew(char *value);
+void    print_parsing(t_data *data);
+void    print_exand(t_lexer *lex_tmp);
+void    print_lexer(t_lexer *lex_tmp);
 
 void	minishell()
 {
@@ -23,38 +28,14 @@ void	minishell()
 		valid_prompt(prompt);
 		lexer(prompt, &lex);
 		t_lexer  *lex_tmp = lex;
-		// while (lex_tmp)
-		// {
-		// 	printf("##########################\nvalue is :%s, type is : %c, in_quotes : %d\n", \
-		// 	lex_tmp->value, lex_tmp->type, lex_tmp->in_quotes);
-		// 	lex_tmp = lex_tmp->next;
-		// }
+		print_lexer(lex_tmp);
 		printf("========= end lexer\n");
 		expand(prompt, &lex);
-		// while (lex_tmp)
-		// {
-			// printf("##########################\nvalue is :%s, type is : %c, in_quotes : %d\n", \
-			// lex_tmp->value, lex_tmp->type, lex_tmp->in_quotes);
-			// lex_tmp = lex_tmp->next;
-		// }
-		(void) lex_tmp;
+		print_exand(lex_tmp);
 		printf("========= end expand\n");
 		parsing(prompt, &lex, &data);
+		print_parsing(data);
 		printf("========= end parsing\n");
-		while (data)
-		{
-			// int i = 0;
-			printf("##########################\n value is :%s\n", data->cmd);
-			// while (data->args[i])
-			// {
-			// 	printf(" args[%d] : \n", data->args[i]);
-			// 	i++;
-			// }
-			printf("in_quotes : %d, in_file : %s, out_file : %s\n", \
-			data->in_quotes, data->redir_in, data->redir_out);
-			printf("##########################\n");
-			data = data->next;
-		}
 		free(prompt);
 	}
 }

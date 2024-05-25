@@ -39,6 +39,8 @@ t_data	*pars_lstnew(char *value, int quotes)
 	head->in_quotes = quotes;
 	head->redir_in = NULL;
 	head->redir_out = NULL;
+	head->has_heredoc = 0;
+	head->heredoc_head = NULL;
 	head->next = NULL;
 	head->prev = NULL;
 	return (head);
