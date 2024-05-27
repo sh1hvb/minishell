@@ -28,7 +28,7 @@ void    expand(char *prompt, t_lexer **lex)
 	(void) prompt;
     while (lst)
     {
-		if (lst->value[0] == '$' && lst->in_quotes != 2)
+		if (lst->value[0] == '$' && lst->in_quotes != 2 && lst->value[1])
 		{
 			lst->value++;
 			lst->value = my_strdup(getenv(lst->value));
@@ -40,10 +40,10 @@ void    expand(char *prompt, t_lexer **lex)
 			lst->value = my_strdup(getenv("HOME"));
 			lst->value = my_strjoin(lst->value, tmp);
 		}
-		if (lst->value[0] == '\"' && lst->in_quotes != 2)
-			lst->prev->next = lst->next;
-		else if (lst->value[0] == '\'' && lst->in_quotes != 1)
-			rmv_s_qts(&lst->value);
+		// if (lst->value[0] == '\"' && lst->in_quotes != 2)
+		// 	lst->prev->next = lst->next;
+		// else if (lst->value[0] == '\'' && lst->in_quotes != 1)
+		// 	rmv_s_qts(&lst->value);
 		lst = lst->next;
     }
 }
