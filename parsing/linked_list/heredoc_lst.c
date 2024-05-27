@@ -1,7 +1,7 @@
 
 #include "../../minishell.h"
 
-int	heredoc_lstsize(t_herdoc *lst)
+int	heredoc_lstsize(t_files *lst)
 {
 	int	count;
 
@@ -12,11 +12,12 @@ int	heredoc_lstsize(t_herdoc *lst)
 	{
 		count++;
 		lst = lst->next;
+
 	}
 	return (count);
 }
 
-t_herdoc	*heredoc_lstlast(t_herdoc *lst)
+t_files	*heredoc_lstlast(t_files *lst)
 {
 	int	last;
 
@@ -27,37 +28,37 @@ t_herdoc	*heredoc_lstlast(t_herdoc *lst)
 }
 
 
-t_herdoc	*heredoc_lstnew(char *value)
+t_files	*heredoc_lstnew(char *value)
 {
-	t_herdoc	*head;
+	t_files	*head;
 
-	head = ft_malloc(sizeof(t_herdoc), 0);
+	head = ft_malloc(sizeof(t_files), 0);
 	if (!head)
 		return (NULL);
 	head->buffer = NULL;
 	head->delimiter = my_strdup(value);
-    head->heredocs_index = 0;
+    head->index = 0;
 	head->next = NULL;
 	head->prev = NULL;
 	return (head);
 }
 
-void	heredoc_lstadd_back(t_herdoc **lst, t_herdoc *new)
+void	heredoc_lstadd_back(t_files **lst, t_files *new)
 {
-	t_herdoc	*head;
+	t_files	*head;
 
 	if (!lst)
 		return ;
 	if (!*lst)
 	{
-		*lst = ft_malloc(sizeof(t_herdoc), 0);
+		*lst = ft_malloc(sizeof(t_files), 0);
 		*lst = new;
 	}
 	else
 	{
 		head = heredoc_lstlast(*lst);
 		new->prev = head;
-        new->heredocs_index = head->heredocs_index + 1;
+        new->index = head->index + 1;
 		head->next = new;
 	}
 }
