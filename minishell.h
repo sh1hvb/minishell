@@ -47,24 +47,25 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
-typedef struct s_herdoc
+typedef struct t_files
 {
 	char			*buffer;
 	char			*delimiter;
-	int				heredocs_index;
-	struct s_herdoc	*next;
-	struct s_herdoc	*prev;
-}	t_herdoc;
+	int				index;
+	struct t_files	*next;
+	struct t_files	*prev;
+}	t_files;
 
 typedef struct s_data
 {
 	char			*cmd ;
 	char			**args;
-	char			*redir_in;
-	char			*redir_out;
 	int				in_quotes;
 	int				has_heredoc;
-	t_herdoc		*heredoc_head;
+	t_files			*redir_out;
+	t_files			*redir_in;
+	t_files			*append;
+	t_files			*heredoc;
 	struct s_data	*next;
 	struct s_data	*prev;
 	
