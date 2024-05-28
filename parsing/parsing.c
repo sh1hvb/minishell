@@ -45,14 +45,43 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	heredoc_lstadd_back(head, tmp);
 }
 
-void	parsing(char *prompt, t_lexer **lex, t_data	**data)
+void	new_node(t_lexer **lex, t_data	**data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
 	t_data	*tmp;
-	int		i;
 
-	i = 0;
+	lex_tmp = *lex;
+	data_tmp = *data;
+	tmp = pars_lstnew(NULL, lex_tmp->in_quotes);
+	pars_lstadd_back(&data_tmp, tmp);
+	if (!data_tmp->next)
+	{
+		ft_malloc(0, 1);
+		exit(1);
+	}
+	data_tmp = data_tmp->next;
+	*lex = (*lex)->next;
+}
+
+void	fill_args(t_lexer **lex, t_data	**data)
+{
+	t_lexer	*lex_tmp;
+	t_data	*data_tmp;
+
+	lex_tmp = *lex;
+	data_tmp = *data;
+	data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
+	data_tmp->args = lexer_split(data_tmp->cmd , " \t\n");
+	data_tmp->in_quotes = lex_tmp->in_quotes;
+	*lex = (*lex)->next;	
+}
+
+void	parsing(char *prompt, t_lexer **lex, t_data	**data)
+{
+	t_lexer	*lex_tmp;
+	t_data	*data_tmp;
+
 	lex_tmp = *lex;
 	data_tmp = *data;
 	(void) prompt;
@@ -67,28 +96,9 @@ void	parsing(char *prompt, t_lexer **lex, t_data	**data)
 		else if (lex_tmp->type == 'A' && !lex_tmp->in_quotes)
 			pars_files(&data_tmp, &lex_tmp, 3);
 		else if (lex_tmp->value[0] == '|' && !lex_tmp->in_quotes)
-		{
-			tmp = pars_lstnew(NULL, lex_tmp->in_quotes);
-			pars_lstadd_back(&data_tmp, tmp);
-			if (!data_tmp->next)
-			{
-				ft_malloc(0, 1);
-				exit(1);
-			}
-			data_tmp = data_tmp->next;
-			i = 0;
-			lex_tmp = lex_tmp->next;
-		}
+			new_node(&lex_tmp, &data_tmp);
 		else
-		{
-			// if (lex_tmp->value)
-			// {
-				data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
-				data_tmp->in_quotes = lex_tmp->in_quotes;
-				lex_tmp = lex_tmp->next;
-			// }
-		}
-		// if (lex_tmp)
-		// 	lex_tmp = lex_tmp->next;
+			fill_args(&lex_tmp, &data_tmp);
 	}
+	data_tmp->cmd = data_tmp->args[0];
 }
