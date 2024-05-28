@@ -122,22 +122,22 @@ void	is_redirection(char *prompt, t_lexer **lex, int *index, int flag)
 	i = *index;
 	if (prompt[i] == '<' && prompt[i + 1] == '<')
 	{
-		new = ft_lstnew(ft_strdup("<<"), 'H', flag);
+		new = ft_lstnew(my_strdup("<<"), 'H', flag);
 		i += 2;
 	}
 	else if (prompt[i] == '<')
 	{
-		new = ft_lstnew(ft_strdup("<"), 'I', flag);
+		new = ft_lstnew(my_strdup("<"), 'I', flag);
 		i++;
 	}
 	else if (prompt[i] == '>' && prompt[i + 1] == '>')
 	{
-		new = ft_lstnew(ft_strdup(">>"), 'A', flag);
+		new = ft_lstnew(my_strdup(">>"), 'A', flag);
 		i += 2;
 	}
 	else
 	{
-		new = ft_lstnew(ft_strdup(">"), 'O', flag);
+		new = ft_lstnew(my_strdup(">"), 'O', flag);
 		i++;
 	}
 	*index = i;
