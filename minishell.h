@@ -80,6 +80,13 @@ int		check_string(char *s);
 void	handle_builts(t_data *data);
 int		ascending(int a, int b);
 void	ft_env(t_envp *env);
+int		check_equal(char *s);
+void	ft_pwd(t_data *data);
+void	ft_lstdelone_env(t_envp *lst);
+void	ft_unset(t_data *data, t_envp **env);
+void	ft_echo(t_data *data, t_envp *env);
+
+
 
 
 

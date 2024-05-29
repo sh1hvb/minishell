@@ -27,16 +27,16 @@ void handle_builts(t_data *data)
     envtmp = env;
     if(!check_builts(data))
         ft_error("cmd not found",127);
-    // if(check_builts(data)== 1)
-    //     ft_echo(data , envtmp);
+    if(check_builts(data)== 1)
+        ft_echo(data , envtmp);
     // if(check_builts(data)== 2)
     //     ft_cd(data , envtmp);
-    // if(check_builts(data)== 3)
-    //     ft_pwd(data ,envtmp);
+    if(check_builts(data)== 3)
+        ft_pwd(data);
     if(check_builts(data) == 4)
         ft_export(data, envtmp);
-    // if(check_builts(data) == 5)
-    //     ft_unset(data , envtmp);
+    if(check_builts(data) == 5)
+        ft_unset(data , &envtmp);
     if(check_builts(data) == 6)
         ft_env(envtmp);
     // if(check_builts(data) == 7)

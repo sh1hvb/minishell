@@ -73,6 +73,17 @@ t_envp	*ft_lstlast_env(t_envp *lst)
 		lst = lst->next;
 	return (lst);
 }
+void	ft_lstdelone_env(t_envp *lst)
+{
+	if (lst)
+	{
+		free(lst->value);
+		lst->value = NULL;
+		// free()
+		free(lst);
+		lst = NULL;
+	}
+}
 t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag)
 {
 	t_envp	*head;

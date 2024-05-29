@@ -3,7 +3,7 @@
 int if_flag(char *s)
 {
     int i;
-    i=0;
+    i = 0;
     while(s[i])
     {
         if(s[i] == '=')
@@ -48,6 +48,8 @@ char *my_get_env(t_envp *env_list, const char *key) {
 
     while (current != NULL) {
         if (ft_strcmp(current->key, key) == 0) {
+            if(!current->value)
+                current->value = ft_strdup("");
             return current->value;
         }
         current = current->next;
@@ -105,6 +107,7 @@ void ft_append(t_data *data, t_envp *env, int i) {
     append = my_get_env(env, splited[0]);
 
     if (!append) {
+            printf("%s\n", splited[0]);
         flag = if_flag(data->args[i]);
         ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
     } else {
@@ -183,57 +186,114 @@ int check_equal(char *s)
 //         i++;
 //     }
 //}
-void ft_export(t_data *data, t_envp *env) {
+// void ft_export(t_data *data, t_envp *env) {
+//     int flag;
+//     int i;
+//     char **arr;
+
+//     flag = 0;
+//     i = 1;
+
+//     if (!ft_strcmp(data->args[0], "export") && !data->args[1]) 
+//     {
+//         env = sort_list(env, ascending);
+//         print_env_list(env, "ex");
+//         return;
+//     }
+//     while (data->args[i]) {
+//         flag = if_flag(data->args[i]);
+//         arr = lexer_split(data->args[i], "+=");
+//         if (!arr[0]) {
+//             ft_freed(arr);
+//             i++;
+//             continue;
+//         }
+//         if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i])) {
+//             if (check_string(data->args[i]) == 2) {
+//                 ft_append(data, env, i);
+//             printf("%s\n", arr[1]);
+//             } else if (check_string(data->args[i]) == 1) {
+//                 if (my_get_env(env, arr[0])) {
+//                     if (arr[1]) {
+//                         my_append_env(env, arr[0], ft_strdup(arr[1]));
+//                     } else if(check_equal(data->args[i])){
+//                         my_append_env(env, arr[0], ft_strdup("\"\""));
+//                     }
+//                 } else if (my_get_env(env, arr[0])&& !check_equal(data->args[i])) {
+//                     ft_freed(arr);
+//                     i++;
+//                     continue;
+//                 } else if (!my_get_env(env, arr[0]) || check_equal(data->args[i])) {
+
+//                     ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
+//                 }
+//             }
+//         } else {
+//             printf("bad arguments\n");
+//         }
+//         ft_freed(arr);
+//         i++;
+//     }
+// }
+
+void handle_no_arguments(t_envp *env) {
+    env = sort_list(env, ascending);
+    print_env_list(env, "ex");
+}
+int handle_no_first_element(char **arr) {
+    if (!arr[0]) {
+        ft_freed(arr);
+        return 1;
+    }
+    return 0;
+}
+
+void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
     int flag;
-    int i;
+    flag = if_flag(data->args[i]);
+    if (check_string(data->args[i]) == 2) {
+        ft_append(data, env, i);
+    } else if (check_string(data->args[i]) == 1) {
+        if (my_get_env(env, arr[0])) {
+            if (arr[1]) {
+                my_append_env(env, arr[0], ft_strdup(arr[1]));
+            } else if (check_equal(data->args[i])) {
+                my_append_env(env, arr[0], ft_strdup("\"\""));
+            }
+        } else if (!my_get_env(env, arr[0]) || check_equal(data->args[i])) {
+            ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
+        }
+    }
+}
+
+void process_arguments(t_data *data, t_envp *env, int i) {
     char **arr;
 
-    flag = 0;
-    i = 1;
+    arr = lexer_split(data->args[i], "+=");
+    if (handle_no_first_element(arr)) {
+        return;
+    }
+    if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i])) {
+        handle_flag_set(data, env, i, arr);
+    } else {
+        printf("bad arguments\n");
+    }
+    ft_freed(arr);
+}
+
+void ft_export(t_data *data, t_envp *env) {
+    int i = 1;
 
     if (!ft_strcmp(data->args[0], "export") && !data->args[1]) {
-        env = sort_list(env, ascending);
-        print_env_list(env, "ex");
+        handle_no_arguments(env);
         return;
     }
 
     while (data->args[i]) {
-        flag = if_flag(data->args[i]);
-        arr = lexer_split(data->args[i], "+=");
-        // if (!arr[1] && arr[0]) {
-        //     arr[1] = ft_strdup("\"\"");
-        // }
-        if (!arr[0]) {
-            ft_freed(arr);
-            i++;
-            continue;
-        }
-
-        if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i])) {
-            if (check_string(data->args[i]) == 2) {
-                ft_append(data, env, i);
-            } else if (check_string(data->args[i]) == 1) {
-                if (my_get_env(env, arr[0])) {
-                    if (arr[1] ) {
-                        my_append_env(env, arr[0], ft_strdup(arr[1]));
-                    } else {
-                        my_append_env(env, arr[0], ft_strdup("\"\""));
-                    }
-                } else if (my_get_env(env, arr[0])&& !check_equal(data->args[i])) {
-                    ft_freed(arr);
-                    i++;
-                    continue;
-                } else if (!my_get_env(env, arr[0]) || check_equal(data->args[i])) {
-
-                    ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
-                }
-            }
-        } else {
-            printf("bad arguments\n");
-        }
-        ft_freed(arr);
+        process_arguments(data, env, i);
         i++;
     }
 }
+
 
 
