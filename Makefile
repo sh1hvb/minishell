@@ -1,6 +1,6 @@
 # CC = cc 
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 NAME = minishell
 
@@ -21,7 +21,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	 make -C $(LIBFT_PATH)
-	cc -lreadline -fsanitize=address $? $(NAME_LIBFT) -o $@
+	cc -lreadline $? $(NAME_LIBFT) -o $@
 
 clean :
 #	make clean -C $(LIBFT_PATH)
