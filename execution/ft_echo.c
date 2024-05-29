@@ -5,7 +5,7 @@
 void ft_echo(t_data *data, t_envp *env)
 {
     int i = 1;
-    int flag = 0;
+    int flag = 1;
     int j = 1;
     (void)env;
     if(data->args[1][0] =='-')
