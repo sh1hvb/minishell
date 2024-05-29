@@ -51,13 +51,25 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
+typedef struct t_files
+{
+	char			*buffer;
+	char			*delimiter;
+	int				index;
+	struct t_files	*next;
+	struct t_files	*prev;
+}	t_files;
+
 typedef struct s_data
 {
 	char			*cmd ;
 	char			**args;
-	char			redir_in;
-	char			redir_out;
 	int				in_quotes;
+	int				has_heredoc;
+	t_files			*redir_out;
+	t_files			*redir_in;
+	t_files			*append;
+	t_files			*heredoc;
 	struct s_data	*next;
 	struct s_data	*prev;
 	
@@ -109,4 +121,11 @@ void 	handle_env(t_envp **env , char *envp[]);
 char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
+void    expand(char *prompt, t_lexer **lex);
+void	parsing(char *prompt, t_lexer **lex, t_data	**data);
+char	*my_strdup( char *s1);
+void	*my_calloc(int count, int size);
+char	*my_strjoin(char *s1, char *s2);
+char	*my_substr(char const *s, unsigned int start, size_t len);
+
 #endif

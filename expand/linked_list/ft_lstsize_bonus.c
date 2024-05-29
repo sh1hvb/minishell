@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 15:05:11 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:15:03 by smarsi           ###   ########.fr       */
+/*   Created: 2023/11/14 14:46:25 by smarsi            #+#    #+#             */
+/*   Updated: 2024/05/22 11:04:09 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_lexer **lst, t_lexer *new)
+int	ft_lstsize(t_data *lst)
 {
-	t_lexer	*head;
+	int	count;
 
 	if (!lst)
-		return ;
-	if (!*lst)
-		*lst = new;
-	else
+		return (0);
+	count = 0;
+	while (lst)
 	{
-		head = ft_lstlast(*lst);
-		new->prev = head;
-		head->next = new;
+		count++;
+		lst = lst->next;
 	}
+	return (count);
 }

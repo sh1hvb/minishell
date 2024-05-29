@@ -78,14 +78,14 @@ int	in_quotes(char prompt, int *flag_sq, int *flag_dq)
 	}
 	else if (prompt == '\'' && !*flag_dq)
 	{
-		if (*flag_sq == 0)
-			*flag_sq = 1;
-		else
+		if (*flag_sq)
 			*flag_sq = 0;
+		else
+			*flag_sq = 1;
 	}
-	if (*flag_sq == 1)
+	if (*flag_sq)
 		return (2);
-	if (*flag_dq == 1)
+	if (*flag_dq)
 		return (1);
 	return (0);
 }

@@ -24,11 +24,15 @@ static	int	count_word(char  *s, char *delimiters)
         if (s[i] == '\"')
         {
             skip_quotes(s, '\"', &i);
+			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+				i++;
 			if (flag)
             	count++;
         }
         else if (s[i] == '\'') {
             skip_quotes(s, '\'', &i);
+			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+				i++;
             if (flag)
             	count++;
         }
@@ -55,20 +59,36 @@ static	char	*get_word(char *dst, char  *src, char *delimiters, int	*index)
 		i++;
 	start = i;
     if (src[i] == '\"')
+	{
         skip_quotes(src, '\"', &i); 
-    else if (src[i] == '\'')  
+		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+			i++;
+	}
+    else if (src[i] == '\'')
+	{
         skip_quotes(src, '\'', &i);
+		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+			i++;
+	}
     else
 	    while (src[i] && !in_delimiters(src[i], delimiters))
 		{
 		    i++;
 			if (src[i] == '\"')
+			{
         		skip_quotes(src, '\"', &i); 
+				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+					i++;
+			}
     		else if (src[i] == '\'')  
-        	skip_quotes(src, '\'', &i);	
+			{
+        		skip_quotes(src, '\'', &i);	
+				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+					i++;
+			}
 		}
 	len = (i - start) + 1;
-	dst = ft_calloc(len, sizeof(char));
+	dst = my_calloc(len, sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);
@@ -101,7 +121,7 @@ char	**lexer_split(char *s, char *delimiters)
     	return (NULL);
 	}
 	count = count_word(s, delimiters);
-	dst = ft_calloc(count + 1, sizeof(char *));
+	dst = my_calloc(count + 1, sizeof(char *));
 	if (!dst)
 		return (NULL);
 	dst = fill_array(dst, s, delimiters, count);
@@ -118,4 +138,5 @@ char	**lexer_split(char *s, char *delimiters)
 //         i++;
 //     }
 //     return 0;
+// gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
 // }
