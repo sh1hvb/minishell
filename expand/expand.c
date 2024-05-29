@@ -32,8 +32,6 @@ void    expand(char *prompt, t_lexer **lex)
 		{
 			lst->value++;
 			lst->value = my_strdup(my_get_env(env, lst->value));
-			if (lst->value == '\"')
-				lst->value++;
 		}
 		else if (lst->value[0] == '~' && !lst->in_quotes)
 		{
