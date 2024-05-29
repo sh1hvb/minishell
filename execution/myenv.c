@@ -87,7 +87,7 @@ t_envp *get_env(char **env)
     int i = 0;
     while (env[i])
     {
-        splited = lexer_split(env[i], "+=");
+        splited = builtins_split(env[i], "+=");
         new_node = (t_envp *)malloc(sizeof(t_envp));
         if (!new_node)
             return 0;

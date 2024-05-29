@@ -81,6 +81,7 @@ typedef struct s_leaks
     struct s_leaks *next;
 }t_leaks;
 // made by mchihab
+// made by mchihab
 void	ft_lstclear_env(t_envp **lst);
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
 void	print_env_list(t_envp *env_list ,char *x);
@@ -91,6 +92,7 @@ t_envp	*ft_lstlast_env(t_envp *lst);
 t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag);
 int		check_string(char *s);
 void	handle_builts(t_data *data);
+void	handle_env(t_envp **env , char *envp[]);
 int		ascending(int a, int b);
 void	ft_env(t_envp *env);
 int		check_equal(char *s);
@@ -98,6 +100,11 @@ void	ft_pwd(t_data *data);
 void	ft_lstdelone_env(t_envp *lst);
 void	ft_unset(t_data *data, t_envp **env);
 void	ft_echo(t_data *data, t_envp *env);
+void	ft_lstclear_env(t_envp **lst);
+void 	ft_freed(char **p);
+char	**builtins_split(char *s, char *delimiters);
+
+
 
 
 
