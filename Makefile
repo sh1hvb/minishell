@@ -29,7 +29,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 	 make -C $(LIBFT_PATH)
-	cc -lreadline -fsanitize=address $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
+	cc -lreadline $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
 
 clean :
 	make clean -C $(LIBFT_PATH)

@@ -103,7 +103,7 @@ void	ft_echo(t_data *data, t_envp *env);
 void	ft_lstclear_env(t_envp **lst);
 void 	ft_freed(char **p);
 char	**builtins_split(char *s, char *delimiters);
-
+char 	*my_get_env(t_envp *env_list, const char *key);
 
 
 
