@@ -1,3 +1,4 @@
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -20,9 +21,12 @@ typedef struct s_envp
 {
 	char *key;
 	char *value;
+	int flag;
 	struct s_envp *next;
 	struct s_envp *prev;
 } t_envp;
+
+extern t_envp *env;
 
 enum token
 {
@@ -75,11 +79,34 @@ typedef struct s_leaks
     void *add;
     struct s_leaks *next;
 }t_leaks;
-t_leaks	*free_lstlast(t_leaks *lst);
+// made by mchihab
 void	ft_lstclear_env(t_envp **lst);
-// void	ft_lstdelone_env(t_envp *lst);
+t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
+void	print_env_list(t_envp *env_list ,char *x);
+void	ft_export(t_data *data , t_envp *env);
+int		ft_lstsize_env(t_envp *lst);
+void	ft_lstadd_back_env(t_envp **lst, t_envp *new);
+t_envp	*ft_lstlast_env(t_envp *lst);
+t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag);
+int		check_string(char *s);
+void	handle_builts(t_data *data);
+int		ascending(int a, int b);
+void	ft_env(t_envp *env);
+int		check_equal(char *s);
+void	ft_pwd(t_data *data);
+void	ft_lstdelone_env(t_envp *lst);
+void	ft_unset(t_data *data, t_envp **env);
+void	ft_echo(t_data *data, t_envp *env);
 
+
+
+
+
+
+/**************************************************************************************************/
+// made by smarsi 
 void	*ft_malloc(int size, int flag);
+t_leaks	*free_lstlast(t_leaks *lst);
 void	ft_error(char *msg, int ext);
 void	valid_prompt(char *prompt);
 void	lexer(char *prompt, t_lexer **lex);

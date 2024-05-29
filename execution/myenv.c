@@ -1,5 +1,38 @@
+
 #include "../minishell.h"
 
+void print_env_list(t_envp *env_list , char *x)
+{
+    t_envp *current = env_list;
+    while (current)
+    {
+        if(!ft_strcmp(x,"ex"))
+            printf("declare -x ");
+        if(!ft_strcmp(x,"en") && current->flag == 0 && !current->value)
+        {
+            current = current->next;
+            continue;
+        }
+        else if(!current->value  && current->flag == 0  && !ft_strcmp(x,"ex"))
+        {
+            printf("%s\n", current->key);
+
+        }
+        else if(!current->value && current->flag == 1 && !ft_strcmp(x,"ex"))
+        {
+            current->value=ft_strdup("\"\"");
+            printf("%s=%s\n", current->key, current->value);
+        }
+        else
+        {
+            if(!current->value)
+                current->value=ft_strdup("\"\"");
+            printf("%s=%s\n", current->key, current->value);    
+        }
+        current = current->next;
+
+    }
+}
 void handle_env(t_envp **env , char *envp[])
 {
 	char *p;
@@ -41,7 +74,10 @@ void	ft_lstclear_env(t_envp **lst)
 		*lst = next;
 	}
 }
-
+void ft_env( t_envp *env)
+{
+    print_env_list(env,"en");
+}
 t_envp *get_env(char **env)
 {
     char **splited;
@@ -51,13 +87,14 @@ t_envp *get_env(char **env)
     int i = 0;
     while (env[i])
     {
-        splited = ft_split(env[i], '=');
+        splited = lexer_split(env[i], "+=");
         new_node = (t_envp *)malloc(sizeof(t_envp));
         if (!new_node)
             return 0;
         new_node->key = ft_strdup(splited[0]);
         new_node->value = ft_strdup(getenv(splited[0]));
         new_node->next = NULL;
+        new_node->flag = 0;
         new_node->prev = current;
         if (current)
             current->next = new_node;

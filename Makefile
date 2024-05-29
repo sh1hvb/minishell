@@ -1,5 +1,6 @@
 # CC = cc 
 
+
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 NAME = minishell
@@ -12,8 +13,11 @@ SRC = main.c \
 	parsing/syntax.c parsing/parsing.c  parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c\
 	helpers/errors.c lexer/lexer.c lexer/lexer_helper.c \
 	lexer/lexer_split.c lexer/lexer_strchr.c lexer/lexer_functions.c memory_handling/memory_handling.c\
+	memory_handling/memory_helpers.c execution/myenv.c execution/ft_export.c execution/utils_env.c \
+	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c
 	memory_handling/memory_helpers.c execution/myenv.c \
 	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
+
 
 OBJ = $(SRC:.c=.o)
 

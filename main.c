@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+
+t_envp *env = NULL;
+
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstclear(t_data **lst);
 void	heredoc_lstadd_back(t_files **lst, t_files *new);
@@ -39,28 +42,30 @@ void	minishell()
 		free(prompt);
 	}
 }
-void print_env_list(t_envp *env_list)
-{
-    t_envp *current = env_list;
-    while (current)
-    {
-        printf("%s=%s\n", current->key, current->value);
-        current = current->next;
-    }
-}
+
 int	main(int ac, char *av[], char *envp[])
 {
-	t_envp *env;
-	env = NULL;
-
-	(void) av;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
+	(void)av;
+	t_data data;
+	char *p="echo hbibi";
+	char **arr = ft_split(p,' ');
+	// printf("%s", arr[3]);
+	data.cmd = arr[0];
+	data.args = arr;
+
+	// exit(0);
 	handle_env(&env, envp);
-	minishell();
-	// print_env_list(env);
+	// minishell();
+	handle_builts(&data);
+    // env = sort_list(env , ascending);
+	// print_env_list(env,"en");
+
 	ft_malloc(0, 1);
+	// exit(0); 
 	ft_lstclear_env(&env);
+	ft_freed(arr);
 	return (0);
 }
 
