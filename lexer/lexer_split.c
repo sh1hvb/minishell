@@ -29,20 +29,22 @@ static	int	count_word(char  *s, char *delimiters)
 			if (flag)
             	count++;
         }
-        else if (s[i] == '\'') {
+        else if (s[i] && s[i] == '\'') {
             skip_quotes(s, '\'', &i);
 			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
 				i++;
             if (flag)
             	count++;
         }
-		if (!in_delimiters(s[i], delimiters) && flag && s[i])
+		if (s[i] && !in_delimiters(s[i], delimiters) && flag)
 		{
 			count++;
 			flag = 0;
 		}
-		if (in_delimiters(s[i], delimiters))
+		if (s[i] && in_delimiters(s[i], delimiters))
 			flag = 1;
+		if (!s[i])
+			break ;
 		i++;
 	}
 	return (count);
@@ -120,6 +122,7 @@ char	**lexer_split(char *s, char *delimiters)
 	{
     	return (NULL);
 	}
+	count = 0;
 	count = count_word(s, delimiters);
 	dst = my_calloc(count + 1, sizeof(char *));
 	if (!dst)

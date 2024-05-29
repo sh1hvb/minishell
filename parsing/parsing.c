@@ -101,4 +101,5 @@ void	parsing(char *prompt, t_lexer **lex, t_data	**data)
 			fill_args(&lex_tmp, &data_tmp);
 	}
 	data_tmp->cmd = data_tmp->args[0];
+
 }

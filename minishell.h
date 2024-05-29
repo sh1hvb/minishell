@@ -40,6 +40,7 @@ enum token
 	IN_A_FILE = 'A',
 	WITH_SPACE = 'W',
 	DOLLAR = '$',
+	UNSET = 'U',
 };
 
 typedef struct s_lexer
