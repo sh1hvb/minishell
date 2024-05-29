@@ -16,7 +16,7 @@ static int check_builts(t_data *data )
     else if(!ft_strcmp(data->cmd,"unset"))
         return 5;
     else if(!ft_strcmp(data->cmd,"env"))
-        return 6;
+        return 6; 
     else if(!ft_strcmp(data->cmd,"exit"))
         return 7;
     return 0;
