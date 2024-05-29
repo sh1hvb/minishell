@@ -1,7 +1,7 @@
 # CC = cc 
 
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 NAME = minishell
 
@@ -28,8 +28,8 @@ OBJ_SMARSI = $(SRC_SMARSI:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
-	 make -C $(LIBFT_PATH)
-	cc -lreadline $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
+	#  make -C $(LIBFT_PATH)
+	cc -lreadline -fsanitize=address $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
 
 clean :
 	make clean -C $(LIBFT_PATH)
@@ -38,7 +38,7 @@ clean :
 re : fclean all
 
 fclean : clean
-	make fclean -C $(LIBFT_PATH)
+	# make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
 .SECONDARY : $(OBJ_SMARSI) $(OBJ_MCHIHAB)

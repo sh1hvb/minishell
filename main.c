@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+int	pars_lstsize(t_data *lst);
 
 t_envp *env = NULL;
 
@@ -38,8 +39,9 @@ void	minishell()
 		// print_expand(lex_tmp);
 		// printf("========= end expand\n");
 		parsing(prompt, &lex, &data);
-		// print_parsing(data);
-		handle_builts(data);
+		printf("num of : %d\n", pars_lstsize(data));
+		print_parsing(data);
+		// handle_builts(data);
 
 		// printf("========= end parsing\n");
 		free(prompt);

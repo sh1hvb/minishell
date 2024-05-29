@@ -19,6 +19,25 @@ void	rmv_s_qts(char **str)
 	}
 }
 
+void	rmv_d_qts(char **str)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;;
+	(*str)++;
+	tmp = *str;
+	while(tmp[i])
+	{
+		if (tmp[i] == '\"')
+		{
+			tmp[i] = '\0';
+			break;
+		}
+		i++;
+	}
+}
+
 void    expand(char *prompt, t_lexer **lex)
 {
 	t_lexer	*lst;
@@ -32,8 +51,10 @@ void    expand(char *prompt, t_lexer **lex)
 		{
 			lst->value++;
 			lst->value = my_strdup(my_get_env(env, lst->value));
-			if (lst->value == '\"')
-				lst->value++;
+			if (lst->value[0] == '\"')
+				rmv_d_qts(&lst->value);
+			else if (lst->value[0] == '\'')
+				rmv_d_qts(&lst->value);
 		}
 		else if (lst->value[0] == '~' && !lst->in_quotes)
 		{

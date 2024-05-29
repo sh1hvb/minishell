@@ -60,7 +60,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 		ft_malloc(0, 1);
 		exit(1);
 	}
-	data_tmp = data_tmp->next;
+	*data = (*data)->next;
 	*lex = (*lex)->next;
 }
 
