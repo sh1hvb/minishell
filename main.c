@@ -31,15 +31,16 @@ void	minishell()
 		valid_prompt(prompt);
 		lexer(prompt, &lex);
 		t_lexer  *lex_tmp = lex;
-		print_lexer(lex_tmp);
+		(void) lex_tmp;
+		// print_lexer(lex_tmp);
 		// printf("========= end lexer\n");
 		expand(prompt, &lex);
-		print_expand(lex_tmp);
+		// print_expand(lex_tmp);
 		// printf("========= end expand\n");
 		parsing(prompt, &lex, &data);
-	// handle_builts(data);
-
 		// print_parsing(data);
+		handle_builts(data);
+
 		// printf("========= end parsing\n");
 		free(prompt);
 	}

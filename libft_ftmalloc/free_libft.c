@@ -37,9 +37,8 @@ char	*my_strjoin(char *s1, char *s2)
 		return (my_strdup(s2));
 	else if (!s2)
 		return (my_strdup(s1));
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	printf("%s, %d\n",s1,  len);
-	str = ft_malloc((len + 1) * sizeof(char), 0);
+	len = (ft_strlen(s1) + ft_strlen(s2)) + 1;
+	str = ft_malloc(len * sizeof(char), 0);
 	if (!str)
 		return (str);
 	str[0] = '\0';
