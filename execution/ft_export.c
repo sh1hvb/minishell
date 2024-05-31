@@ -62,8 +62,8 @@ tmp = env_list;
     while (tmp != NULL) {
         if (ft_strcmp(tmp->key, key) == 0)
         {
-            // if (tmp->value)
-            //     // free(tmp->value);
+            if (tmp->value)
+                free(tmp->value);
             tmp->value = value;
         }
         tmp = tmp->next;
@@ -290,6 +290,8 @@ void ft_export(t_data *data, t_envp *env) {
     }
 
     while (data->args[i]) {
+        if(!ft_strcmp(data->args[i], "export"))
+            i++;
         process_arguments(data, env, i);
         i++;
     }

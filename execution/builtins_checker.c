@@ -1,9 +1,9 @@
 #include "../minishell.h"
 
 
-static int check_builts(t_data *data )
+int check_builts(t_data *data )
 {
-    if(!data)
+    if(!data->cmd || !data->args)
         return (0);
     if(!ft_strcmp(data->cmd,"echo"))
         return 1;
@@ -29,8 +29,8 @@ void handle_builts(t_data *data)
         ft_error("cmd not found",127);
     if(check_builts(data)== 1)
         ft_echo(data , envtmp);
-    // if(check_builts(data)== 2)
-    //     ft_cd(data , envtmp);
+    if(check_builts(data)== 2)
+        ft_cd(data , envtmp);
     if(check_builts(data)== 3)
         ft_pwd(data);
     if(check_builts(data) == 4)

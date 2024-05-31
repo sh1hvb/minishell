@@ -1,7 +1,7 @@
 # CC = cc 
 
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 NAME = minishell
 
@@ -12,7 +12,7 @@ LIBFT_PATH = libft/
 SRC_MCHIHAB = main.c \
 	execution/myenv.c execution/ft_export.c execution/utils_env.c \
 	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
-	execution/builtins_split.c
+	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c
 
 SRC_SMARSI =  parsing/syntax.c parsing/parsing.c  parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c \
 	helpers/errors.c\
@@ -29,7 +29,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 	 make -C $(LIBFT_PATH)
-	cc -lreadline $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
+	cc -fsanitize=address -lreadline $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o $(NAME)
 
 clean :
 	make clean -C $(LIBFT_PATH)

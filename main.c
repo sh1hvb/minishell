@@ -11,7 +11,7 @@ void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
 
-void	minishell()
+void	minishell(char *envp[])
 {
 	char	*prompt;
 	t_lexer  *lex;
@@ -39,7 +39,8 @@ void	minishell()
 		// printf("========= end expand\n");
 		parsing(prompt, &lex, &data);
 		// print_parsing(data);
-		handle_builts(data);
+		check_cmd(data , env, envp);
+		// handle_builts(data);
 
 		// printf("========= end parsing\n");
 		free(prompt);
@@ -54,7 +55,7 @@ int	main(int ac, char *av[], char *envp[])
 
 	// exit(0);
 	handle_env(&env, envp);
-	minishell();
+	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
 
