@@ -115,8 +115,8 @@ char 	*my_get_env(t_envp *env_list, const char *key);
 // made by smarsi 
 void	*ft_malloc(int size, int flag);
 t_leaks	*free_lstlast(t_leaks *lst);
-void	ft_error(char *msg, int ext);
-void	valid_prompt(char *prompt);
+int		ft_error(char *msg, int ext);
+int		valid_prompt(char *prompt);
 void	lexer(char *prompt, t_lexer **lex);
 void	skip_delimiters(char *str, char *delimiters, int *index);
 int		in_delimiters(char target, char *delimiters);
@@ -135,5 +135,8 @@ char	*my_strdup( char *s1);
 void	*my_calloc(int count, int size);
 char	*my_strjoin(char *s1, char *s2);
 char	*my_substr(char const *s, unsigned int start, size_t len);
-
+int		pipe_syntax(t_lexer *lex);
+int		check_syntax(t_lexer *lex);
+int		valid_quotes(char *prompt);
+int		files_syntax(t_lexer *lex);
 #endif
