@@ -9,7 +9,7 @@ t_files	*heredoc_lstlast(t_files *lst);
 
 static int	is_valid_Type(t_lexer*lex)
 {
-	if ((lex->type == 'W' && lex->in_quotes == 0) 
+	if ((lex && lex->type == 'W' && lex->in_quotes == 0) 
 	|| (lex->type != 'S' && (lex->type != '$') && (lex->type != 'W')
 	&& lex->type != '\"' && lex->type != '\'')
 	|| lex->type == '|')
@@ -23,14 +23,16 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	t_files	*tmp;
 	t_files	**head;
 
-	*lex = (*lex)->next;
+	if (*lex)
+		*lex = (*lex)->next;
 	head = NULL;
 	file_name = NULL;
 	while (*lex)
 	{
 		if (is_valid_Type(*lex))
 			break ;
-		file_name = my_strjoin(file_name, (*lex)->value);
+		if ((*lex)->value)
+			file_name = my_strjoin(file_name, (*lex)->value);
 		*lex = (*lex)->next;
 	}
 	if (flag == 0)
@@ -41,6 +43,8 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 		head = &(*data)->heredoc;
 	else if (flag == 3)
 		head = &(*data)->append;
+	if (!file_name)
+		file_name = my_strdup("");
 	tmp = heredoc_lstnew(file_name);
 	heredoc_lstadd_back(head, tmp);
 }
@@ -60,8 +64,10 @@ void	new_node(t_lexer **lex, t_data	**data)
 		ft_malloc(0, 1);
 		exit(1);
 	}
-	*data = (*data)->next;
-	*lex = (*lex)->next;
+	if (*data)
+		*data = (*data)->next;
+	if (*lex)
+		*lex = (*lex)->next;
 }
 
 void	fill_args(t_lexer **lex, t_data	**data)
@@ -74,7 +80,8 @@ void	fill_args(t_lexer **lex, t_data	**data)
 	data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
 	data_tmp->args = lexer_split(data_tmp->cmd , " \t\n");
 	data_tmp->in_quotes = lex_tmp->in_quotes;
-	*lex = (*lex)->next;	
+	if (*lex)
+		*lex = (*lex)->next;	
 }
 
 void	parsing(char *prompt, t_lexer **lex, t_data	**data)
@@ -95,11 +102,20 @@ void	parsing(char *prompt, t_lexer **lex, t_data	**data)
 			pars_files(&data_tmp, &lex_tmp, 2);
 		else if (lex_tmp->type == 'A' && !lex_tmp->in_quotes)
 			pars_files(&data_tmp, &lex_tmp, 3);
-		else if (lex_tmp->value[0] == '|' && !lex_tmp->in_quotes)
+		else if (lex_tmp->type == 'P' && !lex_tmp->in_quotes)
+		{
+			data_tmp->cmd = data_tmp->args[0];
 			new_node(&lex_tmp, &data_tmp);
+		}
 		else
 			fill_args(&lex_tmp, &data_tmp);
 	}
-	data_tmp->cmd = data_tmp->args[0];
-
+	if (!data_tmp->args)
+	{
+		data_tmp->cmd = NULL;
+		data_tmp->args = NULL;
+	}
+	else
+		data_tmp->cmd = data_tmp->args[0];
+	return ;
 }
