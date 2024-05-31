@@ -40,10 +40,10 @@ static char	*get_path(char **cmd, t_envp *env)
 		if (access(exec, X_OK) == 0)
         {
 			return (exec);
-
         }
-		// free(exec);
+		free(exec);
 	}
+	free(allpath);
 	return (cmd[0]);
 }
 static void	exec(char **cmd, t_envp *env , char *envp[])
@@ -54,7 +54,7 @@ static void	exec(char **cmd, t_envp *env , char *envp[])
 	int	pid;
 
 	path = get_path(cmd, env);
-    dprintf(2,"%s\n", path);
+    // dprintf(2,"%s\n", path);
 	if (pipe(fds) == -1)
 		perror("pipe:");
 	pid = fork();
@@ -66,10 +66,8 @@ static void	exec(char **cmd, t_envp *env , char *envp[])
 		// dup2(fds[1], 1);
 		if (execve(path, cmd, envp) == -1)
         {
-            dprintf(2,"not found");
+            // dprintf(2,"not found");
             exit(127);
-
-
         }
 	}
 	else
@@ -106,23 +104,6 @@ void	add_pipe(t_data *data, t_envp *env, char *envp[])
 
 	}
 }
-// void	create_pipes_and_execute(int ac, char *av[], char *env[], int fd_out)
-// {
-// 	int i, (pid);
-// 	if (ft_strcmp(av[1], "here_doc") == 0)
-// 		i = 3;
-// 	else
-// 		i = 2;
-// 	while (i < ac - 2)
-// 		add_pipe(av[i++], env);
-// 	pid = fork();
-// 	if (!pid)
-// 	{
-// 		dup2(fd_out, 1);
-// 		exec(av[ac - 2], env);
-// 	}
-// 	close(fd_out);
-// }
 void check_cmd(t_data *data, t_envp *env, char *envp[])
 {
     int i = 0;
@@ -140,7 +121,7 @@ void check_cmd(t_data *data, t_envp *env, char *envp[])
         i = ft_lstsize_data(data);   
         while(i-- > 1)
         {
-            add_pipe(data,e/nv,envp);
+            add_pipe(data,env,envp);
             // printf("%s\n",data->args[0]);
             data = data->next;
         }
