@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+int	pars_lstsize(t_data *lst);
 
 t_envp *env = NULL;
 
