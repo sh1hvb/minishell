@@ -66,5 +66,7 @@ void    print_parsing(t_data *data)
             printf("\n");
         }
 		data = data->next;
+        i++;
+        
 	}
 }
