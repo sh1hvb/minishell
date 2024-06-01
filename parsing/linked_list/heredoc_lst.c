@@ -1,4 +1,3 @@
-
 #include "../../minishell.h"
 
 int	heredoc_lstsize(t_files *lst)
@@ -12,7 +11,6 @@ int	heredoc_lstsize(t_files *lst)
 	{
 		count++;
 		lst = lst->next;
-
 	}
 	return (count);
 }
@@ -27,7 +25,6 @@ t_files	*heredoc_lstlast(t_files *lst)
 	return (lst);
 }
 
-
 t_files	*heredoc_lstnew(char *value)
 {
 	t_files	*head;
@@ -37,7 +34,7 @@ t_files	*heredoc_lstnew(char *value)
 		return (NULL);
 	head->buffer = NULL;
 	head->delimiter = my_strdup(value);
-    head->index = 0;
+	head->index = 0;
 	head->next = NULL;
 	head->prev = NULL;
 	return (head);
@@ -58,7 +55,7 @@ void	heredoc_lstadd_back(t_files **lst, t_files *new)
 	{
 		head = heredoc_lstlast(*lst);
 		new->prev = head;
-        new->index = head->index + 1;
+		new->index = head->index + 1;
 		head->next = new;
 	}
 }
