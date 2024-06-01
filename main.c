@@ -45,11 +45,12 @@ void	minishell(char *envp[])
 		if (!status)
 		{
 			expand(prompt, &lex);
-			// print_expand(lex_tmp);
-			// printf("========= end expand\n");
-			parsing(prompt, &lex, &data);
-			// print_parsing(data);
-			// printf("\n\n");
+			print_expand(lex_tmp);
+			printf("========= end expand\n");
+			parsing(&lex, &data);
+			print_parsing(data);
+			printf("\n\n");
+			(void) envp;
 			check_cmd(data , env, envp);
 			// handle_builts(data);
 			// printf("========= end parsing\n");
@@ -60,57 +61,6 @@ void	minishell(char *envp[])
 		free(prompt);
 	}
 }
-
-//
-
-// // Soufyane Marsi  7:23 PM
-// void minishell()
-// {
-//  char *prompt;
-//  t_lexer *lex;
-//  t_data *data;
-//  int status;
-
-//  status = 0;
-//  while (1)
-//  {
-//  // ft_lstclear(&lex);
-//  // pars_lstclear(&data);
-//  lex = NULL;
-//  data = pars_lstnew(NULL, 0);
-//  prompt = readline("minishell$ ");
-//  if (prompt[0] == '\0')
-//  return ;
-//  if (!prompt)
-//  return ;
-//  add_history(prompt);
-//  status = valid_quotes(prompt);
-//  if (status)
-//  {
-//  free(prompt);
-//  continue;
-//  }
-//  lexer(prompt, &lex);
-//  t_lexer *lex_tmp = lex;
-//  (void) lex_tmp;
-//  // print_lexer(lex_tmp);
-//  // printf("========= end lexer\n");
-//  status = check_syntax(lex);
-//  if (!status)
-//  {
-//  expand(prompt, &lex);
-//  // print_expand(lex_tmp);
-//  // printf("========= end expand\n");
-//  parsing(prompt, &lex, &data);
-//  print_parsing(data);
-//  // printf("\n\n");
-//  handle_builts(data);
-//  // printf("========= end parsing\n");
-//  }
-//  ft_malloc(0, 1);
-//  }
-// }
-//
 
 int	main(int ac, char *av[], char *envp[])
 {
