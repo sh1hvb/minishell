@@ -30,7 +30,7 @@ void    print_parsing(t_data *data)
         int i = 0;
 		printf("\n\n#######################  NODE : %d  #################################\n", i);
 		printf("cmd is :%s\n", data->cmd);
-        while (data->args[i])
+        while (data->args && data->args[i])
         {
             printf("args[%d] = %s, ", i, data->args[i]);
             i++;

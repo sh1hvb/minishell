@@ -36,6 +36,13 @@ void	minishell(char *envp[])
 			free(prompt);
 			continue;
 		}
+		add_history(prompt);
+		status = valid_quotes(prompt);
+		if (status)
+		{
+			free(prompt);
+			continue;
+		}
 		lexer(prompt, &lex);
 		t_lexer *lex_tmp = lex;
 		(void) lex_tmp;
@@ -73,7 +80,6 @@ int	main(int ac, char *av[], char *envp[])
 	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
-
 	ft_malloc(0, 1);
 	// exit(0); 
 	ft_lstclear_env(&env);
