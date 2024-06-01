@@ -1,13 +1,13 @@
 
 #include "../minishell.h"
 
-int	ft_error(char *msg, int ext)
+void	ft_error(char *msg, int ext)
 {
 	printf("%s\n", msg);
 	return (ext);
 }
 
-void ft_freed(char **p)
+void	ft_freed(char **p)
 {
 	int i = 0;
 	while(p[i])
