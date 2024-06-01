@@ -10,28 +10,3 @@ echo < Makefile "<< heredoc" << "f "i"n" >> "appe"nd  >>append2
 echo hello < 1 from < 2  main < 3 > 4 > 5 > 6 "    <    5"  << 4"."txt >>  8.txt >> 9."txt"
 <1".$"USER<2
 << 4"."txt << 5"."txt
-
-
-// int ft_checkpip(t_data *cmd)
-// {
-// 	t_data* cmdpip;
-// 	cmdpip = cmd;
-// 	if(cmdpip->next != NULL)
-// 		return 1;
-// 	else
-// 		return 0;
-// }
-// void check_cmd(t_data *data, t_envp *env, char *envp[])
-// {
-// 	t_data *cmd;
-// 	cmd = data;
-// 	(void)env;
-// 	(void)envp;
-// 	if(check_builts(cmd))
-// 		handle_builts(cmd);
-// 	else if(ft_checkpip(cmd))
-// 		add_pipe(cmd,env,envp);
-// 	else
-// 		exec(data->args, env ,envp);
-    
-// }

@@ -27,6 +27,27 @@ void	skip_quotes(char *target, char delimiter, int *index)
 	*index = i;
 }
 
+void	split_quotes(char *target, char delimiter, int *index)
+{
+	int	i;
+
+	i = *index;
+	i++;
+	while (target[i])
+	{
+		if (target[i] == delimiter)
+		{
+			i++;
+			if (target[i] == '\'' || target[i] == '\"')
+				delimiter = target[i];
+			else
+				break;
+		}
+		i++;
+	}
+	*index = i;
+}
+
 void	get_cmds(char *prompt, t_data **data, int *index)
 {
 	int	i;
