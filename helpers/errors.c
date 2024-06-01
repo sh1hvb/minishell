@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-void	ft_error(char *msg, int ext)
+int	ft_error(char *msg, int ext)
 {
 	printf("%s\n", msg);
 	return (ext);
