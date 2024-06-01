@@ -54,7 +54,7 @@ void    print_parsing(t_data *data)
 		printf("-------------------------- HEREDOC --------------------------------\n");
         while (data->heredoc)
         {
-            printf("heredoc num : %d, delimiter : %s  ", data->heredoc->index, data->heredoc->delimiter);
+            printf("heredoc num : %d, delimiter : %s  , type = %d",data->heredoc->index, data->heredoc->delimiter, data->heredoc->type);
             data->heredoc = data->heredoc->next;
             printf("\n");
         }

@@ -1,5 +1,5 @@
 #include "../minishell.h"
-
+int		is_heredoc(t_lexer *lst);
 int		heredoc_lstsize(t_files *lst);
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstadd_back(t_data **lst, t_data *new);
@@ -37,6 +37,9 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	}
 	helpers_lines(data, &head, flag, file_name);
 	tmp = heredoc_lstnew(file_name);
+	tmp->type = 0;
+	if (file_name[0] == '\'' || file_name[0] == '\"')
+		tmp->type = 1;
 	heredoc_lstadd_back(head, tmp);
 }
 

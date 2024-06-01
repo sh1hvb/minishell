@@ -7,7 +7,7 @@ int	ft_error(char *msg, int ext)
 	return (ext);
 }
 
-void ft_freed(char **p)
+void	ft_freed(char **p)
 {
 	int i = 0;
 	while(p[i])
