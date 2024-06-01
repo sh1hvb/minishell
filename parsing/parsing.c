@@ -1,21 +1,21 @@
 #include "../minishell.h"
 
-int	heredoc_lstsize(t_files *lst);
+int		heredoc_lstsize(t_files *lst);
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstadd_back(t_data **lst, t_data *new);
 void	heredoc_lstadd_back(t_files **lst, t_files *new);
 t_files	*heredoc_lstnew(char *value);
 t_files	*heredoc_lstlast(t_files *lst);
 
-static int	is_valid_Type(t_lexer*lex)
+static int	is_valid_type(t_lexer *lex)
 {
-	if ((lex && lex->type == 'W' && lex->in_quotes == 0) 
-	|| (lex->type != 'S' && (lex->type != '$') && (lex->type != 'W')
-	&& lex->type != '\"' && lex->type != '\'')
-	|| lex->type == '|')
+	if ((lex && lex->type == 'W' && lex->in_quotes == 0)
+		|| (lex->type != 'S' && (lex->type != '$') && (lex->type != 'W')
+			&& lex->type != '\"' && lex->type != '\'')
+		|| lex->type == '|')
 		return (1);
 	return (0);
-}	
+}
 
 void	pars_files(t_data **data, t_lexer **lex, int flag)
 {
@@ -29,22 +29,13 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	file_name = NULL;
 	while (*lex)
 	{
-		if (is_valid_Type(*lex))
+		if (is_valid_type(*lex))
 			break ;
 		if ((*lex)->value)
 			file_name = my_strjoin(file_name, (*lex)->value);
 		*lex = (*lex)->next;
 	}
-	if (flag == 0)
-		head = &(*data)->redir_out;
-	else if (flag == 1)
-		head = &(*data)->redir_in;
-	else if (flag == 2)
-		head = &(*data)->heredoc;
-	else if (flag == 3)
-		head = &(*data)->append;
-	if (!file_name)
-		file_name = my_strdup("");
+	helpers_lines(data, &head, flag, file_name);
 	tmp = heredoc_lstnew(file_name);
 	heredoc_lstadd_back(head, tmp);
 }
@@ -78,20 +69,19 @@ void	fill_args(t_lexer **lex, t_data	**data)
 	lex_tmp = *lex;
 	data_tmp = *data;
 	data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
-	data_tmp->args = lexer_split(data_tmp->cmd , " \t\n");
+	data_tmp->args = lexer_split(data_tmp->cmd, " \t\n");
 	data_tmp->in_quotes = lex_tmp->in_quotes;
 	if (*lex)
-		*lex = (*lex)->next;	
+		*lex = (*lex)->next;
 }
 
-void	parsing(char *prompt, t_lexer **lex, t_data	**data)
+void	parsing(t_lexer **lex, t_data	**data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
 
 	lex_tmp = *lex;
 	data_tmp = *data;
-	(void) prompt;
 	while (lex_tmp)
 	{
 		if (lex_tmp->type == 'I' && !lex_tmp->in_quotes)
@@ -110,12 +100,7 @@ void	parsing(char *prompt, t_lexer **lex, t_data	**data)
 		else
 			fill_args(&lex_tmp, &data_tmp);
 	}
-	if (!data_tmp->args)
-	{
-		data_tmp->cmd = NULL;
-		data_tmp->args = NULL;
-	}
-	else
-		data_tmp->cmd = data_tmp->args[0];
+	remove_quotes(data_tmp);
+	initialize_cmd(data_tmp);
 	return ;
 }

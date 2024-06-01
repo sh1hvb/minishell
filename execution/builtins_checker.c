@@ -23,6 +23,7 @@ int check_builts(t_data *data )
 }
 void handle_builts(t_data *data)
 {
+
     t_envp *envtmp;
     envtmp = env;
     if(!check_builts(data))

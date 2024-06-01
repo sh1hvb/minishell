@@ -6,13 +6,13 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:04:47 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:09:26 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/01 07:19:12 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_data	*ft_lstnew(char *value, int type, int quotes, char *in, char *out)
+t_data	*ft_lstnew(char *value, int quotes, char *in, char *out)
 {
 	t_data	*head;
 
@@ -28,4 +28,3 @@ t_data	*ft_lstnew(char *value, int type, int quotes, char *in, char *out)
 	head->prev = NULL;
 	return (head);
 }
-
