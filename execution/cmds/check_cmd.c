@@ -62,6 +62,8 @@ void	add_pipe(t_data *data, t_envp *env, char *envp[])
 {
 	int	fds[2];
 	int	pid;
+	// int (status),(exit_status) = 0;
+
 
 	if (pipe(fds) == -1)
 	{
@@ -83,19 +85,23 @@ void	add_pipe(t_data *data, t_envp *env, char *envp[])
         if (!check_builts(data))
 		    exec_cmd(data->args, env, envp);
         else
+		{
             handle_builts(data);
+			close(fds[1]);
+			exit (0);
+		}
+		close(fds[1]);
 	}
 	close(fds[1]);
 	dup2(fds[0], 0);
 	close(fds[0]);
-	
 }
 
 void check_cmd(t_data *data, t_envp *env, char *envp[])
 {
-	int	status;
 
 	dup2(0, 3);
+	int (status), (exit_status);
     while (data && data->next)
     {
         add_pipe(data, env, envp);
@@ -111,13 +117,17 @@ void check_cmd(t_data *data, t_envp *env, char *envp[])
         	else
             	handle_builts(data);
 		}
-		while (waitpid(-1, &status, 0) != -1)
+		while (waitpid(pid, &status, 0) != -1)
 		{
-			if (WEXITSTATUS(status) == 127 || WEXITSTATUS(status) == 1)
-				exit(WEXITSTATUS(status));
-		};
+			if (WIFEXITED(status))
+			{
+				exit_status = WEXITSTATUS(status);
+				if (exit_status == 127 || exit_status == 1 || exit_status == 0)
+					break ;
+			}
+		}
 	}
-	dup2(3, 0);
+	dup2(3, 0);	
 }
 // while (i < ac - 2)
 // 		add_pipe(av[i++], env);
@@ -131,8 +141,8 @@ void check_cmd(t_data *data, t_envp *env, char *envp[])
 // 	if (!id)
 // 		close(fd_out);
 // 	else
-// 		while (waitpid(-1, &status, 0) != -1)
-// 		{
-// 			if (WEXITSTATUS(status) == 127 || WEXITSTATUS(status) == 1)
-// 				exit(WEXITSTATUS(status));
-// 		};
+	// while (waitpid(-1, &status, 0) != -1)
+	// {
+	// 	if (WEXITSTATUS(status) == 127 || WEXITSTATUS(status) == 1 || WEXITSTATUS(status) == 0)
+	// 		exit(WEXITSTATUS(status));
+	// };
