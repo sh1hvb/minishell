@@ -12,7 +12,7 @@ SRC_MCHIHAB = main.c \
 	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
 	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c
 
-SRC_SMARSI =  parsing/parsing.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
+SRC_SMARSI =  parsing/parsing.c parsing/quotes_remover.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
 	helpers/errors.c\
 	lexer/lexer.c lexer/lexer_helper.c lexer/lexer_split.c lexer/lexer_strchr.c lexer/lexer_functions.c \
 	memory_handling/memory_handling.c memory_handling/memory_helpers.c \

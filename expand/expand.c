@@ -38,6 +38,27 @@ void	rmv_d_qts(char **str)
 	}
 }
 
+int	is_heredoc(t_lexer *lst)
+{
+	char	delimiter;
+
+	if (lst && lst->prev && lst->prev->type == 'H')
+		return (1);
+	if (lst && lst->in_quotes)
+	{
+		delimiter = '\"';
+		if (lst->type == '\'')
+			delimiter = '\'';
+		printf("before %c\n", delimiter);
+		while (lst && lst->value[0] != delimiter)
+			lst = lst->prev;
+		if (lst && lst->value[0] == delimiter)
+			if (lst->prev && lst->prev->type == 'H')
+				return (1);
+	}
+	return (0);
+}
+
 void	expand(char *prompt, t_lexer **lex)
 {
 	t_lexer	*lst;
@@ -47,7 +68,8 @@ void	expand(char *prompt, t_lexer **lex)
 	(void) prompt;
 	while (lst)
 	{
-		if (lst->value[0] == '$' && lst->in_quotes != 2 && lst->value[1])
+		if (lst->value[0] == '$' && lst->in_quotes != 2 && lst->value[1]
+		&& !is_heredoc(lst))
 		{
 			lst->value++;
 			lst->value = my_strdup(my_get_env(env, lst->value));
@@ -66,7 +88,3 @@ void	expand(char *prompt, t_lexer **lex)
 		lst = lst->next;
 	}
 }
-// if (lst->value[0] == '\"' && lst->in_quotes != 2)
-		// 	lst->prev->next = lst->next;
-		// else if (lst->value[0] == '\'' && lst->in_quotes != 1)
-		// 	rmv_s_qts(&lst->value);

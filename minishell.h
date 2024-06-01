@@ -57,6 +57,7 @@ typedef struct t_files
 	char			*buffer;
 	char			*delimiter;
 	int				index;
+	int				type;
 	struct t_files	*next;
 	struct t_files	*prev;
 }	t_files;
@@ -143,5 +144,5 @@ int		valid_quotes(char *prompt);
 int		files_syntax(t_lexer *lex);
 void	helpers_lines(t_data **data, t_files ***head, int flag, char *name);
 void	initialize_cmd(t_data *data_tmp);
-void	remove_quotes(t_data *data);
+void	remove_quotes(t_data *data_tmp);
 #endif
