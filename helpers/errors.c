@@ -1,10 +1,10 @@
 
 #include "../minishell.h"
 
-void	ft_error(char *msg, int ext)
+int	ft_error(char *msg, int ext)
 {
-	printf("%s", msg);
-	exit(ext);
+	printf("%s\n", msg);
+	return (ext);
 }
 
 void ft_freed(char **p)

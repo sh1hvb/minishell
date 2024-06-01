@@ -17,7 +17,9 @@ void	minishell()
 	char	*prompt;
 	t_lexer  *lex;
 	t_data *data;
+	int		status;
 
+	status = 0;
 	while (1)
 	{
 		// ft_lstclear(&lex);
@@ -29,22 +31,31 @@ void	minishell()
 			return ;
 		if (!prompt)
 			return ;
-		valid_prompt(prompt);
+		add_history(prompt);
+		status = valid_quotes(prompt);
+		if (status)
+		{
+			free(prompt);
+			continue;
+		}
 		lexer(prompt, &lex);
 		t_lexer  *lex_tmp = lex;
 		(void) lex_tmp;
 		// print_lexer(lex_tmp);
 		// printf("========= end lexer\n");
-		expand(prompt, &lex);
-		// print_expand(lex_tmp);
-		// printf("========= end expand\n");
-		parsing(prompt, &lex, &data);
-		printf("num of : %d\n", pars_lstsize(data));
-		print_parsing(data);
-		// handle_builts(data);
-
-		// printf("========= end parsing\n");
-		free(prompt);
+		status = check_syntax(lex);
+		if (!status)
+		{
+			expand(prompt, &lex);
+			// print_expand(lex_tmp);
+			// printf("========= end expand\n");
+			parsing(prompt, &lex, &data);
+			print_parsing(data);
+			// printf("\n\n");
+			handle_builts(data);
+			// printf("========= end parsing\n");
+		}
+		ft_malloc(0, 1);
 	}
 }
 
@@ -59,7 +70,6 @@ int	main(int ac, char *av[], char *envp[])
 	minishell();
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
-
 	ft_malloc(0, 1);
 	// exit(0); 
 	ft_lstclear_env(&env);

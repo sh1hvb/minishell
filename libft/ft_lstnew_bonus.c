@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:04:47 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/22 11:08:13 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:05:24 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ t_lexer	*ft_lstnew(char *value, int type, int quotes)
 	head->type = type;
 	head->in_quotes = quotes;
 	head->next = NULL;
+	head->prev = NULL;
 	return (head);
 }
