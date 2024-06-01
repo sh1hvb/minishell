@@ -118,7 +118,7 @@ void	check_cmd(t_data *data, t_envp *env, char *envp[]);
 // made by smarsi 
 void	*ft_malloc(int size, int flag);
 t_leaks	*free_lstlast(t_leaks *lst);
-int		ft_error(char *msg, int ext);
+void		ft_error(char *msg, int ext);
 void	lexer(char *prompt, t_lexer **lex);
 void	skip_delimiters(char *str, char *delimiters, int *index);
 int		in_delimiters(char target, char *delimiters);

@@ -1,129 +1,138 @@
 #include "../../minishell.h"
 
-static int	ft_lstsize_data(t_data *lst)
-{
-	int	count;
-
-	if (!lst)
-		return (0);
-	count = 0;
-	while (lst)
-	{
-		count++;
-		lst = lst->next;
-	}
-	return (count);
-}
-
-
 static char	*get_path(char **cmd, t_envp *env)
 {
 	int		i;
 	char	*exec;
 	char	**allpath;
 	char	*path_part;
-	// char	**s_cmd;
-
     t_envp *tmp = env;
 
-	i = -1;
+	if (!cmd)
+		return NULL;
 	if (!access(cmd[0], X_OK))
 		return (cmd[0]);
-	allpath = ft_split(my_get_env(tmp,"PATH" ), ':');
+
+	allpath = ft_split(my_get_env(tmp, "PATH"), ':');
 	if (!allpath)
 		return (NULL);
-	while (allpath[++i])
+
+	for (i = 0; allpath[i]; i++)
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd[0]);
 		// free(path_part);
+
 		if (access(exec, X_OK) == 0)
         {
+			// free(allpath);
 			return (exec);
         }
 		free(exec);
 	}
-	free(allpath);
-	return (cmd[0]);
+	// ft_freed(allpath);
+	return (exec);
 }
-static void	exec(char **cmd, t_envp *env , char *envp[])
+
+static void	exec_cmd(char **cmd, t_envp *env, char *envp[])
 {
-	// char	**s_cmd;
 	char	*path;
-	int	fds[2];
-	int	pid;
 
 	path = get_path(cmd, env);
-    // dprintf(2,"%s\n", path);
-	if (pipe(fds) == -1)
-		perror("pipe:");
-	pid = fork();
-	if (pid == -1)
-		perror("fork");
-	if (!pid)
-	{
-        close(fds[0]);
-		// dup2(fds[1], 1);
-		if (execve(path, cmd, envp) == -1)
-        {
-            // dprintf(2,"not found");
-            exit(127);
-        }
-	}
-	else
-	{
-		close(fds[1]);
-		// dup2(fds[0], 0);
-        wait(NULL);
-	}
+	if (execve(path, cmd, envp) == -1)
+    {
+        perror("execve");
+        return ;
+    }
 }
+
+static void	exec_cmd2(char **cmd, t_envp *env, char *envp[])
+{
+	char	*path;
+
+	path = get_path(cmd, env);
+	if (execve(path, cmd, envp) == -1)
+    {
+        perror("execve");
+        return ;
+    }
+}
+
 void	add_pipe(t_data *data, t_envp *env, char *envp[])
 {
 	int	fds[2];
 	int	pid;
 
 	if (pipe(fds) == -1)
-		perror("pipe:");
+	{
+		perror("pipe");
+		return;
+	}
+
 	pid = fork();
 	if (pid == -1)
+	{
 		perror("fork");
-	if (!pid)
+		return;
+	}
+
+	if (pid == 0)
 	{
 		close(fds[0]);
 		dup2(fds[1], 1);
-        if(!check_builts(data))
-		    exec(data->args, env, envp);
+        if (!check_builts(data))
+		    exec_cmd(data->args, env, envp);
         else
             handle_builts(data);
 	}
-	else
-	{
-		close(fds[1]);
-		dup2(fds[0], 0);
-        // wait(NULL);
-
-	}
+	close(fds[1]);
+	dup2(fds[0], 0);
+	close(fds[0]);
+	
 }
+
 void check_cmd(t_data *data, t_envp *env, char *envp[])
 {
-    int i = 0;
-    if(!data->next)
+	int	status;
+
+	dup2(0, 3);
+    while (data && data->next)
     {
-        if(!check_builts(data))
-		    exec(data->args, env ,envp);
-        else if(check_builts(data))
-            handle_builts(data);
-        else
-            printf("cmd");
+        add_pipe(data, env, envp);
+        data = data->next;
     }
-    else
-    {
-        i = ft_lstsize_data(data);   
-        while(i-- > 1)
-        {
-            add_pipe(data,env,envp);
-            // printf("%s\n",data->args[0]);
-            data = data->next;
-        }
-    }
+	if (data)
+	{
+		int pid = fork();
+		if(!pid)
+		{
+			if (!check_builts(data))
+		    	exec_cmd2(data->args, env, envp);
+        	else
+            	handle_builts(data);
+		}
+		while (waitpid(-1, &status, 0) != -1)
+		{
+			if (WEXITSTATUS(status) == 127 || WEXITSTATUS(status) == 1)
+				exit(WEXITSTATUS(status));
+		};
+	}
+	dup2(3, 0);
 }
+// while (i < ac - 2)
+// 		add_pipe(av[i++], env);
+// 	pid = fork();
+// 	if (!pid)
+// 	{
+// 		dup2(fd_out, 1);
+// 		exec(av[ac - 2], env);
+// 	}
+// 	id = fork();
+// 	if (!id)
+// 		close(fd_out);
+// 	else
+// 		while (waitpid(-1, &status, 0) != -1)
+// 		{
+// 			if (WEXITSTATUS(status) == 127 || WEXITSTATUS(status) == 1)
+// 				exit(WEXITSTATUS(status));
+// 		};

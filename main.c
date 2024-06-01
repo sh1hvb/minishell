@@ -25,8 +25,6 @@ void	minishell(char *envp[])
 		lex = NULL;
 		data = pars_lstnew(NULL, 0);
 		prompt = readline("minishell$ ");
-		if (prompt[0] == '\0')
-			return ;
 		if (!prompt)
 			return ;
 		add_history(prompt);
