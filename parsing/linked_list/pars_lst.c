@@ -1,4 +1,3 @@
-
 #include "../../minishell.h"
 
 int	pars_lstsize(t_data *lst)
@@ -25,7 +24,6 @@ t_data	*pars_lstlast(t_data *lst)
 		lst = lst->next;
 	return (lst);
 }
-
 
 t_data	*pars_lstnew(char *value, int quotes)
 {

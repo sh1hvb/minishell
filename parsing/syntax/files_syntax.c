@@ -18,7 +18,7 @@ int	files_syntax(t_lexer *lex)
 		else if (lex->type == 'A')
 			printf("bash: syntax error near unexpected token `>>'\n");
 		if (!lex || lex->type == 'I' || lex->type == 'O'
-		|| lex->type == 'H' || lex->type == 'A')
+			|| lex->type == 'H' || lex->type == 'A')
 			return (2);
 	}
 	return (0);

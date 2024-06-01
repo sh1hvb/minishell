@@ -1,5 +1,19 @@
 #include "../../minishell.h"
 
+int	helper_line(int flag, int flag2)
+{
+	if (flag == 1)
+		printf("minishell: unexpected EOF while looking for matching `\"'\n");
+	if (flag2)
+		printf("minishell: unexpected EOF while looking for matching `\''\n");
+	if (flag2 | flag)
+	{
+		printf("minishell: syntax error: unexpected end of file \n");
+		return (2);
+	}
+	return (0);
+}
+
 int	valid_quotes(char *prompt)
 {
 	int (i), (flag), (flag2);
@@ -24,15 +38,5 @@ int	valid_quotes(char *prompt)
 		}
 		i++;
 	}
-	if (flag == 1)
-		printf("minishell: unexpected EOF while looking for matching `\"'\n");
-	if (flag2)
-		printf("minishell: unexpected EOF while looking for matching `\''\n");
-	if (flag2 | flag)
-	{
-		printf("minishell: syntax error: unexpected end of file \n");
-		return (2);
-	}
-	return (0);
+	return (helper_line(flag, flag2));
 }
-
