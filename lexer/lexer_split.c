@@ -1,5 +1,7 @@
 #include "../minishell.h"
 
+void	split_quotes(char *target, char delimiter, int *index);
+
 static	void	ft_free(char **s)
 {
 	int	i;
@@ -23,14 +25,14 @@ static	int	count_word(char  *s, char *delimiters)
 	{
         if (s[i] == '\"')
         {
-            skip_quotes(s, '\"', &i);
+            split_quotes(s, '\"', &i);
 			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
 				i++;
 			if (flag)
             	count++;
         }
         else if (s[i] && s[i] == '\'') {
-            skip_quotes(s, '\'', &i);
+            split_quotes(s, '\'', &i);
 			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
 				i++;
             if (flag)
@@ -62,13 +64,13 @@ static	char	*get_word(char *dst, char  *src, char *delimiters, int	*index)
 	start = i;
     if (src[i] == '\"')
 	{
-        skip_quotes(src, '\"', &i); 
+        split_quotes(src, '\"', &i); 
 		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
 			i++;
 	}
     else if (src[i] == '\'')
 	{
-        skip_quotes(src, '\'', &i);
+        split_quotes(src, '\'', &i);
 		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
 			i++;
 	}
@@ -78,13 +80,13 @@ static	char	*get_word(char *dst, char  *src, char *delimiters, int	*index)
 		    i++;
 			if (src[i] == '\"')
 			{
-        		skip_quotes(src, '\"', &i); 
+        		split_quotes(src, '\"', &i); 
 				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
 					i++;
 			}
     		else if (src[i] == '\'')  
 			{
-        		skip_quotes(src, '\'', &i);	
+        		split_quotes(src, '\'', &i);	
 				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
 					i++;
 			}
@@ -130,16 +132,3 @@ char	**lexer_split(char *s, char *delimiters)
 	dst = fill_array(dst, s, delimiters, count);
 	return (dst);
 }
-
-// int main(int ac, char *av[])
-// {
-//     char **spliter = lexer_split(av[1], av[2]);
-//     int i = 0;
-//     while (spliter[i])
-//     {
-//         printf("%s\n", spliter[i]);
-//         i++;
-//     }
-//     return 0;
-// gcc lexer/lexer_split.c lexer/lexer_helper.c libft_ftmalloc/free_libft.c libft/libft.a memory_handling/*.c
-// }

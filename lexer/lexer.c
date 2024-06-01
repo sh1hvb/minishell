@@ -17,7 +17,7 @@ void	lexer(char *prompt, t_lexer **lex)
 
 	flag_dq = 0;
 	i = 0;
-	while (prompt[i])
+	while (prompt && prompt[i])
 	{
 		flag_sq = 0;
 		flag = in_quotes(prompt[i], &flag_sq, &flag_dq);

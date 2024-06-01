@@ -20,7 +20,7 @@ int	valid_quotes(char *prompt)
 	flag = 0;
 	flag2 = 0;
 	i = 0;
-	while (prompt[i])
+	while (prompt && prompt[i])
 	{
 		if (prompt[i] == '\"' && !flag2)
 		{
