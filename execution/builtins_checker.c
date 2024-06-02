@@ -40,6 +40,6 @@ void handle_builts(t_data *data)
         ft_unset(data , &envtmp);
     if(check_builts(data) == 6)
         ft_env(envtmp);
-    // if(check_builts(data) == 7)
-    //     ft_exit(data , envtmp);
+    if(check_builts(data) == 7)
+        ft_exit(data);
 }   

@@ -108,6 +108,7 @@ void 	ft_freed(char **p);
 char	**builtins_split(char *s, char *delimiters);
 char 	*my_get_env(t_envp *env_list, const char *key);
 void	ft_cd(t_data *data);
+void    ft_exit(t_data *data);
 int		check_builts(t_data *data );
 void	check_cmd(t_data *data, t_envp *env, char *envp[]);
 
