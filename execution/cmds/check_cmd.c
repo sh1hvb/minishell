@@ -86,7 +86,10 @@ void	add_pipe(t_data *data, t_envp *env, char *envp[])
 		    exec_cmd(data->args, env, envp);
         else
 		{
-            handle_builts(data);
+			if(data && !ft_strcmp(data->cmd, "exit"))
+					data = data->next;
+			else
+            	handle_builts(data);
 			close(fds[1]);
 			exit (0);
 		}
@@ -102,31 +105,42 @@ void check_cmd(t_data *data, t_envp *env, char *envp[])
 
 	dup2(0, 3);
 	int (status), (exit_status);
-    while (data && data->next)
-    {
-        add_pipe(data, env, envp);
-        data = data->next;
-    }
-	if (data)
+	if(data && !ft_strcmp(data->cmd, "exit") && !data->next)
+		ft_exit(data);
+	else
 	{
-		int pid = fork();
-		if(!pid)
-		{
-			if (!check_builts(data))
-		    	exec_cmd2(data->args, env, envp);
-        	else
-            	handle_builts(data);
-		}
-		while (waitpid(pid, &status, 0) != -1)
-		{
-			if (WIFEXITED(status))
+		while (data && data->next)
 			{
-				exit_status = WEXITSTATUS(status);
-				if (exit_status == 127 || exit_status == 1 || exit_status == 0)
-					break ;
+				add_pipe(data, env, envp);
+				data = data->next;
 			}
-		}
+			if (data)
+			{
+				int pid = fork();
+				if(!pid)
+				{
+					if (!check_builts(data))
+						exec_cmd2(data->args, env, envp);
+					else
+					{
+						if(data && !ft_strcmp(data->cmd, "exit"))
+							data = data->next;
+						else
+							handle_builts(data);
+					}
+				}
+				while (waitpid(pid, &status, 0) != -1)
+				{
+					if (WIFEXITED(status))
+					{
+						exit_status = WEXITSTATUS(status);
+						if (exit_status == 127 || exit_status == 1 || exit_status == 0)
+							break ;
+					}
+				}
+			}
 	}
+   
 	dup2(3, 0);	
 }
 // while (i < ac - 2)

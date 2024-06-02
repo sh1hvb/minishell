@@ -1,5 +1,21 @@
 #include "../minishell.h"
 
+void	get_old_pwd(char *cwd)
+{
+	t_envp	*tmp_env;
+
+	tmp_env = env;
+	while (tmp_env)
+	{
+		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
+		{
+			tmp_env->value = ft_strdup(cwd);
+			break ;
+		}
+		tmp_env = tmp_env->next; 
+	}
+}
+
 void	cd_home(t_data *data, char *msg, char *cwd)
 {
 	char	*tmp;
@@ -15,7 +31,7 @@ void	cd_home(t_data *data, char *msg, char *cwd)
         perror(my_strjoin(msg, ": "));
 		return ;
 	}
-	get_oldpwd(cwd);
+	get_old_pwd(cwd);
 	return ;
 }
 
@@ -48,23 +64,7 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 	}
 	ft_putstr_fd(my_get_env(env, "OLDPWD"), 1);
 	ft_putstr_fd("\n", 1);
-	get_oldpwd(cwd);
-}
-
-void	get_oldpwd(char *cwd)
-{
-	t_envp	*tmp_env;
-
-	tmp_env = env;
-	while (tmp_env)
-	{
-		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
-		{
-			tmp_env->value = ft_strdup(cwd);
-			break ;
-		}
-		tmp_env = tmp_env->next; 
-	}
+	get_old_pwd(cwd);
 }
 
 void	ft_cd(t_data *data)
@@ -93,5 +93,6 @@ void	ft_cd(t_data *data)
         	perror(my_strjoin(msg, ": "));
 			return ;
 		}
+		get_old_pwd(cwd);
 	}
 }
