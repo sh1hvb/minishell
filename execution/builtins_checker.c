@@ -39,7 +39,7 @@ void handle_builts(t_data *data)
     if(check_builts(data) == 5)
         ft_unset(data , &envtmp);
     if(check_builts(data) == 6)
-        ft_env(envtmp);
+        ft_env();
     // if(check_builts(data) == 7)
     //     ft_exit(data , envtmp);
 }   

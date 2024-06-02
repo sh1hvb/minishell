@@ -1,9 +1,9 @@
 
 #include "../minishell.h"
 
-void print_env_list(t_envp *env_list , char *x)
+void print_env_list(char *x)
 {
-    t_envp *current = env_list;
+    t_envp *current = env;
     while (current)
     {
         if(!ft_strcmp(x,"ex"))
@@ -30,10 +30,9 @@ void print_env_list(t_envp *env_list , char *x)
             printf("%s=%s\n", current->key, current->value);    
         }
         current = current->next;
-
     }
 }
-void handle_env(t_envp **env , char *envp[])
+void handle_env(char *envp[])
 {
 	char *p;
 	char *tmp;
@@ -41,18 +40,24 @@ void handle_env(t_envp **env , char *envp[])
 	p = NULL;
 	tmp = NULL;
 	char **new_env = NULL;
-	if(!envp)
+    // if (env)
+    // {
+    //     inc_shell();
+        
+    //     printf("-----------------\n------------------");
+    // }
+    if(!envp)
 	{
 		p = ft_strjoin(getenv("PWD"),getenv("SHLVL"));
 		tmp = ft_strjoin(p , getenv("_"));
 		new_env = ft_split(tmp , '\n');
 		free(p);
 		free(tmp);
-		*env = get_env(new_env);
+		env = get_env(new_env);
 		ft_freed(new_env);
 	}
 	else
-		*env = get_env(envp);
+		env = get_env(envp);
 }
 
 void	ft_lstclear_env(t_envp **lst)
@@ -74,9 +79,9 @@ void	ft_lstclear_env(t_envp **lst)
 		*lst = next;
 	}
 }
-void ft_env( t_envp *env)
+void ft_env()
 {
-    print_env_list(env,"en");
+    print_env_list("en");
 }
 t_envp *get_env(char **env)
 {

@@ -35,6 +35,7 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 int			ft_strcmp(const char *s1, const char *s2);
+char		*ft_itoa(int n);
 int			ft_isalnum(int c);
 
 

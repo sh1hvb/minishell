@@ -1,5 +1,21 @@
 #include "../minishell.h"
 
+void	get_oldpwd(char *cwd)
+{
+	t_envp	*tmp_env;
+
+	tmp_env = env;
+	while (tmp_env)
+	{
+		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
+		{
+			tmp_env->value = ft_strdup(cwd);
+			break ;
+		}
+		tmp_env = tmp_env->next; 
+	}
+}
+
 void	cd_home(t_data *data, char *msg, char *cwd)
 {
 	char	*tmp;
@@ -51,21 +67,6 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 	get_oldpwd(cwd);
 }
 
-void	get_oldpwd(char *cwd)
-{
-	t_envp	*tmp_env;
-
-	tmp_env = env;
-	while (tmp_env)
-	{
-		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
-		{
-			tmp_env->value = ft_strdup(cwd);
-			break ;
-		}
-		tmp_env = tmp_env->next; 
-	}
-}
 
 void	ft_cd(t_data *data)
 {
