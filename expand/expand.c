@@ -49,7 +49,6 @@ int	is_heredoc(t_lexer *lst)
 		delimiter = '\"';
 		if (lst->type == '\'')
 			delimiter = '\'';
-		printf("before %c\n", delimiter);
 		while (lst && lst->value[0] != delimiter)
 			lst = lst->prev;
 		if (lst && lst->value[0] == delimiter)
