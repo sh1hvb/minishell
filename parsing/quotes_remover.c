@@ -48,7 +48,10 @@ static void	string_quotes(t_data *data)
 			else
 				tmp = my_strjoin_c(tmp, data->args[i][j++]);
 		}
-		data->args[i++] = tmp;
+		if (!tmp)
+			data->args[i++] = my_strdup("");
+		else
+			data->args[i++] = tmp;
 	}
 }
 
@@ -75,7 +78,10 @@ static void	rmv_file_qts(t_files *data)
 			else
 				tmp = my_strjoin_c(tmp, data->delimiter[i++]);
 		}
-		data->delimiter = tmp;
+		if (tmp)
+			data->delimiter = my_strdup("");
+		else
+			data->delimiter = tmp;
 		data = data->next;
 	}
 }

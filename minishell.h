@@ -9,6 +9,8 @@
 #include <readline/history.h>
 #include "libft/libft.h"
 # include <sys/wait.h>
+#include <fcntl.h>
+#include <limits.h>
 // typedef struct s_data
 // {
 // 	char			**args;
@@ -105,7 +107,7 @@ void	ft_lstclear_env(t_envp **lst);
 void 	ft_freed(char **p);
 char	**builtins_split(char *s, char *delimiters);
 char 	*my_get_env(t_envp *env_list, const char *key);
-void	ft_cd(t_data *data, t_envp *env);
+void	ft_cd(t_data *data);
 int		check_builts(t_data *data );
 void	check_cmd(t_data *data, t_envp *env, char *envp[]);
 
