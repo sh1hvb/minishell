@@ -31,7 +31,7 @@ void handle_builts(t_data *data)
     if(check_builts(data)== 1)
         ft_echo(data , envtmp);
     if(check_builts(data)== 2)
-        ft_cd(data , envtmp);
+        ft_cd(data);
     if(check_builts(data)== 3)
         ft_pwd(data);
     if(check_builts(data) == 4)

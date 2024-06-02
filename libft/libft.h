@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 12:56:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/21 21:53:03 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/06/02 06:09:59 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ void		ft_lstdelone(t_lexer *lst);
 void		ft_lstclear(t_lexer **lst);
 void		ft_lstiter(t_lexer **lst);
 void		lexer_strchr(char *str, char *dlmtrs, int *ind, int f);
-
+void		ft_putstr_fd(char *s, int fd);
 #endif
