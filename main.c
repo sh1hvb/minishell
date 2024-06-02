@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int	pars_lstsize(t_data *lst);
-
 t_envp *env = NULL;
+int a = 0;
+int	pars_lstsize(t_data *lst);
 
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstclear(t_data **lst);
@@ -50,11 +50,11 @@ void	minishell(char *envp[])
 		if (!status)
 		{
 			expand(prompt, &lex);
-			print_expand(lex_tmp);
-			printf("========= end expand\n");
+			// print_expand(lex_tmp);
+			// printf("========= end expand\n");
 			parsing(&lex, &data);
-			print_parsing(data);
-			printf("\n\n");
+			// print_parsing(data);
+			// printf("\n\n");
 			(void) envp;
 			check_cmd(data , env, envp);
 			// handle_builts(data);
@@ -74,7 +74,17 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 
 	// exit(0);
-	handle_env(&env, envp);
+
+	handle_env(envp);
+	// char **test =NULL;
+	// test = list_to_pointer();
+	// int i = 0;
+	// while(test[i])
+	// {
+	// 	printf("%s\n", test[i]);
+	// 	i++;
+	// }
+	// exit(0);
 	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");

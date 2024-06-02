@@ -22,7 +22,7 @@ int check_string(char *s)
         return 0;
     while (s[i])
     {
-        if(s[i]=='=' )
+        if(s[i]=='=')
             return 1;
         if(!ft_isalnum(s[i]))
 		{

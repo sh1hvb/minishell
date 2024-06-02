@@ -238,7 +238,7 @@ int check_equal(char *s)
 
 void handle_no_arguments(t_envp *env) {
     env = sort_list(env, ascending);
-    print_env_list(env, "ex");
+    print_env_list("ex");
 }
 int handle_no_first_element(char **arr) {
     if (!arr[0]) {
@@ -270,13 +270,15 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     char **arr;
 
     arr = builtins_split(data->args[i], "+=");
+    if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
+        printf("export: `%s': not a valid identifier \n",data->args[1]);
     if (handle_no_first_element(arr)) {
         return;
     }
-    if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i])) {
+    if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
     } else {
-        printf("bad arguments\n");
+        printf("export: `%s': not a valid identifier\n",data->args[1]);;
     }
     ft_freed(arr);
 }
@@ -284,7 +286,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
 void ft_export(t_data *data, t_envp *env) {
     int i = 1;
 
-    if (!ft_strcmp(data->args[0], "export") && !data->args[1]) {
+    if (!ft_strcmp(data->args[0], "export") && (!data->args[1] )) {
         handle_no_arguments(env);
         return;
     }

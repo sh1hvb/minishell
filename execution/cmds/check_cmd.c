@@ -33,25 +33,38 @@ static char	*get_path(char **cmd, t_envp *env)
 	// ft_freed(allpath);
 	return (exec);
 }
+void inc_shell() {
+    int tmp;
+    t_envp *tmpenv = env;
+
+    while (tmpenv) {
+        if (!ft_strcmp(tmpenv->key, "SHLVL")) {
+            tmp = ft_atoi(tmpenv->value) + 1;
+            free(tmpenv->value);
+            tmpenv->value = ft_itoa(tmp);
+			break;
+        }
+        tmpenv = tmpenv->next;
+    }
+}
 
 static void	exec_cmd(char **cmd, t_envp *env, char *envp[])
 {
 	char	*path;
-
+	char **env_tmp;
+	env_tmp =NULL;
 	path = get_path(cmd, env);
-	if (execve(path, cmd, envp) == -1)
-    {
-        perror("execve");
-        return ;
-    }
-}
-
-static void	exec_cmd2(char **cmd, t_envp *env, char *envp[])
-{
-	char	*path;
-
-	path = get_path(cmd, env);
-	if (execve(path, cmd, envp) == -1)
+	if(!ft_strcmp("minishell", cmd[0]))
+	{
+		perror("cmd not found");
+		return ;
+	}(void)envp;;
+	env_tmp = list_to_pointer();
+	if(!ft_strcmp("./minishell", cmd[0]))
+	{
+		inc_shell();
+	}
+	if (execve(path, cmd, env_tmp) == -1)
     {
         perror("execve");
         return ;
@@ -99,7 +112,27 @@ void	add_pipe(t_data *data, t_envp *env, char *envp[])
 	dup2(fds[0], 0);
 	close(fds[0]);
 }
-
+char **list_to_pointer()
+{
+	int i = 0;
+	char **arr = NULL;
+	char *tmp;
+	tmp = NULL;
+	int size = ft_lstsize_env(env);
+	arr = malloc((size + 1) * sizeof(char *));
+	if(!arr)
+		return NULL;
+	while(env)
+	{
+		tmp = ft_strjoin(env->key,"=");
+		arr[i] = ft_strjoin(tmp,env->value);
+		// free(tmp);
+		i++;
+		env = env->next;
+	}
+	arr[i] = NULL;
+	return arr;
+}
 void check_cmd(t_data *data, t_envp *env, char *envp[])
 {
 
