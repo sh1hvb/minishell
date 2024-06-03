@@ -78,7 +78,7 @@ static void	rmv_file_qts(t_files *data)
 			else
 				tmp = my_strjoin_c(tmp, data->delimiter[i++]);
 		}
-		if (tmp)
+		if (!tmp)
 			data->delimiter = my_strdup("");
 		else
 			data->delimiter = tmp;

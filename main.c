@@ -56,7 +56,7 @@ void	minishell(char *envp[])
 			// print_parsing(data);
 			// printf("\n\n");
 			(void) envp;
-			check_cmd(data , env, envp);
+			process_cmd(data);
 			// handle_builts(data);
 			// printf("========= end parsing\n");
 		}
