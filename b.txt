@@ -43,3 +43,4 @@ fclean : clean
 
 run : re clean
 	./minishell
+minishell$ 

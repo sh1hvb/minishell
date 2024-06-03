@@ -74,6 +74,9 @@ typedef struct s_data
 	t_files			*redir_in;
 	t_files			*append;
 	t_files			*heredoc;
+	int 			infile;
+	int				outfile;
+	int				appfile;
 	struct s_data	*next;
 	struct s_data	*prev;
 	
@@ -114,7 +117,16 @@ int		check_builts(t_data *data );
 void	check_cmd(t_data *data, t_envp *env, char *envp[]);
 void	inc_shell();
 char	**list_to_pointer();
-
+void	dec_shell();
+void execute_single_cmd(t_data *data);
+void execute(t_data *data);
+t_files	*ft_lstlast_file(t_files *lst);
+void process_pipe(t_data *data);
+void ft_execute_multiple(t_data *data);
+void exec(t_data *data);
+void create_pipes(t_data *data);
+void	ft_output(t_files *file);
+void	ft_input(t_files *file);
 
 
 
@@ -149,4 +161,5 @@ int		files_syntax(t_lexer *lex);
 void	helpers_lines(t_data **data, t_files ***head, int flag, char *name);
 void	initialize_cmd(t_data *data_tmp);
 void	remove_quotes(t_data *data_tmp);
+void process_cmd(t_data *data);
 #endif
