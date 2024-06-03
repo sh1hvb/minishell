@@ -50,11 +50,11 @@ void	minishell(char *envp[])
 		if (!status)
 		{
 			expand(prompt, &lex);
-			print_expand(lex_tmp);
-			printf("========= end expand\n");
+			// xpand(lex_tmp);
+			// printf("========= end expand\n");
 			parsing(&lex, &data);
 			print_parsing(data);
-			printf("\n\n");
+			// printf("\n\n");
 			(void) envp;
 			check_cmd(data , env, envp);
 			// handle_builts(data);

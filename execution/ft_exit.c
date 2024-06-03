@@ -1,5 +1,27 @@
 #include "../minishell.h"
 
+long long	ft_atoi2(char *str)
+{
+	long long	signe;
+	long long	digit;
+
+	digit = 0;
+	signe = 1;
+	while (*str == 32 || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-')
+		signe = -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		digit = (digit * 10 + *str) - '0';
+		if ((signe > 0 && digit >= 9223372036854775807) || (signe < 0 && digit > 9223372036854775807))
+			return (0);
+		str++;
+	}
+	return (1);
+}
 int	is_number(char *arg)
 {
 	int i;
@@ -34,7 +56,7 @@ void	ft_exit(t_data *data)
 	{
 		ft_putstr_fd("exit\n", 1);
 		if (data->args && data->args[1] && (!is_number(data->args[1])
-			|| !data->args[1][0]))
+			|| !data->args[1][0] || ft_atoi2(data->args[1])))
 		{
 			ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
@@ -46,10 +68,7 @@ void	ft_exit(t_data *data)
 			return ;
 		}
 		else if (data->args && data->args[1])
-		{
-
-			ext = ft_atoi(data->args[1]);
-		}
-		exit (ext);
+			ext =  ft_atoi(data->args[1]);
+		exit ((char) ext);
 	}
 }
