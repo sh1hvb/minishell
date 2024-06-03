@@ -29,7 +29,7 @@ typedef struct s_envp
 } t_envp;
 
 extern t_envp *env;
-
+extern int a;
 enum token
 {
 	STRING = 'S',
@@ -74,6 +74,9 @@ typedef struct s_data
 	t_files			*redir_in;
 	t_files			*append;
 	t_files			*heredoc;
+	int 			infile;
+	int				outfile;
+	int				appfile;
 	struct s_data	*next;
 	struct s_data	*prev;
 	
@@ -87,7 +90,7 @@ typedef struct s_leaks
 // made by mchihab
 void	ft_lstclear_env(t_envp **lst);
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
-void	print_env_list(t_envp *env_list ,char *x);
+void	print_env_list(char *x);
 void	ft_export(t_data *data , t_envp *env);
 int		ft_lstsize_env(t_envp *lst);
 void	ft_lstadd_back_env(t_envp **lst, t_envp *new);
@@ -95,9 +98,9 @@ t_envp	*ft_lstlast_env(t_envp *lst);
 t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag);
 int		check_string(char *s);
 void	handle_builts(t_data *data);
-void	handle_env(t_envp **env , char *envp[]);
+void	handle_env(char *envp[]);
 int		ascending(int a, int b);
-void	ft_env(t_envp *env);
+void	ft_env();
 int		check_equal(char *s);
 void	ft_pwd(t_data *data);
 void	ft_lstdelone_env(t_envp *lst);
@@ -107,12 +110,23 @@ void	ft_lstclear_env(t_envp **lst);
 void 	ft_freed(char **p);
 char	**builtins_split(char *s, char *delimiters);
 char 	*my_get_env(t_envp *env_list, const char *key);
+t_envp	*my_append_env(t_envp *env_list, const char *key, char *value);
 void	ft_cd(t_data *data);
 void    ft_exit(t_data *data);
 int		check_builts(t_data *data );
 void	check_cmd(t_data *data, t_envp *env, char *envp[]);
-
-
+void	inc_shell();
+char	**list_to_pointer();
+void	dec_shell();
+void execute_single_cmd(t_data *data);
+void execute(t_data *data);
+t_files	*ft_lstlast_file(t_files *lst);
+void process_pipe(t_data *data);
+void ft_execute_multiple(t_data *data);
+void exec(t_data *data);
+void create_pipes(t_data *data);
+void	ft_output(t_files *file);
+void	ft_input(t_files *file);
 
 
 
@@ -131,7 +145,6 @@ void	get_quotes(char *prompt, t_data **data, int *index);
 void	skip_quotes(char *target, char delimiter, int *index);
 t_envp 	*get_env(char **env);
 void 	ft_freed(char **p);
-void 	handle_env(t_envp **env , char *envp[]);
 char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
@@ -148,4 +161,5 @@ int		files_syntax(t_lexer *lex);
 void	helpers_lines(t_data **data, t_files ***head, int flag, char *name);
 void	initialize_cmd(t_data *data_tmp);
 void	remove_quotes(t_data *data_tmp);
+void process_cmd(t_data *data);
 #endif

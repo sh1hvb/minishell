@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 12:56:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/02 06:09:59 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/03 16:31:22 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 int			ft_strcmp(const char *s1, const char *s2);
+char		*ft_itoa(int n);
 int			ft_isalnum(int c);
 
 
@@ -59,4 +60,5 @@ void		ft_lstclear(t_lexer **lst);
 void		ft_lstiter(t_lexer **lst);
 void		lexer_strchr(char *str, char *dlmtrs, int *ind, int f);
 void		ft_putstr_fd(char *s, int fd);
+void		ft_putendl_fd(char *s, int fd);
 #endif
