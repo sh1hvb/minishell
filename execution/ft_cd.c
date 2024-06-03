@@ -9,7 +9,7 @@ void	get_old_pwd(char *cwd)
 	{
 		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
 		{
-			tmp_env->value = ft_strdup(cwd);
+			tmp_env->value = my_strdup(cwd);
 			break ;
 		}
 		tmp_env = tmp_env->next; 
