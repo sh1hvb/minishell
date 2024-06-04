@@ -55,6 +55,7 @@ void process_cmd(t_data *data)
 {
 	dup2(0, 3);
 	dup2(1, 4);
+	 int (status);
 	if (data && data->next)
 		process_pipe(data);
 	else
@@ -65,4 +66,5 @@ void process_cmd(t_data *data)
 	}
 	dup2(3,0);
 	dup2(4, 1);
+	while (waitpid(-1, &status, 0) != -1);
 }

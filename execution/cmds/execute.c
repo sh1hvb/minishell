@@ -54,6 +54,9 @@ void create_pipes(t_data *data)
 	t_files *file;
 	int pid;
 	int fds[2];
+	int flag;
+
+	flag = 0;
 	if(pipe(fds) == -1 )
 	{
 		perror("pipe :");
@@ -67,18 +70,31 @@ void create_pipes(t_data *data)
 			ft_input(data->redir_in);
 			file = ft_lstlast_file(data->redir_in);
 			dup2(file->index, 0);
+			close(file->index);
+		}
+		if(data && data->redir_out)
+		{
+			ft_output(data->redir_out);
+			file = ft_lstlast_file(data->redir_out);
+			dup2(file->index, 1);
+			close(file->index);
+			flag = 1;
 		}
 		if (data && !data->cmd)
 		{
-			if(execve(NULL , NULL, NULL) == -1)
+			// if(execve(NULL , NULL, NULL) == -1)
 				exit (127);
 		}
 		close(fds[0]);
-		dup2(fds[1], 1);
+		if (!flag)
+			dup2(fds[1], 1);
+		else
+			close(fds[1]);
 		exec(data);
 	}
 	close(fds[1]);
 	dup2(fds[0], 0);
+	close(fds[0]);
 }
 void exec(t_data *data)
 {
@@ -100,7 +116,7 @@ void exec(t_data *data)
 }
 void ft_execute_multiple(t_data *data)
 {
-	int (pid), (status), (exit_status) ;
+	int (pid);
 	t_files *file;
 	while(data && data->next)
 	{
@@ -112,19 +128,21 @@ void ft_execute_multiple(t_data *data)
 	{
 		if(data && data->redir_in)
 		{
-			ft_output(data->redir_in);
+			ft_input(data->redir_in);
 			file = ft_lstlast_file(data->redir_in);
 			dup2(file->index, 0);
+			close(file->index);
 		}
 		if(data && data->redir_out)
 		{
 			ft_output(data->redir_out);
 			file = ft_lstlast_file(data->redir_out);
 			dup2(file->index, 1);
+			close(file->index);
 		}
 		if (data && !data->cmd)
 		{
-			if(execve(NULL , NULL, NULL) == -1)
+			// if(execve(NULL , NULL, NULL) == -1)
 				exit (127);
 		}
 		else if(check_builts(data))
@@ -132,16 +150,6 @@ void ft_execute_multiple(t_data *data)
 		else
 			exec(data);
 	}
-		while (waitpid(pid, &status, 0) != -1)
-		{
-			if (WIFEXITED(status))
-			{
-				exit_status = WEXITSTATUS(status);
-				if (exit_status == 127 || exit_status == 1 || exit_status == 0)
-					break ;
-			}
-		}
-	// }
 }
 void process_pipe(t_data *data)
 {
@@ -175,11 +183,13 @@ void execute(t_data *data)
 	{
 		index = ft_lstlast_file(data->redir_out)->index;
 		dup2(index, 1);
+		close(index);
 	}
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
 		dup2(index, 0);
+		close(index);
 	}
 	if(execve(path , data->args ,envp) == -1)
 	{

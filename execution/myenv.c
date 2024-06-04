@@ -100,7 +100,6 @@ t_envp *get_env(char **env)
         new_node->value = ft_strdup(getenv(splited[0]));
         new_node->next = NULL;
         new_node->flag = 0;
-        new_node->i = 0;
         new_node->prev = current;
         if (current)
             current->next = new_node;
