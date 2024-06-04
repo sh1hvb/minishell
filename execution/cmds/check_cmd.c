@@ -53,7 +53,8 @@ void dec_shell() {
 
 void process_cmd(t_data *data)
 {
-	dup2(0, 200);
+	dup2(0, 3);
+	dup2(1, 4);
 	if (data && data->next)
 		process_pipe(data);
 	else
@@ -62,5 +63,6 @@ void process_cmd(t_data *data)
 		// close(data->redir_in->index);
 		// close(data->redir_out->index);
 	}
-	dup2(200,0);
+	dup2(3,0);
+	dup2(4, 1);
 }

@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-void	ft_input(t_files *file)
+int	ft_input(t_files *file)
 {
 	int	fd;
 
@@ -10,9 +10,9 @@ void	ft_input(t_files *file)
 		if (fd == -1)
 		{
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
-			perror("");
+			perror(" ");
 			ft_putstr_fd("", 2);
-			return ;
+			return (1);
 		}
 		if (file->next)
 			close(fd); 
@@ -20,21 +20,30 @@ void	ft_input(t_files *file)
 			file->index = fd;
 		file = file->next;
 	}
-	
+	return (0);
 }
 
-void	ft_output(t_files *file)
+int	ft_output(t_files *file)
 {
 	int	fd;
 
-	while (file && file->next)
+	while (file)
 	{
 		fd = open(file->delimiter, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		close(fd); 
+		if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
+			perror(" ");
+			ft_putstr_fd("", 2);
+			return (1);
+		}
+		if (file->next)
+			close(fd); 
+		else
+			file->index = fd; 
 		file = file->next;
 	}
-	fd = open(file->delimiter, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	file->index = fd;
+	return (0);
 }
 
 // void	ft_append(t_files *file)

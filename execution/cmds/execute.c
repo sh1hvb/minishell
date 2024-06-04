@@ -57,6 +57,7 @@ void create_pipes(t_data *data)
 	if(pipe(fds) == -1 )
 	{
 		perror("pipe :");
+		return ;
 	}
 	pid = fork();
 	if(!pid)
@@ -67,15 +68,17 @@ void create_pipes(t_data *data)
 			file = ft_lstlast_file(data->redir_in);
 			dup2(file->index, 0);
 		}
+		if (data && !data->cmd)
+		{
+			if(execve(NULL , NULL, NULL) == -1)
+				exit (127);
+		}
 		close(fds[0]);
 		dup2(fds[1], 1);
 		exec(data);
 	}
-	else
-	{
-		close(fds[1]);
-		dup2(fds[0], 0);
-	}
+	close(fds[1]);
+	dup2(fds[0], 0);
 }
 void exec(t_data *data)
 {
@@ -92,7 +95,7 @@ void exec(t_data *data)
 	if(execve(path , data->args ,envp) == -1)
 	{
 		perror("minishell : cmd not found");
-		return ;
+		exit (127);
 	}
 }
 void ft_execute_multiple(t_data *data)
@@ -107,29 +110,37 @@ void ft_execute_multiple(t_data *data)
 	pid = fork();
 	if(!pid)
 	{
+		if(data && data->redir_in)
+		{
+			ft_output(data->redir_in);
+			file = ft_lstlast_file(data->redir_in);
+			dup2(file->index, 0);
+		}
 		if(data && data->redir_out)
 		{
-			ft_input(data->redir_out);
+			ft_output(data->redir_out);
 			file = ft_lstlast_file(data->redir_out);
 			dup2(file->index, 1);
 		}
-		if(check_builts(data))
+		if (data && !data->cmd)
+		{
+			if(execve(NULL , NULL, NULL) == -1)
+				exit (127);
+		}
+		else if(check_builts(data))
 			handle_builts(data);
 		else
 			exec(data);
 	}
-	else
-	{
 		while (waitpid(pid, &status, 0) != -1)
+		{
+			if (WIFEXITED(status))
 			{
-				if (WIFEXITED(status))
-				{
-					exit_status = WEXITSTATUS(status);
-					if (exit_status == 127 || exit_status == 1 || exit_status == 0)
-						break ;
-				}
+				exit_status = WEXITSTATUS(status);
+				if (exit_status == 127 || exit_status == 1 || exit_status == 0)
+					break ;
 			}
-	}	
+		}
 	// }
 }
 void process_pipe(t_data *data)
@@ -173,20 +184,27 @@ void execute(t_data *data)
 	if(execve(path , data->args ,envp) == -1)
 	{
 		perror("minishell : cmd not found");
-		return ;
+		exit (127);
 	}
 }
 void execute_single_cmd(t_data *data)
 {
 	int pid;
+	int status;
 
 	if(data && (data->redir_in || data->redir_out || data->append))
-	{	
-		if(data->redir_in)
-			ft_input(data->redir_in);
-		if(data->redir_out)
-			ft_output(data->redir_out);
-	}
+		{	
+			if(data->redir_in)
+				if (ft_input(data->redir_in))
+					return ;
+			if(data->redir_out)
+			{
+				if (ft_output(data->redir_out))
+					return ;
+			}
+		}
+	if (data && !data->cmd)
+		return ;
 	if(check_builts(data))
 		handle_builts(data);
 	else
@@ -194,7 +212,15 @@ void execute_single_cmd(t_data *data)
 		pid = fork();
 		if(!pid)
 			execute(data);
-		wait(&pid);
+		while (waitpid(pid, &status, 0) != -1)
+		{
+			if (WIFEXITED(status))
+			{
+				status = WEXITSTATUS(status);
+				if (status == 127 || status == 1 || status == 0)
+					break ;
+			}
+		};
 	}
 	if(ft_lstlast_file(data->redir_in) && ft_lstlast_file(data->redir_in)->index)
 		close(ft_lstlast_file(data->redir_in)->index);
