@@ -1,0 +1,4 @@
+
+echo * | awk -v RS=" " '{print}' | sort
+
+$PWD

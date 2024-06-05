@@ -14,7 +14,7 @@ char **list_to_pointer()
 	{
 		tmp = ft_strjoin(env->key,"=");
 		arr[i] = ft_strjoin(tmp,env->value);
-		// free(tmp);
+		free(tmp);
 		i++;
 		env = env->next;
 	}

@@ -15,7 +15,7 @@ static int	ft_lstsize_file(t_files *lst)
 	return (count);
 }
 
-static char	*get_path(char **cmd)
+static char	*get_path(char *cmd)
 {
 	int		i;
 	char	*exec;
@@ -25,29 +25,30 @@ static char	*get_path(char **cmd)
 
 	if (!cmd)
 		return NULL;
-	if (!access(cmd[0], X_OK))
-		return (cmd[0]);
-
-	allpath = ft_split(my_get_env(tmp, "PATH"), ':');
+	if (!access(cmd, X_OK))
+		return (cmd);
+	char *value = my_get_env(tmp, "PATH");
+	allpath = ft_split(value, ':');
 	if (!allpath)
 		return (NULL);
-	i = 0;
-	while (allpath[i] )
+	i = -1;
+	while (allpath[++i] )
 	{
 		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, cmd[0]);
-		// free(path_part);
+		exec = ft_strjoin(path_part, cmd);
+		free(path_part);
 
 		if (access(exec, X_OK) == 0)
         {
 			// ft_freed(allpath);
+			free(value);
 			return (exec);
         }
 		free(exec);
-		i++;
 	}
-	// free(exec);
-	return (cmd[0]);
+	free(value);
+	ft_freed(allpath);
+	return (cmd);
 }
 
 void create_pipes(t_data *data)
@@ -113,16 +114,21 @@ void exec(t_data *data)
 		perror("cmd not found");
 		return ;
 	}
-	path = get_path(data->args);
+	path = get_path(data->cmd);
 	envp = list_to_pointer();
 	if(access(path , X_OK | F_OK)!= 0)
 	{
+		free(path);
+		ft_freed(envp);
 		perror("minishell : cmd not found");
 		exit (127);
 	}
 	if(execve(path , data->args ,envp) == -1)
 	{
+		free(path);
+		ft_freed(envp);
 		perror("minishell : cmd not found");
+		exit (127);
 	}
 }
 void ft_execute_multiple(t_data *data)
@@ -188,7 +194,7 @@ void execute(t_data *data)
 		perror("cmd not found");
 		return ;
 	}
-	path = get_path(data->args);
+	path = get_path(data->cmd);
 	envp = list_to_pointer();
 	if (ft_lstlast_file(data->redir_out))
 	{
@@ -202,8 +208,17 @@ void execute(t_data *data)
 		dup2(index, 0);
 		close(index);
 	}
+	if(access(path , X_OK & F_OK)!= 0)
+	{
+		free(path);
+		ft_freed(envp);
+		perror("minishell : cmd not found");
+		exit (127);
+	}
 	if(execve(path , data->args ,envp) == -1)
 	{
+		ft_freed(envp);
+		free(path);
 		perror("minishell : cmd not found");
 		exit (127);
 	}

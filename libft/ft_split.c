@@ -58,7 +58,7 @@ static	char	*get_word(char *dst, char const *src, char c, int	*index)
 	while (src[i] && src[i] != c)
 		i++;
 	len = (i - start) + 1;
-	dst = ft_calloc(len, sizeof(char));
+	dst = malloc(len* sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);
@@ -89,9 +89,10 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = count_word(s, c);
-	dst = ft_calloc(count + 1, sizeof(char *));
+	dst = malloc((count + 1) * sizeof(char *));
 	if (!dst)
 		return (NULL);
 	dst = fill_array(dst, s, c, count);
+	dst[count] = 0;
 	return (dst);
 }
