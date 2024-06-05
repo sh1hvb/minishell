@@ -31,8 +31,8 @@ static char	*get_path(char **cmd)
 	allpath = ft_split(my_get_env(tmp, "PATH"), ':');
 	if (!allpath)
 		return (NULL);
-
-	for (i = 0; allpath[i]; i++)
+	i = 0;
+	while (allpath[i] )
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd[0]);
@@ -40,12 +40,13 @@ static char	*get_path(char **cmd)
 
 		if (access(exec, X_OK) == 0)
         {
-			// free(allpath);
+			// ft_freed(allpath);
 			return (exec);
         }
 		free(exec);
+		i++;
 	}
-	// ft_freed(allpath);
+	// free(exec);
 	return (cmd[0]);
 }
 
@@ -90,7 +91,13 @@ void create_pipes(t_data *data)
 			dup2(fds[1], 1);
 		else
 			close(fds[1]);
-		exec(data);
+		if(check_builts(data))
+		{
+			handle_builts(data);
+			exit(0);
+		}
+		else if(!check_builts(data))
+			exec(data);
 	}
 	close(fds[1]);
 	dup2(fds[0], 0);
@@ -108,10 +115,14 @@ void exec(t_data *data)
 	}
 	path = get_path(data->args);
 	envp = list_to_pointer();
-	if(execve(path , data->args ,envp) == -1)
+	if(access(path , X_OK | F_OK)!= 0)
 	{
 		perror("minishell : cmd not found");
 		exit (127);
+	}
+	if(execve(path , data->args ,envp) == -1)
+	{
+		perror("minishell : cmd not found");
 	}
 }
 void ft_execute_multiple(t_data *data)
@@ -147,7 +158,7 @@ void ft_execute_multiple(t_data *data)
 		}
 		else if(check_builts(data))
 			handle_builts(data);
-		else
+		else if(!check_builts(data))
 			exec(data);
 	}
 }

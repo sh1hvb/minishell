@@ -10,7 +10,7 @@ void	get_old_pwd(char *cwd)
 		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
 		{
 			if (tmp_env && tmp_env->value)
-				free (tmp_env->value);
+				free(tmp_env->value);
 			tmp_env->value = ft_strdup(cwd);
 			break ;
 		}
@@ -28,8 +28,7 @@ void	set_pwd(char *cwd)
 		if (!ft_strcmp(tmp_env->key, "PWD"))
 		{
 			if (tmp_env && tmp_env->value)
-				free (tmp_env->value);
-			tmp_env->value = ft_strdup(cwd);
+			  tmp_env->value = ft_strdup(cwd);
 			break ;
 		}
 		tmp_env = tmp_env->next; 
