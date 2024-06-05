@@ -20,6 +20,8 @@ long long	ft_atoi2(char *str)
 			return (0);
 		str++;
 	}
+	if (str && *str)
+		return (0);
 	return (1);
 }
 int	is_number(char *arg)
@@ -56,8 +58,7 @@ void	ft_exit(t_data *data)
 	if (data && !data->next)
 	{
 		ft_putstr_fd("exit\n", 1);
-		if (data->args && data->args[1] && (!is_number(data->args[1])
-			|| !data->args[1][0] || ft_atoi2(data->args[1])))
+		if ((data->args && data->args[1]) || !data->args[1][0] || !ft_atoi2(data->args[1]))
 		{
 			ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
