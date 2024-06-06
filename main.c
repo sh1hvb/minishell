@@ -42,8 +42,7 @@ void	minishell(char *envp[])
 			continue;
 		}
 		lexer(prompt, &lex);
-		t_lexer *lex_tmp = lex;
-		(void) lex_tmp;
+		// t_lexer *lex_tmp = lex;
 		// print_lexer(lex_tmp);
 		// printf("========= end lexer\n");
 		status = check_syntax(lex);
@@ -53,8 +52,9 @@ void	minishell(char *envp[])
 			// print_expand(lex_tmp);
 			// printf("========= end expand\n");
 			parsing(&lex, &data);
-			// print_parsing(data);
+			// print_parsing(pars_tmp);
 			// printf("\n\n");
+			// printf("========= end pars\n");
 			(void) envp;
 			process_cmd(data);
 			// handle_builts(data);
