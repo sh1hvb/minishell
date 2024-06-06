@@ -37,7 +37,7 @@ void handle_builts(t_data *data)
     if(check_builts(data) == 4)
         ft_export(data, envtmp);
     if(check_builts(data) == 5)
-        ft_unset(data , &envtmp);
+        ft_unset(data);
     if(check_builts(data) == 6)
         ft_env(envtmp);
     if(check_builts(data) == 7)

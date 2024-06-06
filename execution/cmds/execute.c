@@ -194,6 +194,7 @@ void execute(t_data *data)
 		perror("cmd not found");
 		return ;
 	}
+
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
 	if (ft_lstlast_file(data->redir_out))
@@ -215,6 +216,7 @@ void execute(t_data *data)
 		perror("minishell : cmd not found");
 		exit (127);
 	}
+
 	if(execve(path , data->args ,envp) == -1)
 	{
 		ft_freed(envp);
