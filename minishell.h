@@ -104,7 +104,7 @@ void	ft_env();
 int		check_equal(char *s);
 void	ft_pwd(t_data *data);
 void	ft_lstdelone_env(t_envp *lst);
-void	ft_unset(t_data *data, t_envp **env);
+void	ft_unset(t_data *data);
 void	ft_echo(t_data *data, t_envp *env);
 void	ft_lstclear_env(t_envp **lst);
 void 	ft_freed(char **p);
