@@ -1,4 +1,13 @@
 
 echo * | awk -v RS=" " '{print}' | sort
 
-$PWD
+$PWD && $OLDPWD 
+our output :
+minishell : cmd not found: Permission denied
+excepted output :
+bash: /nfs1/homes/mchihab/Desktop/pipex: Is a directory
+//------------------------------------------------//
+
+echo - "" "  " hello
+
+aa==vv

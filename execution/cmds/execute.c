@@ -239,12 +239,16 @@ void execute_single_cmd(t_data *data)
 					return ;
 			}
 		}
+	if(data && !ft_strcmp(data->args[0],"./minishell"))
+		inc_shell();
+	else if(data && !ft_strcmp(data->args[0],"exit"))
+		dec_shell();
 	if (data && !data->cmd)
 		return ;
 	if(check_builts(data))
 		handle_builts(data);
 	else
-	{	
+	{
 		pid = fork();
 		if(!pid)
 			execute(data);
