@@ -17,11 +17,13 @@ void ft_unset(t_data *data)
                 {
                     env = env->next;
                     env->prev = NULL;
-                    ft_lstdelone_env(head);
+                    free(head->key);
+                    free(head->value);
                     break;
                 }
                 head->prev->next = head->next;
-                ft_lstdelone_env(head);
+                 free(head->key);
+                    free(head->value);
                 head = env;
                 break;
             }

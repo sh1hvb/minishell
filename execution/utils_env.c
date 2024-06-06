@@ -79,7 +79,8 @@ void	ft_lstdelone_env(t_envp *lst)
 	{
 		free(lst->value);
 		lst->value = NULL;
-		// free()
+		free(lst->key);
+		lst->key =NULL;
 		free(lst);
 		lst = NULL;
 	}

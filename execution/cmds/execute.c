@@ -111,7 +111,8 @@ void exec(t_data *data)
 
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
-		perror("cmd not found");
+		ft_putstr_fd( data->cmd ,2);
+		ft_putendl_fd(" : cmd not found",2);
 		return ;
 	}
 	path = get_path(data->cmd);
@@ -120,14 +121,16 @@ void exec(t_data *data)
 	{
 		free(path);
 		ft_freed(envp);
-		perror("minishell : cmd not found");
+		ft_putstr_fd( data->cmd ,2);
+		ft_putendl_fd(" : cmd not found",2);
 		exit (127);
 	}
 	if(execve(path , data->args ,envp) == -1)
 	{
 		free(path);
 		ft_freed(envp);
-		perror("minishell : cmd not found");
+		ft_putstr_fd( data->cmd ,2);
+		ft_putendl_fd(" : cmd not found",2);
 		exit (127);
 	}
 }
@@ -191,7 +194,8 @@ void execute(t_data *data)
 
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
-		perror("cmd not found");
+		ft_putstr_fd(data->cmd ,2);
+		ft_putendl_fd(": cmd not found",2);
 		return ;
 	}
 
@@ -213,7 +217,8 @@ void execute(t_data *data)
 	{
 		free(path);
 		ft_freed(envp);
-		perror("minishell : cmd not found");
+		ft_putstr_fd( data->cmd ,2);
+		ft_putendl_fd(" : cmd not found",2);
 		exit (127);
 	}
 
@@ -221,7 +226,8 @@ void execute(t_data *data)
 	{
 		ft_freed(envp);
 		free(path);
-		perror("minishell : cmd not found");
+		ft_putstr_fd( data->cmd ,2);
+		ft_putendl_fd(" : cmd not found",2);
 		exit (127);
 	}
 }

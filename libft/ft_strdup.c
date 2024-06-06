@@ -24,5 +24,6 @@ char	*ft_strdup(const char *s1)
 	if (!s1_dup)
 		return (NULL);
 	ft_strlcpy(s1_dup, s1, len + 1);
+	// free((char *)s1);
 	return (s1_dup);
 }
