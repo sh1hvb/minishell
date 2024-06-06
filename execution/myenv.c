@@ -27,7 +27,7 @@ void print_env_list(char *x)
         {
             if(!current->value)
                 current->value=ft_strdup("\"\"");
-            printf("%s=%s\n", current->key, current->value);    
+            printf("%s=\"%s\"\n", current->key, current->value);    
         }
         current = current->next;
     }
