@@ -1,7 +1,5 @@
 #include "../minishell.h"
 
-
-
 void ft_echo(t_data *data, t_envp *env)
 {
     int i = 1;

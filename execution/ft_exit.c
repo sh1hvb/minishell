@@ -54,7 +54,6 @@ void	ft_exit(t_data *data)
 
 	i = 0;
 	ext = 0;
-	// dec_shell();
 	if (data && !data->next)
 	{
 		ft_putstr_fd("exit\n", 1);
