@@ -102,8 +102,8 @@ void	parsing(t_lexer **lex, t_data	**data)
 		}
 		else
 			fill_args(&lex_tmp, &data_tmp);
+		remove_quotes(data_tmp);
 	}
-	remove_quotes(data_tmp);
 	initialize_cmd(data_tmp);
 	return ;
 }
