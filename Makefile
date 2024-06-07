@@ -10,7 +10,8 @@ LIBFT_PATH = libft/
 SRC_MCHIHAB = main.c \
 	execution/myenv.c execution/ft_export.c execution/utils_env.c \
 	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
-	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c execution/cmds/redirection.c execution/cmds/execute.c execution/ft_exit.c
+	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c execution/cmds/redirection.c execution/cmds/execute.c execution/ft_exit.c \
+	execution/cmds/here_doc.c
 
 SRC_SMARSI =  parsing/parsing.c parsing/quotes_remover.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
 	helpers/errors.c\

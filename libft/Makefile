@@ -8,7 +8,7 @@ FILES = ft_isdigit.c ft_isalpha.c  ft_strlen.c ft_strlcpy.c ft_strlcat.c \
 		ft_bzero.c ft_calloc.c ft_strdup.c ft_memset.c ft_atoi.c	\
 		ft_strjoin.c ft_strtrim.c ft_split.c ft_strcmp.c ft_isalnum.c \
 		ft_itoa.c ft_putstr_fd.c \
-			ft_putendl.c
+		ft_putendl.c get_next_line_utils.c  get_next_line.c
 
 BONUS_FILES = ft_lstnew_bonus.c	\
 			ft_lstadd_front_bonus.c	\
