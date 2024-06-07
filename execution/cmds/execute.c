@@ -48,7 +48,7 @@ static char	*get_path(char *cmd)
 	}
 	free(value);
 	ft_freed(allpath);
-	return (cmd);
+	return (NULL);
 }
 
 void create_pipes(t_data *data)
@@ -185,12 +185,13 @@ void execute(t_data *data)
 	char * path;
 	char **envp;
 	int	index;
-	if(!ft_strcmp("minishell", data->args[0]))
+	if(data && data->cmd)
+	{if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd(data->cmd ,2);
 		ft_putendl_fd(": cmd not found",2);
 		return ;
-	}
+	}}
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
 	if (ft_lstlast_file(data->redir_out))
@@ -202,9 +203,11 @@ void execute(t_data *data)
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
-		dup2(index, 0);
+		dup2(index, 1);
 		close(index);
 	}
+	if(data && data->heredoc)
+		heredoc(data);
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
 		ft_freed(envp);
@@ -218,9 +221,9 @@ void execute_single_cmd(t_data *data)
 {
 	int pid;
 	int status;
-	if (data && data->next)
-		process_pipe(data);
-	if(data && (data->redir_in || data->redir_out || data->append))
+	// if (data && data->next)
+	// 	process_pipe(data);
+	if(data && (data->redir_in || data->redir_out || data->append || data->heredoc))
 		{	
 			if(data->redir_in)
 				if (ft_input(data->redir_in))
@@ -231,16 +234,19 @@ void execute_single_cmd(t_data *data)
 					return ;
 			}
 		}
-	if(data && data->heredoc)
-		heredoc(data);
-	if(data && !data->cmd)
-		return;
-	if(data && !ft_strcmp(data->args[0],"./minishell"))
-		inc_shell();
-	else if(data && !ft_strcmp(data->args[0],"exit"))
-		dec_shell();
-	if (data && !data->cmd)
-		return ;
+	
+	// if(data && !data->cmd)
+	// 	return;
+	
+	if(data->cmd)
+	{	if(data && !ft_strcmp(data->args[0],"./minishell"))
+			inc_shell();
+		else if(data && !ft_strcmp(data->args[0],"exit"))
+			dec_shell();}
+	
+	// if (data && !data->cmd)
+	// 	return ;
+	
 	if(check_builts(data))
 		handle_builts(data);
 	else
@@ -264,4 +270,6 @@ void execute_single_cmd(t_data *data)
 		close(ft_lstlast_file(data->redir_in)->index);
 	if (ft_lstlast_file(data->redir_out) && ft_lstlast_file(data->redir_out)->index)
 		close(ft_lstlast_file(data->redir_out)->index);
+	if(ft_lstlast_file(data->heredoc) && ft_lstlast_file(data->heredoc)->index)
+	close(ft_lstlast_file(data->heredoc)->index);
 }
