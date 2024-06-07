@@ -58,7 +58,7 @@ void process_cmd(t_data *data)
 	 int (status);
 	if (data && data->next)
 		process_pipe(data);
-	else if(data && data->cmd)
+	else if(data && data->cmd && !data->next)
 	{
 		execute_single_cmd(data);
 		// close(data->redir_in->index);

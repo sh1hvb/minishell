@@ -45,7 +45,7 @@ static void set_previous_pointers(t_envp *lst)
 }
 char *my_get_env(t_envp *env_list, const char *key) {
     t_envp *current = env_list;
-
+    
     while (current != NULL) {
         if (ft_strcmp(current->key, key) == 0) {
             if(!current->value)
