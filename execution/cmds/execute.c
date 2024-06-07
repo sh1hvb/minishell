@@ -59,6 +59,7 @@ void create_pipes(t_data *data)
 	int flag;
 
 	flag = 0;
+	
 	if(pipe(fds) == -1 )
 	{
 		perror("pipe :");
@@ -74,6 +75,7 @@ void create_pipes(t_data *data)
 			dup2(file->index, 0);
 			close(file->index);
 		}
+	
 		if(data && data->redir_out)
 		{
 			ft_output(data->redir_out);
@@ -82,6 +84,7 @@ void create_pipes(t_data *data)
 			close(file->index);
 			flag = 1;
 		}
+		
 		if (data && !data->cmd)
 		{
 			// if(execve(NULL , NULL, NULL) == -1)
@@ -117,15 +120,7 @@ void exec(t_data *data)
 	}
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
-	if(access(path , X_OK | F_OK)!= 0)
-	{
-		free(path);
-		ft_freed(envp);
-		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : cmd not found",2);
-		exit (127);
-	}
-	if(execve(path , data->args ,envp) == -1)
+	if(execve(path , data->args ,envp) == -1 || access(path , X_OK | F_OK)!= 0)
 	{
 		free(path);
 		ft_freed(envp);
@@ -138,8 +133,10 @@ void ft_execute_multiple(t_data *data)
 {
 	int (pid);
 	t_files *file;
+	
 	while(data && data->next)
 	{
+		
 		create_pipes(data);
 		data = data->next;
 	}
@@ -161,10 +158,7 @@ void ft_execute_multiple(t_data *data)
 			close(file->index);
 		}
 		if (data && !data->cmd)
-		{
-			// if(execve(NULL , NULL, NULL) == -1)
 				exit (127);
-		}
 		else if(check_builts(data))
 			handle_builts(data);
 		else if(!check_builts(data))
@@ -191,14 +185,12 @@ void execute(t_data *data)
 	char * path;
 	char **envp;
 	int	index;
-
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd(data->cmd ,2);
 		ft_putendl_fd(": cmd not found",2);
 		return ;
 	}
-
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
 	if (ft_lstlast_file(data->redir_out))
@@ -213,16 +205,7 @@ void execute(t_data *data)
 		dup2(index, 0);
 		close(index);
 	}
-	if(access(path , X_OK & F_OK)!= 0)
-	{
-		free(path);
-		ft_freed(envp);
-		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : cmd not found",2);
-		exit (127);
-	}
-
-	if(execve(path , data->args ,envp) == -1)
+	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
 		ft_freed(envp);
 		free(path);
@@ -235,7 +218,8 @@ void execute_single_cmd(t_data *data)
 {
 	int pid;
 	int status;
-
+	if (data && data->next)
+		process_pipe(data);
 	if(data && (data->redir_in || data->redir_out || data->append))
 		{	
 			if(data->redir_in)
@@ -247,6 +231,10 @@ void execute_single_cmd(t_data *data)
 					return ;
 			}
 		}
+	if(data && data->heredoc)
+		heredoc(data);
+	if(data && !data->cmd)
+		return;
 	if(data && !ft_strcmp(data->args[0],"./minishell"))
 		inc_shell();
 	else if(data && !ft_strcmp(data->args[0],"exit"))
@@ -259,7 +247,9 @@ void execute_single_cmd(t_data *data)
 	{
 		pid = fork();
 		if(!pid)
-			execute(data);
+		{
+				execute(data);
+		}
 		while (waitpid(pid, &status, 0) != -1)
 		{
 			if (WIFEXITED(status))

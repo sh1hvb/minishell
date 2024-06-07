@@ -1,5 +1,5 @@
 
-echo * | awk -v RS=" " '{print}' | sort
+echo * 2
 
 $PWD && $OLDPWD 
 our output :

@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <fcntl.h>
 # include "../minishell.h" 
+# define BUFFER_SIZE 1
 
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
@@ -37,7 +38,10 @@ char		**ft_split(char const *s, char c);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_itoa(int n);
 int			ft_isalnum(int c);
-
+char		*get_next_line(int fd);
+char		*ft_strjoin_ws(char const *s1, char const *s2);
+char		*ft_strjoin_get(char *s1, char *s2);
+char		*ft_sstrchr(char *str, int c);
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 

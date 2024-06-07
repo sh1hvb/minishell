@@ -126,7 +126,10 @@ void 	ft_execute_multiple(t_data *data);
 void 	exec(t_data *data);
 void 	create_pipes(t_data *data);
 int		ft_output(t_files *file);
-int	ft_input(t_files *file);
+int		ft_input(t_files *file);
+void	heredoc(t_data *data);
+void heredoc_read_and_put(t_files *heredoc, int *fdp);
+
 
 
 

@@ -21,7 +21,6 @@ char **list_to_pointer()
 	arr[i] = NULL;
 	return arr;
 }
-//-------------------------------------new execution------------------------------------- //
 void inc_shell() {
     int tmp;
     t_envp *tmpenv = env;
@@ -56,10 +55,13 @@ void process_cmd(t_data *data)
 	dup2(0, 3);
 	dup2(1, 4);
 	 int (status);
+	if(data && data->heredoc)
+			heredoc(data);
 	if (data && data->next)
 		process_pipe(data);
-	else if(data && data->cmd && !data->next)
+	else if(data && !data->next)
 	{
+		
 		execute_single_cmd(data);
 		// close(data->redir_in->index);
 		// close(data->redir_out->index);
