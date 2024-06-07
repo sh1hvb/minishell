@@ -50,26 +50,28 @@ int	is_number(char *arg)
 void	ft_exit(t_data *data)
 {
 	int	ext;
-	int i;
 
-	i = 0;
 	ext = 0;
 	if (data && !data->next)
 	{
 		ft_putstr_fd("exit\n", 1);
-		if ((data->args && data->args[1]) || !data->args[1][0] || !ft_atoi2(data->args[1]))
+		if ((data->args && data->args[1]))
 		{
-			ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(255);
-		}
-		if (data->args && data->args[1] && data->args[2])
-		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			return ;
-		}
-		else if (data->args && data->args[1])
+			if (!data->args[1][0] || !ft_atoi2(data->args[1]))
+			{
+				ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
+				ft_putstr_fd(": numeric argument required\n", 2);
+				dec_shell();
+				exit(255);
+			}
+			else if (data->args[2])
+			{
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				return ;
+			}
 			ext =  ft_atoi(data->args[1]);
+		}
+		dec_shell();
 		exit ((char) ext);
 	}
 }

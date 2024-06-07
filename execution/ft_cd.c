@@ -35,6 +35,7 @@ void	set_pwd(char *cwd)
 	}
 }
 
+
 void	cd_home(t_data *data, char *msg, char *cwd)
 {
 	char	*tmp;
@@ -57,12 +58,8 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 {
 	char (*tmp);
-	if ((data->args[1][1] == '-' && !data->args[1][2]))
-	{
-		cd_home(data, msg, cwd);
-		return ;
-	}
-	else if (!data->args[1][1])
+
+	if (!data->args[1][1])
 	{
 		tmp = my_get_env(env, "OLDPWD");
 		if (!tmp)
@@ -92,24 +89,35 @@ void	ft_cd(t_data *data)
 
     char (*msg), (*cwd);
     cwd = getcwd(buff, PATH_MAX);
-	if (!data || !data->args || !cwd)
+
+    msg = my_strjoin("minishell: cd: ", data->args[1]);
+	if ((!data || !data->args || !cwd )&& ft_strcmp(data->args[1], ".."))
 	{
 		if (!cwd)
 			perror("getcwd : ");
 		return ;
 	}
-    msg = my_strjoin("minishell: cd: ", data->args[1]);
-    if (!data->args[1])
-        cd_home(data, msg, cwd);
+	if (data->args[1] && data->args[2])
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		return ; // should return with 1;
+	}
 	else if (data->args[1] && !data->args[1][0])
         return ;
+    if (!data->args[1] || !ft_strcmp(data->args[1], "--"))
+        cd_home(data, msg, cwd);
     else if (data->args[1][0] == '-')
 		cd_old_pwd(data, msg, cwd);
     else
 	{
 		if (chdir(data->args[1]) == -1)
 		{
-        	perror(my_strjoin(msg, ": "));
+			if (!ft_strcmp(data->args[1], ".."))
+			{
+				ft_putendl_fd("minishell : cd: No such file or directory", 2);
+				return ;
+			}
+			perror(msg);
 			return ;
 		}
 		get_old_pwd(cwd);
