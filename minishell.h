@@ -128,8 +128,10 @@ void 	create_pipes(t_data *data);
 int		ft_output(t_files *file);
 int		ft_input(t_files *file);
 void	heredoc(t_data *data);
-void heredoc_read_and_put(t_files *heredoc, int *fdp);
-
+void 	heredoc_read_and_put(t_data *data, int *fdp);
+int		ft_heredoc(t_files *file);
+void 	heredoc_mult(t_data *data, int *fd);
+char    *heredoc_expand(char *line);
 
 
 
