@@ -65,10 +65,11 @@ void create_pipes(t_data *data)
 		perror("pipe :");
 		return ;
 	}
+	if(data && data->heredoc)
+		heredoc_mult(data,fds);
 	pid = fork();
 	if(!pid)
 	{
-		
 		if(data && data->redir_in)
 		{
 			ft_input(data->redir_in);
@@ -137,8 +138,7 @@ void ft_execute_multiple(t_data *data)
 	
 	while(data && data->next)
 	{
-		if(data && data->heredoc)
-			heredoc_mult(data);
+		
 		create_pipes(data);
 		data = data->next;
 	}
@@ -161,7 +161,9 @@ void ft_execute_multiple(t_data *data)
 			close(file->index);
 		}
 		if (data && !data->cmd)
+		{
 				exit (127);
+		}
 		else if(check_builts(data))
 			handle_builts(data);
 		else if(!check_builts(data))
