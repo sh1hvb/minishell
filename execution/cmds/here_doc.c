@@ -37,3 +37,19 @@ void	heredoc(t_data *data)
 		perror("dup2");
 
 }
+
+void heredoc_mult(t_data *data)
+{
+	int	fds[2];	
+	if (pipe(fds) == -1)
+		perror("pipe");
+	while(data)
+	{
+		heredoc_read_and_put(data, fds);
+		data = data->next;
+	}
+	close(fds[1]);
+	if (dup2(fds[0], 0) == -1)
+		perror("dup2");
+
+}

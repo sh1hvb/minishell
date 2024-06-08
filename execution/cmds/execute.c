@@ -68,6 +68,7 @@ void create_pipes(t_data *data)
 	pid = fork();
 	if(!pid)
 	{
+		
 		if(data && data->redir_in)
 		{
 			ft_input(data->redir_in);
@@ -136,13 +137,15 @@ void ft_execute_multiple(t_data *data)
 	
 	while(data && data->next)
 	{
-		
+		if(data && data->heredoc)
+			heredoc_mult(data);
 		create_pipes(data);
 		data = data->next;
 	}
 	pid = fork();
 	if(!pid)
 	{
+		
 		if(data && data->redir_in)
 		{
 			ft_input(data->redir_in);
@@ -185,6 +188,8 @@ void execute(t_data *data)
 	char * path;
 	char **envp;
 	int	index;
+	if(data && data->heredoc)
+		heredoc(data);
 	if(data && data->cmd)
 	{if(!ft_strcmp("minishell", data->args[0]))
 	{
@@ -206,8 +211,7 @@ void execute(t_data *data)
 		dup2(index, 1);
 		close(index);
 	}
-	if(data && data->heredoc)
-		heredoc(data);
+	
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
 		ft_freed(envp);
