@@ -11,8 +11,8 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		{
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
-			if(data->heredoc->type)
-				heredoc_expand(line);
+			if(!data->heredoc->type)
+				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
 				free(delimiter);
@@ -39,8 +39,8 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 		{
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
-			if(data->heredoc->type)
-				heredoc_expand(line);
+			if(!data->heredoc->type)
+				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
 				free(delimiter);

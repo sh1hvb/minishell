@@ -131,7 +131,7 @@ void	heredoc(t_data *data);
 void 	heredoc_read_and_put(t_data *data, int *fdp);
 int		ft_heredoc(t_files *file);
 void 	heredoc_mult(t_data *data, int *fd);
-void    heredoc_expand(char *line);
+char    *heredoc_expand(char *line);
 
 
 
