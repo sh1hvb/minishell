@@ -8,14 +8,17 @@ static char	*my_strjoin_c(char *s1, char s2)
 	if (!s1 && !s2)
 		return (NULL);
 	else if (!s2)
-		return (my_strdup(s1));
-	if (!s1)
+	{
+		free(s1);
+		return (ft_strdup(s1));
+	}
+	else if (!s1)
 		len = 2;
 	else
 		len = (ft_strlen(s1) + 1) + 1;
 	str = malloc(len * sizeof(char));
 	if (!str)
-		return (str);
+		return (NULL);
 	str[0] = '\0';
 	if (s1)
 		ft_strlcat(str, s1, ft_strlen(s1) + 1);
@@ -59,7 +62,5 @@ char	*heredoc_expand(char *line)
 			new = my_strjoin_c(new, line[i]);
 		i++;
 	}
-	if (line)
-		free(line);
-	return (ft_strdup(new));
+	return (line);
 }
