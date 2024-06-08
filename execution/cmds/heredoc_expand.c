@@ -8,10 +8,7 @@ static char	*my_strjoin_c(char *s1, char s2)
 	if (!s1 && !s2)
 		return (NULL);
 	else if (!s2)
-	{
-		free(s1);
-		return (ft_strdup(s1));
-	}
+		return (s1);
 	else if (!s1)
 		len = 2;
 	else
@@ -28,6 +25,32 @@ static char	*my_strjoin_c(char *s1, char s2)
 	return (str);
 }
 
+
+static char	*ft_strjoin_s(char  *s1, char  *s2)
+{
+	char	*p;
+	int		i;
+	int		j;
+	size_t	lens1;
+	size_t	lens2;
+
+	if (!s1 || !s2)
+		return (0);
+	lens1 = ft_strlen((char *)s2);
+	lens2 = ft_strlen((char *)s1);
+	p = (char *)malloc(sizeof(char) * lens1 + lens2 + 1);
+	if (!p)
+		return (0);
+	i = -1;
+	while (s1[++i])
+		p[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+		p[i++] = s2[j];
+	p[i] = '\0';
+	free(s1);
+	return (p);
+}
 
 char	*heredoc_expand(char *line)
 {
@@ -55,12 +78,13 @@ char	*heredoc_expand(char *line)
 			}
 			ft_strlcpy(tmp, line + start, (i - start) + 1);
 			tmp = my_get_env(env, tmp);
-			new = my_strjoin(new, tmp);
+			new = ft_strjoin_s(new, tmp);
 			i--;
 		}
 		else
 			new = my_strjoin_c(new, line[i]);
 		i++;
 	}
-	return (line);
+	free(line);
+	return (new);
 }
