@@ -11,7 +11,7 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		{
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
-			if(!data->heredoc->type)
+			if(line && !data->heredoc->type)
 				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
@@ -62,6 +62,8 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 				break;
 			}
 			if(!check_builts(data))
+				ft_putstr_fd(line, fdp[1]);
+			else if (!data->next && data->cmd)
 			{
 				if ( data->next && !data->next->heredoc && !data->next->next && !data->heredoc->next)
 					ft_putstr_fd(line, fdp[1]);
@@ -70,8 +72,6 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 					ft_putstr_fd(line, fdp[1]);
 				}
 			}
-			
-			
 			free(line);
 		}
 		data->heredoc = data->heredoc->next;
