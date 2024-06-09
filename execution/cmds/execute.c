@@ -54,20 +54,19 @@ static char	*get_path(char *cmd)
 void create_pipes(t_data *data)
 {
 	t_files *file;
-	int pid;
-	int fds[2];
-	int flag;
 
+	int (pid) ,fds[2] ,flag;
 	flag = 0;
-	
 	if(pipe(fds) == -1 )
 	{
 		perror("pipe :");
 		return ;
 	}
-	if(data && data->heredoc)
+	if(data && check_here_doc(data))
 		heredoc_mult(data,fds);
-	pid = fork();
+	
+	if((pid = fork() )== -1)
+		perror("fork");
 	if(!pid)
 	{
 		if(data && data->redir_in)
@@ -77,7 +76,6 @@ void create_pipes(t_data *data)
 			dup2(file->index, 0);
 			close(file->index);
 		}
-	
 		if(data && data->redir_out)
 		{
 			ft_output(data->redir_out);
@@ -86,12 +84,8 @@ void create_pipes(t_data *data)
 			close(file->index);
 			flag = 1;
 		}
-		
 		if (data && !data->cmd)
-		{
-			// if(execve(NULL , NULL, NULL) == -1)
 				exit (127);
-		}
 		close(fds[0]);
 		if (!flag)
 			dup2(fds[1], 1);
@@ -113,7 +107,7 @@ void exec(t_data *data)
 {
 	char *path;
 	char **envp;
-
+	printf("fsff");
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd( data->cmd ,2);
@@ -138,14 +132,12 @@ void ft_execute_multiple(t_data *data)
 	
 	while(data && data->next)
 	{
-		
 		create_pipes(data);
 		data = data->next;
 	}
 	pid = fork();
 	if(!pid)
 	{
-		
 		if(data && data->redir_in)
 		{
 			ft_input(data->redir_in);
@@ -161,15 +153,14 @@ void ft_execute_multiple(t_data *data)
 			close(file->index);
 		}
 		if (data && !data->cmd)
-		{
 				exit (127);
-		}
 		else if(check_builts(data))
 			handle_builts(data);
 		else if(!check_builts(data))
 			exec(data);
 	}
 }
+
 void process_pipe(t_data *data)
 {
 	if(data && !ft_strcmp(data->args[0],"./minishell"))
@@ -213,7 +204,6 @@ void execute(t_data *data)
 		dup2(index, 1);
 		close(index);
 	}
-	
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
 		ft_freed(envp);
@@ -225,43 +215,32 @@ void execute(t_data *data)
 }
 void execute_single_cmd(t_data *data)
 {
-	int pid;
-	int status;
-	// if (data && data->next)
-	// 	process_pipe(data);
+	int (pid),(status);
 	if(data && (data->redir_in || data->redir_out || data->append || data->heredoc))
-		{	
-			if(data->redir_in)
-				if (ft_input(data->redir_in))
-					return ;
-			if(data->redir_out)
-			{
-				if (ft_output(data->redir_out))
-					return ;
-			}
+	{	
+		if(data->redir_in)
+			if (ft_input(data->redir_in))
+				return ;
+		if(data->redir_out)
+		{
+			if (ft_output(data->redir_out))
+				return ;
 		}
-	
-	// if(data && !data->cmd)
-	// 	return;
-	
+	}
 	if(data->cmd)
-	{	if(data && !ft_strcmp(data->args[0],"./minishell"))
+	{	
+		if(data && !ft_strcmp(data->args[0],"./minishell"))
 			inc_shell();
 		else if(data && !ft_strcmp(data->args[0],"exit"))
-			dec_shell();}
-	
-	// if (data && !data->cmd)
-	// 	return ;
-	
+			dec_shell();
+	}
 	if(check_builts(data))
 		handle_builts(data);
 	else
 	{
 		pid = fork();
 		if(!pid)
-		{
 				execute(data);
-		}
 		while (waitpid(pid, &status, 0) != -1)
 		{
 			if (WIFEXITED(status))

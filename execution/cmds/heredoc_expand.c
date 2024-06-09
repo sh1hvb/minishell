@@ -54,11 +54,8 @@ static char	*ft_strjoin_s(char  *s1, char  *s2)
 
 char	*heredoc_expand(char *line)
 {
-	char	*tmp;
-	char	*new;
-	int		i;
-	int		start;
-
+	char	(*tmp), (*new);
+	int		(i) , (start);
 	tmp = NULL;
 	new = NULL;
 	i = 0;

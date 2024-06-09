@@ -28,6 +28,18 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		data->heredoc = data->heredoc->next;
 	}
 }
+int check_here_doc(t_data *data)
+{
+	t_data *p;
+	p = data;
+	while(p)
+	{
+		if(p->heredoc)
+			return 1;
+		p = p->next;
+	}
+	return 0;
+}
 void heredoc_read_and_put_mult(t_data *data, int *fdp)
 {
     char	*line;
@@ -39,21 +51,26 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 		{
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
-			if(line && !data->heredoc->type)
+			if(line && data->heredoc && !data->heredoc->type)
 				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
 				free(delimiter);
 				// delimiter = NULL;
 				free(line);
-				// line = NULL;
+				line = NULL;
 				break;
 			}
-			if ( data->next && !data->next->heredoc && !data->next->next)
+			if(!check_builts(data))
 				ft_putstr_fd(line, fdp[1]);
 			else if (!data->next && data->cmd)
 			{
-				ft_putstr_fd(line, fdp[1]);
+				if ( data->next && !data->next->heredoc && !data->next->next && !data->heredoc->next)
+					ft_putstr_fd(line, fdp[1]);
+				else if (!data->next && data->cmd)
+				{
+					ft_putstr_fd(line, fdp[1]);
+				}
 			}
 			free(line);
 		}
@@ -76,13 +93,17 @@ void heredoc_mult(t_data *data, int *fds)
 {
 	t_data *p;
 	p = data;
-	while(p)
+	int pid = fork();
+	if(!pid)
 	{
-		heredoc_read_and_put_mult(p, fds);
-		p = p->next;
+		while(p)
+		{
+			heredoc_read_and_put_mult(p, fds);
+			p = p->next;
+		}
 	}
-		close(fds[1]);
+	close(fds[1]);
 	if (dup2(fds[0], 0) == -1)
-			perror("dup2");
-
+		perror("dup2");
+	wait(NULL);
 }
