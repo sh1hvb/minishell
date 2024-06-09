@@ -52,7 +52,7 @@ void dec_shell() {
 
 void process_cmd(t_data *data)
 {
-	dup2(0, 3);
+	dup2(0, 199);
 	dup2(1, 4);
 	 int (status);
 	
@@ -65,7 +65,7 @@ void process_cmd(t_data *data)
 		// close(data->redir_in->index);
 		// close(data->redir_out->index);
 	}
-	dup2(3,0);
-	dup2(4, 1);
+	dup2(199,0);
+	dup2(200, 1);
 	while (waitpid(-1, &status, 0) != -1);
 }
