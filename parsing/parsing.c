@@ -97,7 +97,10 @@ void	parsing(t_lexer **lex, t_data	**data)
 			pars_files(&data_tmp, &lex_tmp, 3);
 		else if (lex_tmp->type == 'P' && !lex_tmp->in_quotes)
 		{
-			data_tmp->cmd = data_tmp->args[0];
+			if (data_tmp->args && data_tmp->args[0])
+				data_tmp->cmd = data_tmp->args[0];
+			else
+				data_tmp->cmd = NULL;
 			new_node(&lex_tmp, &data_tmp);
 		}
 		else

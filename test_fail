@@ -11,3 +11,6 @@ bash: /nfs1/homes/mchihab/Desktop/pipex: Is a directory
 echo - "" "  " hello
 
 aa==vv
+
+
+<$kk cat -e|>OUT|ls<<her
