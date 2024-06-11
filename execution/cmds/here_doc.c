@@ -28,15 +28,15 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		data->heredoc = data->heredoc->next;
 	}
 }
-int check_here_doc(t_data *data)
+int check_heredoc(t_data * data)
 {
 	t_data *p;
-	p = data;
+	p = data ;
 	while(p)
 	{
 		if(p->heredoc)
 			return 1;
-		p = p->next;
+		p= p->next;
 	}
 	return 0;
 }
@@ -61,19 +61,11 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 				line = NULL;
 				break;
 			}
-			// if(!check_builts(data))
-			// 	ft_putstr_fd(line, fdp[1]);
-			
-			// if (!data->next && data->cmd)
-			// {
-			if(!data->heredoc->next )
+			if ( line && data->next && !data->heredoc->next)
+				ft_putstr_fd(line, fdp[1]);
+			else if (!data->next && data->cmd && (ft_lstsize_file(data->heredoc)-1)== data->heredoc->index)
 			{
-				if ( data->next && !data->next->heredoc && !data->next->next && data->next->cmd)
-					ft_putstr_fd(line, fdp[1]);
-				else if (!data->next)
-				{
-					ft_putstr_fd(line, fdp[1]);
-				}
+				ft_putstr_fd(line, fdp[1]);
 			}
 			free(line);
 		}
