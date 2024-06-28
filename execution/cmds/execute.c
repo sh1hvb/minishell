@@ -228,7 +228,7 @@ void execute(t_data *data)
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
-		dup2(index, 1);
+		dup2(index, 0);
 		close(index);
 	}
 	if((data && !data->cmd) || !data->cmd[0])

@@ -13,4 +13,6 @@ echo - "" "  " hello
 aa==vv
 
 
+cat <minishell.h
+
 <$kk cat -e|>OUT|ls<<her
