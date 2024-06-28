@@ -32,15 +32,17 @@ void	free_lstclear(t_leaks **lst)
 {
 	t_leaks	*next;
 
-	if (!lst)
+	if (!lst || *lst)
 		return ;
 	while (*lst)
 	{
 		next = (*lst)->next;
         if (*lst)
 	    {
-            free((*lst)->add);
+			if ((*lst)->add)
+            	free((*lst)->add);
             free(*lst);
+			lst = NULL;
 	    }
 		*lst = next;
 	}

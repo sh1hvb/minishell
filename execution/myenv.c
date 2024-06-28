@@ -16,7 +16,6 @@ void print_env_list(char *x)
         else if(!current->value  && current->flag == 0  && !ft_strcmp(x,"ex"))
         {
             printf("%s\n", current->key);
-
         }
         else if(!current->value && current->flag == 1 && !ft_strcmp(x,"ex"))
         {
@@ -46,7 +45,6 @@ void handle_env(char *envp[])
     // if (env)
     // {
     //     inc_shell();
-        
     //     printf("-----------------\n------------------");
     // }
     if(!envp)

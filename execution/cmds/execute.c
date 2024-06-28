@@ -26,7 +26,7 @@ static char	*get_path(char *cmd)
 	if (!cmd)
 		return NULL;
 	if (!access(cmd, X_OK))
-		return (cmd);
+		return (ft_strdup(cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
 	if (!allpath)
@@ -84,7 +84,7 @@ void create_pipes(t_data *data)
 			close(file->index);
 			flag = 1;
 		}
-		if (data && !data->cmd)
+		if ((data && !data->cmd) || !data->cmd[0])
 				exit (127);
 		close(fds[0]);
 		if (!flag)
@@ -115,12 +115,25 @@ void exec(t_data *data)
 	}
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
+	if (path)
+	{
+		int fd = open(path, __O_DIRECTORY);
+		if (fd != -1)
+		{
+			free(path);
+			ft_freed(envp);
+			ft_putstr_fd("minishell: ",2);
+			ft_putstr_fd(data->cmd, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			exit (127);
+		}
+	}
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK | F_OK)!= 0)
 	{
 		free(path);
 		ft_freed(envp);
 		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : cmd not found",2);
+		perror(" : cmd not found");
 		exit (127);
 	}
 }
@@ -151,7 +164,7 @@ void ft_execute_multiple(t_data *data)
 			dup2(file->index, 1);
 			close(file->index);
 		}
-		if (data && !data->cmd)
+		if ((data && !data->cmd) || !data->cmd[0])
 				exit (127);
 		else if(check_builts(data))
 			handle_builts(data);
@@ -183,14 +196,29 @@ void execute(t_data *data)
 	if(data && data->heredoc)
 		heredoc(data);
 	if(data && data->cmd)
-	{if(!ft_strcmp("minishell", data->args[0]))
 	{
-		ft_putstr_fd(data->cmd ,2);
-		ft_putendl_fd(": cmd not found",2);
-		return ;
-	}}
+		if(!ft_strcmp("minishell", data->args[0]))
+		{
+			ft_putstr_fd(data->cmd ,2);
+			ft_putendl_fd(": cmd not found",2);
+			return ;
+		}
+	}
 	path = get_path(data->cmd);
 	envp = list_to_pointer();
+	if (path)
+	{
+		int fd = open(path, __O_DIRECTORY);
+		if (fd != -1)
+		{
+			free(path);
+			ft_freed(envp);
+			ft_putstr_fd("minishell: ",2);
+			ft_putstr_fd(data->cmd, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			exit (127);
+		}
+	}
 	if (ft_lstlast_file(data->redir_out))
 	{
 		index = ft_lstlast_file(data->redir_out)->index;
@@ -203,10 +231,10 @@ void execute(t_data *data)
 		dup2(index, 0);
 		close(index);
 	}
+	if((data && !data->cmd) || !data->cmd[0])
+		exit (127);
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
-		ft_freed(envp);
-		free(path);
 		ft_putstr_fd( data->cmd ,2);
 		ft_putendl_fd(" : cmd not found",2);
 		exit (127);
@@ -226,12 +254,13 @@ void execute_single_cmd(t_data *data)
 				return ;
 		}
 	}
+
 	if(data->cmd)
 	{	
 		if(data && !ft_strcmp(data->args[0],"./minishell"))
+		{
 			inc_shell();
-		else if(data && !ft_strcmp(data->args[0],"exit"))
-			dec_shell();
+		}
 	}
 	if(check_builts(data))
 		handle_builts(data);
@@ -246,7 +275,9 @@ void execute_single_cmd(t_data *data)
 			{
 				status = WEXITSTATUS(status);
 				if (status == 127 || status == 1 || status == 0)
+				{
 					break ;
+				}
 			}
 		};
 	}

@@ -61,7 +61,6 @@ void	ft_exit(t_data *data)
 			{
 				ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 				ft_putstr_fd(": numeric argument required\n", 2);
-				dec_shell();
 				exit(255);
 			}
 			else if (data->args[2])
@@ -71,7 +70,6 @@ void	ft_exit(t_data *data)
 			}
 			ext =  ft_atoi(data->args[1]);
 		}
-		dec_shell();
 		exit ((char) ext);
 	}
 }

@@ -88,6 +88,7 @@ int	main(int ac, char *av[], char *envp[])
 	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
+	printf("here");
 	ft_malloc(0, 1);
 	// exit(0); 
 	ft_lstclear_env(&env);
