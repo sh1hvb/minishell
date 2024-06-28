@@ -12,7 +12,7 @@ int	ft_input(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			return (1);
+			exit(1);
 		}
 		if (file->next)
 			close(fd); 
@@ -35,7 +35,8 @@ int	ft_output(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			return (1);
+			exit(1);
+
 		}
 		if (file->next)
 			close(fd); 

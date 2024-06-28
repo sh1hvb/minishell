@@ -107,7 +107,6 @@ void exec(t_data *data)
 {
 	char *path;
 	char **envp;
-	printf("fsff");
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd( data->cmd ,2);
@@ -201,7 +200,7 @@ void execute(t_data *data)
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
-		dup2(index, 1);
+		dup2(index, 0);
 		close(index);
 	}
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)

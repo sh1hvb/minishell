@@ -90,7 +90,6 @@ int	main(int ac, char *av[], char *envp[])
 	// print_env_list(env,"en");
 	ft_malloc(0, 1);
 	// exit(0); 
-	printf("here");
 	ft_lstclear_env(&env);
 	// ft_freed(arr);
 	return (0);

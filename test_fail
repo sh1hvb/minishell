@@ -11,3 +11,5 @@ bash: /nfs1/homes/mchihab/Desktop/pipex: Is a directory
 echo - "" "  " hello
 
 aa==vv
+
+cat <minishell.h
