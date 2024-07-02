@@ -53,7 +53,7 @@ void dec_shell() {
 void process_cmd(t_data *data)
 {
 	dup2(0, 199);
-	dup2(1, 4);
+	dup2(1, 200);
 	 int (status);
 	
 	if (data && data->next)
