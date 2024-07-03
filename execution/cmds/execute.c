@@ -25,7 +25,7 @@ static char	*get_path(char *cmd)
 
 	if (!cmd)
 		return NULL;
-	if (!access(cmd, X_OK))
+	if (!access(cmd, X_OK)),
 		return (ft_strdup(cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
@@ -192,7 +192,7 @@ void execute(t_data *data)
 {
 	char * path;
 	char **envp;
-	int	index;
+	// int	index;
 	if(data && data->heredoc)
 		heredoc(data);
 	if(data && data->cmd)
@@ -242,7 +242,7 @@ void execute(t_data *data)
 }
 void execute_single_cmd(t_data *data)
 {
-	int (pid),(status);
+	int (pid),(status), index;
 	if(data && (data->redir_in || data->redir_out || data->append || data->heredoc))
 	{	
 		if(data->redir_in)
@@ -252,6 +252,18 @@ void execute_single_cmd(t_data *data)
 		{
 			if (ft_output(data->redir_out))
 				return ;
+		}
+		if (ft_lstlast_file(data->redir_out))
+		{
+		index = ft_lstlast_file(data->redir_out)->index;
+			dup2(index, 1);
+			close(index);
+		}
+		if (ft_lstlast_file(data->redir_in))
+		{
+			index = ft_lstlast_file(data->redir_in)->index;
+			dup2(index, 0);
+			close(index);
 		}
 	}
 
