@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-static int	ft_lstsize_file(t_files *lst)
+ int	ft_lstsize_file(t_files *lst)
 {
 	int	count;
 
@@ -62,7 +62,7 @@ void create_pipes(t_data *data)
 		perror("pipe :");
 		return ;
 	}
-	if(data && check_here_doc(data))
+	if(data && check_heredoc(data))
 		heredoc_mult(data,fds);
 	
 	if((pid = fork() )== -1)

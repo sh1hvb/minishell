@@ -132,8 +132,8 @@ void 	heredoc_read_and_put(t_data *data, int *fdp);
 int		ft_heredoc(t_files *file);
 void 	heredoc_mult(t_data *data, int *fd);
 char    *heredoc_expand(char *line);
-int		check_here_doc(t_data *data);
-
+int 	check_heredoc(t_data * data);
+ int	ft_lstsize_file(t_files *lst);
 
 
 
