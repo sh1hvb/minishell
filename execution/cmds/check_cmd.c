@@ -57,16 +57,21 @@ void process_cmd(t_data *data)
 	 int (status);
 	
 	if (data && data->next)
+	{
 		process_pipe(data);
+		dup2(199,0);
+		dup2(200, 1);
+		while (waitpid(-1, &status, 0) != -1);
+		env->exit_status = WEXITSTATUS(status);
+	}
 	else if(data && !data->next)
 	{
 
 		execute_single_cmd(data);
 		// close(data->redir_in->index);
 		// close(data->redir_out->index);
+		dup2(199,0);
+		dup2(200, 1);
 	}
-	dup2(199,0);
-	dup2(200, 1);
-	while (waitpid(-1, &status, 0) != -1);
 }
 

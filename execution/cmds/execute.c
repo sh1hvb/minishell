@@ -71,18 +71,28 @@ void create_pipes(t_data *data)
 	{
 		if(data && data->redir_in)
 		{
-			ft_input(data->redir_in);
+			if (ft_input(data->redir_in))
+				exit (1);
 			file = ft_lstlast_file(data->redir_in);
 			dup2(file->index, 0);
 			close(file->index);
 		}
 		if(data && data->redir_out)
 		{
-			ft_output(data->redir_out);
+			if (ft_output(data->redir_out))
+				exit (1);
 			file = ft_lstlast_file(data->redir_out);
 			dup2(file->index, 1);
 			close(file->index);
 			flag = 1;
+		}
+		if(data && data->append)
+		{
+			if (ft_append_file(data->append))
+				exit (1);
+			file = ft_lstlast_file(data->append);
+			dup2(file->index, 0);
+			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])
 				exit (127);
@@ -91,13 +101,14 @@ void create_pipes(t_data *data)
 			dup2(fds[1], 1);
 		else
 			close(fds[1]);
-		if(check_builts(data))
+		
+		 if(!check_builts(data))
+			exec(data);
+		else if(check_builts(data))
 		{
 			handle_builts(data);
 			exit(0);
 		}
-		else if(!check_builts(data))
-			exec(data);
 	}
 	close(fds[1]);
 	dup2(fds[0], 0);
@@ -139,7 +150,7 @@ void exec(t_data *data)
 }
 void ft_execute_multiple(t_data *data)
 {
-	int (pid);
+	int (pid),status;
 	t_files *file;
 	
 	while(data && data->next)
@@ -175,12 +186,33 @@ void ft_execute_multiple(t_data *data)
 			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])
+		{
 				exit (127);
-		else if(check_builts(data))
-			handle_builts(data);
+
+		}
 		else if(!check_builts(data))
+		{
 			exec(data);
+			while (waitpid(pid, &status, 0) != -1)
+			{
+				if (WIFEXITED(status))
+				{
+					status = WEXITSTATUS(status);
+					if (status == 127 || status == 126 || status == 1 || status == 0)
+					{
+						env->exit_status = status;
+						exit (status);
+					}
+				}
+			};
+		}
+		else if(check_builts(data))
+		{
+			handle_builts(data);
+			exit (0);
+		}
 	}
+
 }
 
 void process_pipe(t_data *data)
