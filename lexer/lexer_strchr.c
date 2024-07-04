@@ -17,7 +17,7 @@ void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f)
 	(void) dlmtrs;
 	(void) f;
 	i = *ind;
-	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_'))
+	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_' || str[i] == '?'))
 		i++;
 	*ind = i;
 }

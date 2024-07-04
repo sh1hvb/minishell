@@ -12,7 +12,7 @@ int	ft_input(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			exit(1);
+			return (1);
 		}
 		if (file->next)
 			close(fd); 
@@ -35,7 +35,30 @@ int	ft_output(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			exit(1);
+			return (1);
+
+		}
+		if (file->next)
+			close(fd); 
+		else
+			file->index = fd; 
+		file = file->next;
+	}
+	return (0);
+}
+int	ft_append_file(t_files *file)
+{
+	int	fd;
+
+	while (file)
+	{
+		fd = open(file->delimiter, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
+			perror(" ");
+			ft_putstr_fd("", 2);
+			return (1);
 
 		}
 		if (file->next)

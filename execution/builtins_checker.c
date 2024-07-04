@@ -27,7 +27,7 @@ void handle_builts(t_data *data)
     t_envp *envtmp;
     envtmp = env;
     if(!check_builts(data))
-        ft_error("cmd not found",127);
+        ft_error(" command not found",127);
     if(check_builts(data)== 1)
         ft_echo(data , envtmp);
     if(check_builts(data)== 2)

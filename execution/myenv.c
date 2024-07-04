@@ -102,6 +102,7 @@ t_envp *get_env(char **env)
         new_node->next = NULL;
         new_node->flag = 0;
         new_node->prev = current;
+        new_node->exit_status = 0;
         if (current)
             current->next = new_node;
         else
