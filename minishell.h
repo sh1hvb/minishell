@@ -11,6 +11,8 @@
 # include <sys/wait.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <sys/types.h>
+#include <signal.h>
 // typedef struct s_data
 // {
 // 	char			**args;
@@ -24,6 +26,7 @@ typedef struct s_envp
 	char *key;
 	char *value;
 	int flag;
+    int exit_status;
 	struct s_envp *next;
 	struct s_envp *prev;
 } t_envp;
@@ -166,5 +169,6 @@ int		files_syntax(t_lexer *lex);
 void	helpers_lines(t_data **data, t_files ***head, int flag, char *name);
 void	initialize_cmd(t_data *data_tmp);
 void	remove_quotes(t_data *data_tmp);
-void process_cmd(t_data *data);
+void 	process_cmd(t_data *data);
+int		ft_append_file(t_files *file);
 #endif

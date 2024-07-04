@@ -58,6 +58,28 @@ int	is_heredoc(t_lexer *lst)
 	return (0);
 }
 
+char	*my_strjoin2(char *s1, char *s2)
+{
+	char	*str;
+	int		len;
+
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (my_strdup(s2));
+	else if (!s2)
+		return (my_strdup(s1));
+	len = (ft_strlen(s1) + ft_strlen(s2)) + 1;
+	str = ft_malloc(len * sizeof(char), 0);
+	if (!str)
+		return (str);
+	str[0] = '\0';
+	ft_strlcat(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s2, len);
+	free(s1);
+	return (str);
+}
+
 void	expand(char *prompt, t_lexer **lex)
 {
 	t_lexer	*lst;
@@ -71,7 +93,10 @@ void	expand(char *prompt, t_lexer **lex)
 		&& !is_heredoc(lst))
 		{
 			lst->value++;
-			lst->value = my_strdup(my_get_env(env, lst->value));
+			if (lst->value[0] == '?')
+				lst->value = my_strjoin2(ft_itoa(env->exit_status), lst->value + 1);
+			else
+				lst->value = my_strdup(my_get_env(env, lst->value));
 			if (lst->value[0] == '\"')
 				rmv_d_qts(&lst->value);
 			if (lst->value[0] == '\'')

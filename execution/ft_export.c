@@ -165,6 +165,7 @@ void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
             ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
         }
     }
+    env->exit_status = 0;
 }
 
 void process_arguments(t_data *data, t_envp *env, int i) {
@@ -172,14 +173,20 @@ void process_arguments(t_data *data, t_envp *env, int i) {
 
     arr = builtins_split(data->args[i], "+=");
     if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
+    {
         printf("export: `%s': not a valid identifier \n",data->args[1]);
+        env->exit_status = 1;
+    }
     if (handle_no_first_element(arr)) {
         return;
     }
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
-    } else {
-        printf("export: `%s': not a valid identifier\n",data->args[1]);;
+    } 
+    else 
+    {
+        printf("export: `%s': not a valid identifier\n",data->args[1]);
+        env->exit_status = 1;
     }
     ft_freed(arr);
 }

@@ -25,7 +25,7 @@ static char	*get_path(char *cmd)
 
 	if (!cmd)
 		return NULL;
-	if (!access(cmd, X_OK)),
+	if (!access(cmd, X_OK))
 		return (ft_strdup(cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
@@ -110,7 +110,7 @@ void exec(t_data *data)
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : cmd not found",2);
+		ft_putendl_fd(" : command not found",2);
 		return ;
 	}
 	path = get_path(data->cmd);
@@ -133,7 +133,7 @@ void exec(t_data *data)
 		free(path);
 		ft_freed(envp);
 		ft_putstr_fd( data->cmd ,2);
-		perror(" : cmd not found");
+		perror(" : command not found");
 		exit (127);
 	}
 }
@@ -152,16 +152,26 @@ void ft_execute_multiple(t_data *data)
 	{
 		if(data && data->redir_in)
 		{
-			ft_input(data->redir_in);
+			if (ft_input(data->redir_in))
+				exit (1);
 			file = ft_lstlast_file(data->redir_in);
 			dup2(file->index, 0);
 			close(file->index);
 		}
 		if(data && data->redir_out)
 		{
-			ft_output(data->redir_out);
+			if (ft_output(data->redir_out))
+				exit (1);
 			file = ft_lstlast_file(data->redir_out);
 			dup2(file->index, 1);
+			close(file->index);
+		}
+		if(data && data->append)
+		{
+			if (ft_append_file(data->append))
+				exit (1);
+			file = ft_lstlast_file(data->append);
+			dup2(file->index, 0);
 			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])
@@ -200,7 +210,7 @@ void execute(t_data *data)
 		if(!ft_strcmp("minishell", data->args[0]))
 		{
 			ft_putstr_fd(data->cmd ,2);
-			ft_putendl_fd(": cmd not found",2);
+			ft_putendl_fd(": command not found", 2);
 			return ;
 		}
 	}
@@ -208,6 +218,7 @@ void execute(t_data *data)
 	envp = list_to_pointer();
 	if (path)
 	{
+
 		int fd = open(path, __O_DIRECTORY);
 		if (fd != -1)
 		{
@@ -215,19 +226,27 @@ void execute(t_data *data)
 			ft_freed(envp);
 			ft_putstr_fd("minishell: ",2);
 			ft_putstr_fd(data->cmd, 2);
-			ft_putstr_fd(": Is a directory\n", 2);
-			exit (127);
+			if (data->cmd[ft_strlen(data->cmd) - 1] == '/' ||( data->cmd[0] == '.' && data->cmd[1] == '/'))
+			{
+				ft_putstr_fd(": Is a directory\n", 2);
+				exit (126);
+			}
+			else
+			{
+				ft_putstr_fd(": command not found\n", 2);
+				exit (127);
+			}
 		}
 	}
 	if (ft_lstlast_file(data->redir_out))
 	{
-		index = ft_lstlast_file(data->redir_out)->index;
+		int index = ft_lstlast_file(data->redir_out)->index;
 		dup2(index, 1);
 		close(index);
 	}
 	if (ft_lstlast_file(data->redir_in))
 	{
-		index = ft_lstlast_file(data->redir_in)->index;
+		int index = ft_lstlast_file(data->redir_in)->index;
 		dup2(index, 0);
 		close(index);
 	}
@@ -236,7 +255,7 @@ void execute(t_data *data)
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
 		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : cmd not found",2);
+		ft_putendl_fd(" : command not found",2);
 		exit (127);
 	}
 }
@@ -245,6 +264,9 @@ void execute_single_cmd(t_data *data)
 	int (pid),(status), index;
 	if(data && (data->redir_in || data->redir_out || data->append || data->heredoc))
 	{	
+		if(data->append)
+			if (ft_append_file(data->append))
+				return ;
 		if(data->redir_in)
 			if (ft_input(data->redir_in))
 				return ;
@@ -252,6 +274,12 @@ void execute_single_cmd(t_data *data)
 		{
 			if (ft_output(data->redir_out))
 				return ;
+		}
+		if (ft_lstlast_file(data->append))
+		{
+			index = ft_lstlast_file(data->append)->index;
+			dup2(index, 1);
+			close(index);
 		}
 		if (ft_lstlast_file(data->redir_out))
 		{
@@ -286,7 +314,8 @@ void execute_single_cmd(t_data *data)
 			if (WIFEXITED(status))
 			{
 				status = WEXITSTATUS(status);
-				if (status == 127 || status == 1 || status == 0)
+				env->exit_status = status;
+				if (status == 127 || status == 126 || status == 1 || status == 0)
 				{
 					break ;
 				}
@@ -298,5 +327,5 @@ void execute_single_cmd(t_data *data)
 	if (ft_lstlast_file(data->redir_out) && ft_lstlast_file(data->redir_out)->index)
 		close(ft_lstlast_file(data->redir_out)->index);
 	if(ft_lstlast_file(data->heredoc) && ft_lstlast_file(data->heredoc)->index)
-	close(ft_lstlast_file(data->heredoc)->index);
+		close(ft_lstlast_file(data->heredoc)->index);
 }
