@@ -27,6 +27,12 @@ void	minishell(char *envp[])
 		prompt = readline("minishell$ ");
 		if (!prompt)
 			return ;
+		if (!prompt[0])
+		{
+			free(prompt);
+			env->exit_status = 0;
+			continue ;
+		}
 		add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)

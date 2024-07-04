@@ -19,11 +19,14 @@ void ft_echo(t_data *data, t_envp *env)
         }
         while(data->args[i])
         {
+            
             printf("%s",data->args[i++]);
             if (data->args[i])
                 printf(" ");
         }
     }
+    else if (data->args && !data->args[1])
+        env->exit_status = 0;
     if(flag)
         printf("\n");
 }

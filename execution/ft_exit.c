@@ -61,11 +61,12 @@ void	ft_exit(t_data *data)
 			{
 				ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 				ft_putstr_fd(": numeric argument required\n", 2);
-				exit(255);
+				exit(2);
 			}
 			else if (data->args[2])
 			{
 				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				env->exit_status = 1;
 				return ;
 			}
 			ext =  ft_atoi(data->args[1]);
