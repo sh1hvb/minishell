@@ -12,12 +12,22 @@ void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
 
+void	sigint_handler(int sig)
+{
+	(void) sig;
+	env->exit_status = 130;
+	printf("\nminishell$ ");
+}
+
+
 void	minishell(char *envp[])
 {
 	char	*prompt;
 	t_lexer  *lex;
 	t_data *data;
-	int status;
+	int status = 0;
+
+	signal(SIGINT, sigint_handler);
 	while (1)
 	{
 		// ft_lstclear(&lex);
@@ -25,20 +35,16 @@ void	minishell(char *envp[])
 		lex = NULL;
 		data = pars_lstnew(NULL, 0);
 		prompt = readline("minishell$ ");
-		if (!prompt)
-			return ;
-		if (!prompt[0])
+		if (!prompt || !prompt[0])
 		{
-			free(prompt);
 			env->exit_status = 0;
-			continue ;
-		}
-		add_history(prompt);
-		status = valid_quotes(prompt);
-		if (status)
-		{
+			if (!prompt)
+			{
+				printf("exit\n");
+				return ;
+			}
 			free(prompt);
-			continue;
+			continue ;
 		}
 		add_history(prompt);
 		status = valid_quotes(prompt);
@@ -94,7 +100,6 @@ int	main(int ac, char *av[], char *envp[])
 	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
-	printf("here");
 	ft_malloc(0, 1);
 	// exit(0); 
 	ft_lstclear_env(&env);
