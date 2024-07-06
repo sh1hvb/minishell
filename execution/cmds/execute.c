@@ -120,6 +120,7 @@ void create_pipes(t_data *data)
 	dup2(fds[0], 0);
 	close(fds[0]);
 }
+
 void exec(t_data *data)
 {
 	char *path;
