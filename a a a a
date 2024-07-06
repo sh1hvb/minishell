@@ -1,0 +1,25 @@
+a a a a
+execution
+exit_status
+expand
+fdg
+ft_print.c
+ft_print.o
+helpers
+lexer
+libft
+libft_ftmalloc
+main.c
+main.o
+Makefile
+memory_handling
+minishell
+minishell.h
+minishell_tester
+outfile
+parsing
+README.md
+test
+test2.txt
+test_fail
+test.txt

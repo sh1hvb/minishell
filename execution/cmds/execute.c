@@ -347,7 +347,11 @@ void execute_single_cmd(t_data *data)
 	{
 		pid = fork();
 		if(!pid)
-				execute(data);
+		{
+			if (!data->cmd)
+				exit(0);
+			execute(data);
+		}
 		while (waitpid(pid, &status, 0) != -1)
 		{
 			if (WIFEXITED(status))
