@@ -46,6 +46,12 @@ static char	*get_path(char *cmd)
         }
 		free(exec);
 	}
+	if ((access(cmd , F_OK) == 0 && access(cmd , X_OK) != 0) && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/' ||(cmd[0] == '.' && cmd[1] == '/')))
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit (126);
+	}
 	free(value);
 	ft_freed(allpath);
 	return (NULL);
@@ -136,7 +142,7 @@ void exec(t_data *data)
 			ft_putstr_fd("minishell: ",2);
 			ft_putstr_fd(data->cmd, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			exit (127);
+			exit (126);
 		}
 	}
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK | F_OK)!= 0)
@@ -224,7 +230,7 @@ void execute(t_data *data)
 {
 	char *path;
 	char **envp;
-	// int	index;
+	int	index;
 	if(data && data->heredoc)
 		heredoc(data);
 	if(data && data->cmd)
@@ -240,6 +246,13 @@ void execute(t_data *data)
 	envp = list_to_pointer();
 	if (path)
 	{
+		if (data->cmd[0] == '/' && access(path, X_OK) != 0)
+			{
+				ft_putstr_fd("minishell: ",2);
+				ft_putstr_fd(data->cmd, 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+				exit (127);
+			}
 		int fd = open(path, __O_DIRECTORY);
 		if (fd != -1)
 		{
@@ -247,32 +260,28 @@ void execute(t_data *data)
 			ft_freed(envp);
 			ft_putstr_fd("minishell: ",2);
 			ft_putstr_fd(data->cmd, 2);
-			if (data->cmd[ft_strlen(data->cmd) - 1] == '/' ||( data->cmd[0] == '.' && data->cmd[1] == '/'))
+			if (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/' ||( data->cmd[0] == '.' && data->cmd[1] == '/'))
 			{
 				ft_putstr_fd(": Is a directory\n", 2);
 				exit (126);
 			}
+			
 			else
 			{
 				ft_putstr_fd(": command not found\n", 2);
 				exit (127);
 			}
 		}
-		if (data->cmd[0] == '/')
-		{
-			ft_putstr_fd(": No such file or directory\n", 2);
-			exit (127);
-		}
 	}
 	if (ft_lstlast_file(data->redir_out))
 	{
-		int index = ft_lstlast_file(data->redir_out)->index;
+		index = ft_lstlast_file(data->redir_out)->index;
 		dup2(index, 1);
 		close(index);
 	}
 	if (ft_lstlast_file(data->redir_in))
 	{
-		int index = ft_lstlast_file(data->redir_in)->index;
+		index = ft_lstlast_file(data->redir_in)->index;
 		dup2(index, 0);
 		close(index);
 	}
@@ -280,8 +289,12 @@ void execute(t_data *data)
 		exit (127);
 	if(execve(path , data->args ,envp) == -1 || access(path , X_OK & F_OK)!= 0)
 	{
+		
 		ft_putstr_fd( data->cmd ,2);
-		ft_putendl_fd(" : command not found",2);
+		if (access(path , X_OK & F_OK)!= 0 && (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/' ||( data->cmd[0] == '.' && data->cmd[1] == '/')))
+			ft_putstr_fd(": No such file or directory\n", 2);
+		else
+			ft_putendl_fd(" : command not found",2);
 		exit (127);
 	}
 }
