@@ -25,7 +25,7 @@ static char	*get_path(char *cmd)
 
 	if (!cmd)
 		return NULL;
-	if (!access(cmd, X_OK))
+	if (!access(cmd, X_OK) || cmd[0] == '/')
 		return (ft_strdup(cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
@@ -193,18 +193,8 @@ void ft_execute_multiple(t_data *data)
 		else if(!check_builts(data))
 		{
 			exec(data);
-			while (waitpid(pid, &status, 0) != -1)
-			{
-				if (WIFEXITED(status))
-				{
-					status = WEXITSTATUS(status);
-					if (status == 127 || status == 126 || status == 1 || status == 0)
-					{
-						env->exit_status = status;
-						exit (status);
-					}
-				}
-			};
+			while (waitpid(pid, &status, 0) != -1);
+			env->exit_status = status;
 		}
 		else if(check_builts(data))
 		{
@@ -232,7 +222,7 @@ t_files	*ft_lstlast_file(t_files *lst)
 }
 void execute(t_data *data)
 {
-	char * path;
+	char *path;
 	char **envp;
 	// int	index;
 	if(data && data->heredoc)
@@ -250,7 +240,6 @@ void execute(t_data *data)
 	envp = list_to_pointer();
 	if (path)
 	{
-
 		int fd = open(path, __O_DIRECTORY);
 		if (fd != -1)
 		{
@@ -268,6 +257,11 @@ void execute(t_data *data)
 				ft_putstr_fd(": command not found\n", 2);
 				exit (127);
 			}
+		}
+		if (data->cmd[0] == '/')
+		{
+			ft_putstr_fd(": No such file or directory\n", 2);
+			exit (127);
 		}
 	}
 	if (ft_lstlast_file(data->redir_out))
