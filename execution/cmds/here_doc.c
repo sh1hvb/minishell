@@ -61,21 +61,19 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 				line = NULL;
 				break;
 			}
-		  if(data && !data->heredoc->next)
-      {
-				if ( data->next && !data->next->heredoc && !data->next->next && data->next->cmd){
+			if(!data->heredoc->next)
+			{
+				if ( data->next && !data->next->heredoc && !data->next->next && data->next->cmd)
 					ft_putstr_fd(line, fdp[1]);
-				}
 				else if (!data->next)
 				{
 					ft_putstr_fd(line, fdp[1]);
 				}
-      }
-
 			}
 			free(line);
 		}
 		data->heredoc = data->heredoc->next;
+	}
 }
 
 void	heredoc(t_data *data)
