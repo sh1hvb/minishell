@@ -63,14 +63,13 @@ void create_pipes(t_data *data)
 
 	int (pid) ,fds[2] ,flag;
 	flag = 0;
-	if(pipe(fds) == -1 )
+	if(pipe(fds) == -1)
 	{
 		perror("pipe :");
 		return ;
 	}
 	if(data && check_heredoc(data))
 		heredoc_mult(data,fds);
-	
 	if((pid = fork() )== -1)
 		perror("fork");
 	if(!pid)
@@ -107,7 +106,6 @@ void create_pipes(t_data *data)
 			dup2(fds[1], 1);
 		else
 			close(fds[1]);
-		
 		 if(!check_builts(data))
 			exec(data);
 		else if(check_builts(data))
@@ -125,6 +123,7 @@ void exec(t_data *data)
 {
 	char *path;
 	char **envp;
+
 	if(!ft_strcmp("minishell", data->args[0]))
 	{
 		ft_putstr_fd( data->cmd ,2);
@@ -193,15 +192,15 @@ void ft_execute_multiple(t_data *data)
 			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])
-		{
 				exit (127);
-
-		}
 		else if(!check_builts(data))
 		{
 			exec(data);
 			while (waitpid(pid, &status, 0) != -1);
-			env->exit_status = status;
+			if (WIFEXITED(status))
+				env->exit_status = WIFEXITED(status);
+			else if (WIFSIGNALED(status))
+				env->exit_status = WTERMSIG(status) + 128;
 		}
 		else if(check_builts(data))
 		{
@@ -348,7 +347,11 @@ void execute_single_cmd(t_data *data)
 	{
 		pid = fork();
 		if(!pid)
-				execute(data);
+		{
+			if (!data->cmd)
+				exit(0);
+			execute(data);
+		}
 		while (waitpid(pid, &status, 0) != -1)
 		{
 			if (WIFEXITED(status))
@@ -359,6 +362,11 @@ void execute_single_cmd(t_data *data)
 				{
 					break ;
 				}
+			}
+			else if (WIFSIGNALED(status))
+			{
+				env->exit_status = WTERMSIG(status) + 128;
+				break ;
 			}
 		};
 	}
