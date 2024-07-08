@@ -13,14 +13,14 @@
 #include <limits.h>
 #include <sys/types.h>
 #include <signal.h>
+#include <termios.h>
+
 // typedef struct s_data
 // {
 // 	char			**args;
 // 	struct s_data	*data;
 // 	struct s_data	*next;
 // }	t_data;
-
-
 typedef struct s_envp
 {
 	char *key;
@@ -171,4 +171,7 @@ void	initialize_cmd(t_data *data_tmp);
 void	remove_quotes(t_data *data_tmp);
 void 	process_cmd(t_data *data);
 int		ft_append_file(t_files *file);
+void	sigint_handler(int sig);
+void	sigint_c(int sig);
+void	signal_s(int sig);
 #endif
