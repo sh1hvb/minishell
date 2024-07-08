@@ -12,14 +12,6 @@ void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
 
-void	sigint_handler(int sig)
-{
-	(void) sig;
-	env->exit_status = 130;
-	printf("\nminishell$ ");
-}
-
-
 void	minishell(char *envp[])
 {
 	char	*prompt;
@@ -27,26 +19,29 @@ void	minishell(char *envp[])
 	t_data *data;
 	int status = 0;
 
-	signal(SIGINT, sigint_handler);
 	while (1)
 	{
 		// ft_lstclear(&lex);
 		// pars_lstclear(&data);
+		(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
+		prompt = NULL;
 		lex = NULL;
 		data = pars_lstnew(NULL, 0);
 		prompt = readline("minishell$ ");
-		if (!prompt || !prompt[0])
+		(signal(SIGINT, sigint_c), signal(SIGQUIT, signal_s));
+		if (!prompt)
+		{
+			printf("exit\n");
+			exit (env->exit_status);
+		}
+		else if (!prompt[0])
 		{
 			env->exit_status = 0;
-			if (!prompt)
-			{
-				printf("exit\n");
-				return ;
-			}
 			free(prompt);
 			continue ;
 		}
-		add_history(prompt);
+		if (prompt && strcmp(prompt, ""))
+			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
 		{
