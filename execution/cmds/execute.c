@@ -68,12 +68,12 @@ void create_pipes(t_data *data)
 		perror("pipe :");
 		return ;
 	}
-	if(data && check_heredoc(data))
-		heredoc_mult(data,fds);
+	
 	if((pid = fork() )== -1)
 		perror("fork");
 	if(!pid)
 	{
+		
 		if(data && data->redir_in)
 		{
 			if (ft_input(data->redir_in))
@@ -231,8 +231,8 @@ void execute(t_data *data)
 	char *path;
 	char **envp;
 	int	index;
-	if(data && data->heredoc)
-		heredoc(data);
+	// if(data && data->heredoc)
+	// 	heredoc(data);
 	if(data && data->cmd)
 	{
 		if(!ft_strcmp("minishell", data->args[0]))
@@ -301,6 +301,8 @@ void execute(t_data *data)
 void execute_single_cmd(t_data *data)
 {
 	int (pid),(status), index;
+	if(data && check_heredoc(data))
+		heredoc(data);
 	if(data && (data->redir_in || data->redir_out || data->append || data->heredoc))
 	{	
 		if(data->append)
@@ -333,7 +335,7 @@ void execute_single_cmd(t_data *data)
 			close(index);
 		}
 	}
-
+	
 	if(data->cmd)
 	{	
 		if(data && !ft_strcmp(data->args[0],"./minishell"))

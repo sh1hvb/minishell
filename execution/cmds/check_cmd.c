@@ -55,9 +55,25 @@ void process_cmd(t_data *data)
 	dup2(0, 199);
 	dup2(1, 200);
 	 int (status);
-	
+	if(data && !data->next)
+	{
+
+		execute_single_cmd(data);
+		// close(data->redir_in->index);
+		// close(data->redir_out->index);
+		dup2(199,0);
+		dup2(200, 1);
+	}
+	else if(data && check_heredoc(data)){
+
+		heredoc_mult(data);
+		while (waitpid(-1, &status, 0) != -1);
+
+		// while (waitpid(-1, &status, 0) != -1);
+	}
 	if (data && data->next)
 	{
+		
 		process_pipe(data);
 		dup2(199,0);
 		dup2(200, 1);
@@ -67,14 +83,15 @@ void process_cmd(t_data *data)
 		else if (WIFSIGNALED(status))
 			env->exit_status = WTERMSIG(status) + 128;
 	}
-	else if(data && !data->next)
-	{
+	
+	// else if(data && !data->next)
+	// {
 
-		execute_single_cmd(data);
-		// close(data->redir_in->index);
-		// close(data->redir_out->index);
-		dup2(199,0);
-		dup2(200, 1);
-	}
+	// 	execute_single_cmd(data);
+	// 	// close(data->redir_in->index);
+	// 	// close(data->redir_out->index);
+	// 	dup2(199,0);
+	// 	dup2(200, 1);
+	// }
 }
 
