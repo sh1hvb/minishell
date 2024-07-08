@@ -56,15 +56,17 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
 				free(delimiter);
-				// delimiter = NULL;
+				// delimiter = NULL; 
 				free(line);
 				line = NULL;
 				break;
 			}
 			if(!data->heredoc->next)
 			{
-				if ( data->next && !data->next->heredoc && !data->next->next && data->next->cmd)
+				if ( data->next && !data->next->heredoc && !data->next->next && data->cmd )
+				{
 					ft_putstr_fd(line, fdp[1]);
+				}
 				else if (!data->next)
 				{
 					ft_putstr_fd(line, fdp[1]);
