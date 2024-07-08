@@ -35,6 +35,23 @@ int check_string(char *s)
     return 1;
     
 }
+int check_sp(char *s)
+{
+    int i;
+    i = 0;
+
+    while (s[i])
+    {
+		while(s[i] == 32)
+			i++;
+		if(s[i] == '=')
+			return 1;
+
+        i++;
+    }
+    return 0;
+    
+}
 
 int	ft_lstsize_env(t_envp *lst)
 {

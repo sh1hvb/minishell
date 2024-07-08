@@ -68,12 +68,12 @@ void create_pipes(t_data *data)
 		perror("pipe :");
 		return ;
 	}
-	if(data && check_heredoc(data))
-		heredoc_mult(data,fds);
+	
 	if((pid = fork() )== -1)
 		perror("fork");
 	if(!pid)
 	{
+		
 		if(data && data->redir_in)
 		{
 			if (ft_input(data->redir_in))

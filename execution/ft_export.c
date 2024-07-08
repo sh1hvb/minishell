@@ -176,17 +176,27 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     {
         printf("export: `%s': not a valid identifier \n",data->args[1]);
         env->exit_status = 1;
+        // return;
     }
     if (handle_no_first_element(arr)) {
-        return;
+        // return;
     }
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
-    } 
+    }
+    // if(check_sp(data->args[i]))
+    // {
+    //     printf("export: `=': not a valid identifier\n");
+    //     env->exit_status = 1;
+    //     return;
+
+    // }
     else 
     {
         printf("export: `%s': not a valid identifier\n",data->args[1]);
         env->exit_status = 1;
+        // return;
+
     }
     ft_freed(arr);
 }
