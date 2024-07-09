@@ -15,6 +15,11 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
+                if (!line)
+                {
+                    ft_putstr_fd("\n", 2);
+                    ft_putendl_fd("minishell: warning: here-document at line 126 delimited by end-of-file", 2);
+                }
 				free(delimiter);
 				// delimiter = NULL;
 				free(line);
@@ -85,6 +90,11 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
                 line = heredoc_expand(line);
             if (!line || ft_strcmp(line, delimiter) == 0)
             {
+                if (!line)
+                {
+                    ft_putstr_fd("\n", 2);
+                    ft_putendl_fd("minishell: warning: here-document at line 126 delimited by end-of-file", 2);
+                }
                 free(delimiter);
 				// delimiter =NULL;
                 free(line);

@@ -3,12 +3,12 @@
 int	helper_line(int flag, int flag2)
 {
 	if (flag == 1)
-		printf("minishell: unexpected EOF while looking for matching `\"'\n");
+		ft_putendl_fd("minishell: unexpected EOF while looking for matching `\"'", 2);
 	if (flag2)
-		printf("minishell: unexpected EOF while looking for matching `\''\n");
+		ft_putendl_fd("minishell: unexpected EOF while looking for matching `\''", 2);
 	if (flag2 | flag)
 	{
-		printf("minishell: syntax error: unexpected end of file \n");
+		ft_putendl_fd("minishell: syntax error: unexpected end of file ", 2);
 		return (2);
 	}
 	return (0);

@@ -174,9 +174,11 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     arr = builtins_split(data->args[i], "+=");
     if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
     {
-        printf("export: `%s': not a valid identifier \n",data->args[1]);
+        ft_putstr_fd("minishell: export: `", 2);
+        ft_putstr_fd(data->args[1], 2);
+        ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        // return;
+        exit (1);
     }
     if (handle_no_first_element(arr)) {
         // return;
@@ -193,9 +195,11 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     // }
     else 
     {
-        printf("export: `%s': not a valid identifier\n",data->args[1]);
+        ft_putstr_fd("minishell: export: `", 2);
+        ft_putstr_fd(data->args[1], 2);
+        ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        // return;
+        exit (1);
 
     }
     ft_freed(arr);

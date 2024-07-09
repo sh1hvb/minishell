@@ -172,6 +172,6 @@ void	remove_quotes(t_data *data_tmp);
 void 	process_cmd(t_data *data);
 int		ft_append_file(t_files *file);
 void	sigint_handler(int sig);
-void	sigint_c(int sig);
-void	signal_s(int sig);
+void	sigint_int(int sig);
+void	signal_quit(int sig);
 #endif
