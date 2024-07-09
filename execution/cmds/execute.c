@@ -96,7 +96,7 @@ void create_pipes(t_data *data)
 			if (ft_append_file(data->append))
 				exit (1);
 			file = ft_lstlast_file(data->append);
-			dup2(file->index, 0);
+			dup2(file->index, 1);
 			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])
@@ -188,7 +188,7 @@ void ft_execute_multiple(t_data *data)
 			if (ft_append_file(data->append))
 				exit (1);
 			file = ft_lstlast_file(data->append);
-			dup2(file->index, 0);
+			dup2(file->index, 1);
 			close(file->index);
 		}
 		if ((data && !data->cmd) || !data->cmd[0])

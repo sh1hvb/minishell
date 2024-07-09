@@ -18,5 +18,6 @@ void ft_pwd(t_data *data) {
     }
     // free(buf);
     printf("%s\n", buf);
+    free(buf);
 }
 

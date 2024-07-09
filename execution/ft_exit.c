@@ -2,11 +2,13 @@
 
 long long	ft_atoi2(char *str)
 {
-	long long	signe;
-	long long	digit;
+	int		signe;
+	size_t	digit;
 
 	digit = 0;
 	signe = 1;
+	if (!ft_strcmp(str, "-9223372036854775808") || !ft_strcmp(str, "9223372036854775807"))
+		return (1);
 	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-')
@@ -16,7 +18,9 @@ long long	ft_atoi2(char *str)
 	while (ft_isdigit(*str))
 	{
 		digit = (digit * 10 + *str) - '0';
-		if ((signe > 0 && digit >= 9223372036854775807) || (signe < 0 && digit > 9223372036854775807))
+		if ((signe >= 0 && digit > 9223372036854775807))
+			return (0);
+		else if ((signe < 0 && digit > 9223372036854775807))
 			return (0);
 		str++;
 	}

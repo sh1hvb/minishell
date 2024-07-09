@@ -11,14 +11,15 @@ void	sigint_handler(int sig)
 		rl_redisplay();
 	}
 }
-void	sigint_c(int sig)
+void	sigint_int(int sig)
 {
 	(void) sig;
 	printf("\n");
 }
 
-void	signal_s(int sig)
+void	signal_quit(int sig)
 {
 	printf("Quit: 3\n");
+	env->exit_status = 131;
 	(void)sig;
 }

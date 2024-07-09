@@ -43,9 +43,10 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 	(void) data;
 	tmp = my_get_env(env, "HOME");
 	if (!tmp)
+	{
 	    msg = my_strjoin(msg, "HOME not set\n");
-	if (!tmp)
 		ft_putstr_fd(msg, 2);
+	}
 	else if (chdir(tmp) == -1)
 	{
         perror(my_strjoin(msg, ": "));

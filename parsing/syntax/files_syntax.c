@@ -8,18 +8,21 @@ int	files_syntax(t_lexer *lex)
 		while (lex && lex->type == 'W')
 			lex = lex->next;
 		if (!lex)
-			printf("bash: syntax error near unexpected token `newline'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
 		else if (lex->type == 'I')
-			printf("bash: syntax error near unexpected token `<'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `<'", 2);
 		else if (lex->type == 'O')
-			printf("bash: syntax error near unexpected token `>'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `>'", 2);
 		else if (lex->type == 'H')
-			printf("bash: syntax error near unexpected token `<<'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `<<'", 2);
 		else if (lex->type == 'A')
-			printf("bash: syntax error near unexpected token `>>'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `>>'", 2);
 		if (!lex || lex->type == 'I' || lex->type == 'O'
 			|| lex->type == 'H' || lex->type == 'A')
+		{
+			env->exit_status = 2;
 			return (2);
+		}
 	}
 	return (0);
 }

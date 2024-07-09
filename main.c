@@ -28,7 +28,7 @@ void	minishell(char *envp[])
 		lex = NULL;
 		data = pars_lstnew(NULL, 0);
 		prompt = readline("minishell$ ");
-		(signal(SIGINT, sigint_c), signal(SIGQUIT, signal_s));
+		(signal(SIGINT, sigint_int), signal(SIGQUIT, signal_quit));
 		if (!prompt)
 		{
 			printf("exit\n");

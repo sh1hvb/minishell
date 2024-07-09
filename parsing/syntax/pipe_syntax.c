@@ -14,12 +14,13 @@ int	pipe_syntax(t_lexer *lex)
 		lex = lex->next;
 		while (lex && lex->type == 'W')
 			lex = lex->next;
-		if (!lex || lex->type == 'P'
+		if (!lex || (lex->type == 'P')
 			|| !tmp || tmp->type == 'P'
 			|| tmp->type == 'I' || tmp->type == 'O'
 			|| tmp->type == 'H' || tmp->type == 'A')
 		{
-			printf("bash: syntax error near unexpected token `|'\n");
+			ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
+			env->exit_status = 2;
 			return (2);
 		}
 	}
