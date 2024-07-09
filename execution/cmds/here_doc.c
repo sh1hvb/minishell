@@ -40,6 +40,21 @@ int check_heredoc(t_data * data)
 	}
 	return 0;
 }
+int check_heredoc_two(t_data * data)
+{
+	t_data *p;
+	p = data ;
+	while(p)
+	{
+		if(!p->next)
+        {
+            if(check_heredoc(p))
+                return 1;
+        }
+		p= p->next;
+	}
+	return 0;
+}
 void	heredoc(t_data *data)
 {
 	int	fds[2];	
@@ -107,11 +122,12 @@ void heredoc_mult(t_data *data)
         {
 			while(p->heredoc)
 			{
+                
             	heredoc_read_and_put_mult(p, fdp);
 				p->heredoc = p->heredoc->next;
 			}
         	close(fdp[0]);
-            // exec(p);
+            
             if (dup2(fdp[1], STDOUT_FILENO) == -1)
                 perror("dup2");
             p = p->next;
@@ -126,6 +142,7 @@ void heredoc_mult(t_data *data)
         if (dup2(fdp[0], STDIN_FILENO) == -1)
             perror("dup2");
         close(fdp[0]);
+        
     }
     else
     {
