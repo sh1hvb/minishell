@@ -72,8 +72,8 @@ void	ft_lstclear_env(t_envp **lst)
 		next = (*lst)->next;
         if (*lst)
 	    {
-            // free((*lst)->key);
-            // free((*lst)->value);
+            free((*lst)->key);
+            free((*lst)->value);
             free(*lst);
             *lst = NULL;
 	    }
@@ -97,8 +97,8 @@ t_envp *get_env(char **env)
         new_node = (t_envp *)malloc(sizeof(t_envp));
         if (!new_node)
             return 0;
-        new_node->key = my_strdup(splited[0]);
-        new_node->value = my_strdup(getenv(splited[0]));
+        new_node->key = ft_strdup(splited[0]);
+        new_node->value = ft_strdup(getenv(splited[0]));
         new_node->next = NULL;
         new_node->flag = 0;
         new_node->prev = current;

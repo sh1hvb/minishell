@@ -20,11 +20,9 @@ void ft_echo(t_data *data, t_envp *env)
         while(data->args[i])
         {
             
-            write(1,data->args[i],ft_strlen(data->args[i]));
-            i++;
+            printf("%s",data->args[i++]);
             if (data->args[i])
                 printf(" ");
-            
         }
     }
     else if (data->args && !data->args[1])
