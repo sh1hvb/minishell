@@ -194,14 +194,19 @@ void ft_execute_multiple(t_data *data)
 		if ((data && !data->cmd) || !data->cmd[0])
 				exit (127);
 		else if(!check_builts(data))
+		{
 			exec(data);
+		}
 		else if(check_builts(data))
 		{
 			handle_builts(data);
 			exit (0);
 		}
 	}
-	(void) status;
+	waitpid(pid, &status, 0);
+	env->exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		env->exit_status = WTERMSIG(status) + 128;
 }
 
 void process_pipe(t_data *data)
