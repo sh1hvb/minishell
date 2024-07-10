@@ -138,6 +138,7 @@ char    *heredoc_expand(char *line);
 int 	check_heredoc(t_data * data);
  int	ft_lstsize_file(t_files *lst);
 int check_sp(char *s);
+char	*get_path(char *cmd);
 
 
 /**************************************************************************************************/
