@@ -33,7 +33,7 @@ void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
 	lexer_strchr_d(prompt, " \t\n", index, 0);
 	value = ft_malloc(*index - i + 1, 0);
 	if (!value)
-		return;
+		return ;
 	ft_strlcpy(value, prompt + i, *index - i + 1);
 	new = ft_lstnew(value, '$', flag);
 	ft_lstadd_back(lex, new);

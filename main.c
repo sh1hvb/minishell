@@ -36,7 +36,6 @@ void	minishell(char *envp[])
 		}
 		else if (!prompt[0])
 		{
-			env->exit_status = 0;
 			free(prompt);
 			continue ;
 		}
@@ -67,10 +66,10 @@ void	minishell(char *envp[])
 			// handle_builts(data);
 			// printf("========= end parsing\n");
 		}
- 		ft_malloc(0, 1);
 		// handle_builts(data);
 		// printf("========= end parsing\n");
 		free(prompt);
+		ft_malloc(0, 1);
 	}
 }
 
