@@ -34,8 +34,10 @@ static char	*ft_strjoin_s(char  *s1, char  *s2)
 	size_t	lens1;
 	size_t	lens2;
 
-	if (!s1 || !s2)
-		return (0);
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2));
 	lens1 = ft_strlen((char *)s2);
 	lens2 = ft_strlen((char *)s1);
 	p = (char *)malloc(sizeof(char) * lens1 + lens2 + 1);
@@ -61,7 +63,7 @@ char	*heredoc_expand(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$')
+		if (line[i] == '$' && line[i + 1] != '\n')
 		{
 			i++;
 			start = i;
