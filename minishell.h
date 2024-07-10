@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <termios.h>
+#include <stdbool.h>
 
 // typedef struct s_data
 // {
