@@ -73,7 +73,6 @@ void create_pipes(t_data *data)
 		perror("fork");
 	if(!pid)
 	{
-		
 		if(data && data->redir_in)
 		{
 			if (ft_input(data->redir_in))
@@ -114,9 +113,13 @@ void create_pipes(t_data *data)
 			exit(0);
 		}
 	}
-	close(fds[1]);
-	dup2(fds[0], 0);
-	close(fds[0]);
+	if(!check_heredoc_two(data))
+	{
+
+		close(fds[1]);
+		dup2(fds[0], 0);
+		close(fds[0]);
+	}
 }
 
 void exec(t_data *data)
