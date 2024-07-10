@@ -67,9 +67,6 @@ void process_cmd(t_data *data)
 
 		heredoc_mult(data);
 		while (waitpid(-1, &status, 0) != -1);
-		// dup2(199,0);
-		// dup2(200, 1);
-		// while (waitpid(-1, &status, 0) != -1);
 	}
 	if (data && data->next)
 	{
@@ -77,10 +74,6 @@ void process_cmd(t_data *data)
 		dup2(199,0);
 		dup2(200, 1);
 		while (waitpid(-1, &status, 0) != -1);
-		if (WEXITSTATUS(status))
-			env->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			env->exit_status = WTERMSIG(status) + 128;
 	}
 	// else if(data && !data->next)
 	// {

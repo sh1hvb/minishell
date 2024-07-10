@@ -23,4 +23,3 @@ echo - "" "  " hello
 segfault here ====> ""
 
 
-heredoc delimiter == > $
