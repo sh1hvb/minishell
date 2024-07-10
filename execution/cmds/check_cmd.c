@@ -57,7 +57,6 @@ void process_cmd(t_data *data)
 	 int (status);
 	if(data && !data->next)
 	{
-
 		execute_single_cmd(data);
 		// close(data->redir_in->index);
 		// close(data->redir_out->index);
@@ -76,7 +75,6 @@ void process_cmd(t_data *data)
 		dup2(200, 1);
 		while (waitpid(-1, &status, 0) != -1);
 	}
-	
 	// else if(data && !data->next)
 	// {
 
