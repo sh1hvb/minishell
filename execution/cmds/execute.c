@@ -156,9 +156,9 @@ void exec(t_data *data)
 }
 void ft_execute_multiple(t_data *data)
 {
-	int (pid),status;
 	t_files *file;
-	
+
+	int (pid), (status);
 	while(data && data->next)
 	{
 		create_pipes(data);
@@ -194,21 +194,13 @@ void ft_execute_multiple(t_data *data)
 		if ((data && !data->cmd) || !data->cmd[0])
 				exit (127);
 		else if(!check_builts(data))
-		{
 			exec(data);
-			while (waitpid(pid, &status, 0) != -1);
-			if (WIFEXITED(status))
-				env->exit_status = WIFEXITED(status);
-			else if (WIFSIGNALED(status))
-				env->exit_status = WTERMSIG(status) + 128;
-		}
 		else if(check_builts(data))
 		{
 			handle_builts(data);
 			exit (0);
 		}
 	}
-
 }
 
 void process_pipe(t_data *data)

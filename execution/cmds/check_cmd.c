@@ -68,12 +68,9 @@ void process_cmd(t_data *data)
 
 		heredoc_mult(data);
 		while (waitpid(-1, &status, 0) != -1);
-
-		// while (waitpid(-1, &status, 0) != -1);
 	}
 	if (data && data->next)
 	{
-		
 		process_pipe(data);
 		dup2(199,0);
 		dup2(200, 1);
