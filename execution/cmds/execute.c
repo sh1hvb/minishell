@@ -201,6 +201,7 @@ void ft_execute_multiple(t_data *data)
 			exit (0);
 		}
 	}
+	(void) status;
 }
 
 void process_pipe(t_data *data)
