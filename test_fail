@@ -16,3 +16,11 @@ aa==vv
 cat <minishell.h
 
 <$kk cat -e|>OUT|ls<<her
+
+
+echo - "" "  " hello
+
+segfault here ====> ""
+
+
+heredoc delimiter == > $

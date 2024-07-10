@@ -19,11 +19,12 @@ void ft_unset(t_data *data)
                     env->prev = NULL;
                     free(head->key);
                     free(head->value);
+                    free(head);
                     break;
                 }
                 head->prev->next = head->next;
-                 free(head->key);
-                    free(head->value);
+                free(head->key);
+                free(head->value);
                 head = env;
                 break;
             }
