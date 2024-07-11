@@ -120,9 +120,6 @@ void close_file_descriptors(t_data *data) {
         close(ft_lstlast_file(data->redir_out)->index);
     if (ft_lstlast_file(data->heredoc) && ft_lstlast_file(data->heredoc)->index)
         close(ft_lstlast_file(data->heredoc)->index);
-<<<<<<< HEAD
-}
-=======
 }
 
 void execute_built_in_or_fork(t_data *data) {
@@ -170,4 +167,3 @@ void execute_single_cmd(t_data *data) {
     
     close_file_descriptors(data);
 }
->>>>>>> main

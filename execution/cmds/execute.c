@@ -80,7 +80,7 @@ void create_pipes(t_data *data) {
     } else {
         handle_parent_redirections(fds);
     }
-}
+
 
 	if (!check_heredoc_two(data))
 	{
@@ -113,22 +113,6 @@ void exec(t_data *data)
 	}
 	handle_execve(data, path, envp);
 }
-<<<<<<< HEAD
-void ft_execute_multiple(t_data *data)
-{
-	int pid; //status;
-	// t_files *file;
-
-	while (data && data->next)
-	{
-		create_pipes(data);
-		data = data->next;
-	}
-	pid = fork();
-	if (!pid)
-		handle_multiple_child(data);
-}
-=======
 void handle_process_redirections(t_data *data) {
     t_files *file;
     
@@ -188,7 +172,6 @@ void ft_execute_multiple(t_data *data) {
 }
 
 
->>>>>>> main
 void process_pipe(t_data *data)
 {
 	if(data && !ft_strcmp(data->args[0],"./minishell"))
@@ -196,77 +179,5 @@ void process_pipe(t_data *data)
 	ft_execute_multiple(data);
 }
 
-<<<<<<< HEAD
-	last = ft_lstsize_file(lst);
-	while (last-- > 1)
-		lst = lst->next;
-	return (lst);
-}
-void execute(t_data *data)
-{
-	char *path;
-	char **envp;
-
-	if (data && data->cmd)
-	{
-		if (!ft_strcmp("minishell", data->args[0]))
-		{
-			ft_putstr_fd(data->cmd, 2);
-			ft_putendl_fd(": command not found", 2);
-			return;
-		}
-	}
-	path = get_path(data->cmd);
-	envp = list_to_pointer();
-	if (path)
-	{
-		if (data->cmd[0] == '/' && access(path, X_OK) != 0)
-			handle_no_such_file(data->cmd);
-		if (is_directory(path))
-		{
-			free(path);
-			ft_freed(envp);
-			handle_directory_error(data->cmd);
-		}
-	}
-	handle_redirection(data);
-	if ((data && !data->cmd) || !data->cmd[0])
-		exit(127);
-	handle_execve(data, path, envp);
-}
-
-
-void execute_single_cmd(t_data *data)
-{
-	int pid, status;
-
-	if (data && check_heredoc(data))
-		heredoc(data);
-	handle_redirection_single(data);
-	if (data->cmd)
-	{
-		if (data && !ft_strcmp(data->args[0], "./minishell"))
-			inc_shell();
-	}
-	if (check_builts(data))
-		handle_builts(data);
-	else
-	{
-		pid = fork();
-		if (!pid)
-		{
-			if (!data->cmd)
-				exit(0);
-			execute(data);
-		}
-		wait_for_child(pid, &status);
-	}
-	close_redirection_files(data);
-}
-
-
-
-=======
->>>>>>> main
 
 
