@@ -171,11 +171,16 @@ void ft_execute_multiple(t_data *data) {
     }
 }
 
-
+// void check_shlvl(t_data *data)
+// {
+    
+// }
 void process_pipe(t_data *data)
 {
 	if(data && !ft_strcmp(data->args[0],"./minishell"))
 		inc_shell();
+    // if(data && !ft_strcmp(data->args[0],"exit"))
+	// 	dec_shell();
 	ft_execute_multiple(data);
 }
 
