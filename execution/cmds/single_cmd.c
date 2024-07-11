@@ -9,6 +9,8 @@ void handle_command_not_found(t_data *data) {
 }
 
 void handle_path_access(t_data *data, char *path, char **envp) {
+    if(!data->cmd[0])
+        exit(127);
     if (data->cmd[0] == '/' && access(path, X_OK) != 0) {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(data->cmd, 2);
@@ -124,9 +126,10 @@ void close_file_descriptors(t_data *data) {
 
 void execute_built_in_or_fork(t_data *data) {
     int pid, status;
-    if (check_builts(data)) {
+    if (check_builts(data))
         handle_builts(data);
-    } else {
+    else
+    {
         pid = fork();
         if (!pid) {
             if (!data->cmd)
@@ -158,12 +161,6 @@ void execute_single_cmd(t_data *data) {
             return;
         setup_redirections(data);
     }
-
-    if (data->cmd && !ft_strcmp(data->args[0], "./minishell")) {
-        inc_shell();
-    }
-
     execute_built_in_or_fork(data);
-    
     close_file_descriptors(data);
 }

@@ -143,6 +143,7 @@ char	*get_path(char *cmd);
 int check_heredoc_two(t_data * data);
 void handle_execve(t_data *data, char *path, char **envp);
 void handle_directory_error(char *cmd);
+void check_shlvl(t_data *data);
 /**************************************************************************************************/
 // made by smarsi 
 void	*ft_malloc(int size, int flag);

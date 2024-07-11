@@ -11,7 +11,20 @@ t_files	*heredoc_lstnew(char *value);
 void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
-
+int only_withspace(char *s)
+{
+	int i = 0;
+	if(!s)
+		return 0;
+	while (s[i])
+	{
+		if(s[i] <= 32)
+			return 1;
+		i++;
+	}
+	return 0;
+	
+}
 void	minishell(char *envp[])
 {
 	char	*prompt;
@@ -39,7 +52,7 @@ void	minishell(char *envp[])
 			free(prompt);
 			continue ;
 		}
-		if (prompt && strcmp(prompt, ""))
+		if (prompt && strcmp(prompt, "") && !only_withspace(prompt))
 			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
@@ -80,8 +93,8 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 
 	// exit(0);
-
 	handle_env(envp);
+	inc_shell();
 	// char **test =NULL;
 	// test = list_to_pointer();
 	// int i = 0;
