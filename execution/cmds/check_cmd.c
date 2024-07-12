@@ -63,11 +63,6 @@ void process_cmd(t_data *data)
 		dup2(199,0);
 		dup2(200, 1);
 	}
-	else if(data && check_heredoc(data)){
-
-		heredoc_mult(data);
-		while (waitpid(-1, &status, 0) != -1);
-	}
 	if (data && data->next)
 	{
 		process_pipe(data);
