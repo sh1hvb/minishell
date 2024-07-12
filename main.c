@@ -52,7 +52,7 @@ void	minishell(char *envp[])
 			free(prompt);
 			continue ;
 		}
-		if (prompt && strcmp(prompt, "") && !only_withspace(prompt))
+		if (prompt && strcmp(prompt, "") )
 			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
