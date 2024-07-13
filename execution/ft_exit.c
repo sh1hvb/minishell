@@ -54,6 +54,7 @@ int	is_number(char *arg)
 void	ft_exit(t_data *data)
 {
 	int	ext;
+	// int tmp;
 
 	ext = 0;
 	if (data && !data->next)

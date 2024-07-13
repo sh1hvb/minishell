@@ -28,7 +28,10 @@ void	set_pwd(char *cwd)
 		if (!ft_strcmp(tmp_env->key, "PWD"))
 		{
 			if (tmp_env && tmp_env->value)
-			  tmp_env->value = ft_strdup(cwd);
+			{
+				free(tmp_env->value );
+				tmp_env->value = ft_strdup(cwd);
+			}
 			break ;
 		}
 		tmp_env = tmp_env->next; 
@@ -96,7 +99,6 @@ void	ft_cd(t_data *data)
 
     char (*msg), (*cwd);
     cwd = getcwd(buff, PATH_MAX);
-
     msg = my_strjoin("minishell: cd: ", data->args[1]);
 	if ((!data || !data->args || !cwd ) && ft_strcmp(data->args[1], ".."))
 	{
@@ -108,7 +110,7 @@ void	ft_cd(t_data *data)
 	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		env->exit_status = 1;
-		return ; // should return with 1;
+		return ;
 	}
 	else if (data->args[1] && !data->args[1][0])
 	{

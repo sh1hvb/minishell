@@ -39,7 +39,8 @@ static void	string_quotes(t_data *data)
 		{
 			if (data->args[i][j] == '\"' || data->args[i][j] == '\'')
 			{
-				delimiter = data->args[i][j++];
+				delimiter = data->args[i][j];
+				j++;
 				while (data->args[i][j] && data->args[i][j] != delimiter)
 					tmp = my_strjoin_c(tmp, data->args[i][j++]);
 				if (data->args[i][j] == delimiter)

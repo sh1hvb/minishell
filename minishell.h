@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <termios.h>
+#include <stdbool.h>
 
 // typedef struct s_data
 // {
@@ -133,13 +134,16 @@ int		ft_input(t_files *file);
 void	heredoc(t_data *data);
 void 	heredoc_read_and_put(t_data *data, int *fdp);
 int		ft_heredoc(t_files *file);
-void heredoc_mult(t_data *data);
+void heredoc_mult(t_data *data , int *fdp);
 char    *heredoc_expand(char *line);
 int 	check_heredoc(t_data * data);
  int	ft_lstsize_file(t_files *lst);
 int check_sp(char *s);
-
-
+char	*get_path(char *cmd);
+int check_heredoc_two(t_data * data);
+void handle_execve(t_data *data, char *path, char **envp);
+void handle_directory_error(char *cmd);
+void check_shlvl(t_data *data);
 /**************************************************************************************************/
 // made by smarsi 
 void	*ft_malloc(int size, int flag);
@@ -157,7 +161,7 @@ char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
 void    expand(char *prompt, t_lexer **lex);
-void	parsing(t_lexer **lex, t_data	**data);
+int		parsing(t_lexer **lex, t_data	**data);
 char	*my_strdup( char *s1);
 void	*my_calloc(int count, int size);
 char	*my_strjoin(char *s1, char *s2);
@@ -174,4 +178,5 @@ int		ft_append_file(t_files *file);
 void	sigint_handler(int sig);
 void	sigint_int(int sig);
 void	signal_quit(int sig);
+char	*my_strjoin2(char *s1, char *s2);
 #endif

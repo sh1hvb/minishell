@@ -36,11 +36,10 @@ void	minishell(char *envp[])
 		}
 		else if (!prompt[0])
 		{
-			env->exit_status = 0;
 			free(prompt);
 			continue ;
 		}
-		if (prompt && strcmp(prompt, ""))
+		if (prompt && ft_strcmp(prompt, ""))
 			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
@@ -58,7 +57,11 @@ void	minishell(char *envp[])
 			expand(prompt, &lex);
 			// print_expand(lex_tmp);
 			// printf("========= end expand\n");
-			parsing(&lex, &data);
+			if (parsing(&lex, &data))
+			{
+				free(prompt);
+				continue;
+			}
 			// print_parsing(data);
 			// printf("\n\n");
 			// printf("========= end pars\n");
@@ -67,10 +70,10 @@ void	minishell(char *envp[])
 			// handle_builts(data);
 			// printf("========= end parsing\n");
 		}
- 		ft_malloc(0, 1);
 		// handle_builts(data);
 		// printf("========= end parsing\n");
 		free(prompt);
+		ft_malloc(0, 1);
 	}
 }
 
@@ -81,8 +84,8 @@ int	main(int ac, char *av[], char *envp[])
 	(void)av;
 
 	// exit(0);
-
 	handle_env(envp);
+	inc_shell();
 	// char **test =NULL;
 	// test = list_to_pointer();
 	// int i = 0;

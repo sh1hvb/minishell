@@ -17,7 +17,32 @@ static int	is_valid_type(t_lexer *lex)
 	return (0);
 }
 
-void	pars_files(t_data **data, t_lexer **lex, int flag)
+static int	is_ambiguous(t_lexer *lex)
+{
+	char	*tmp;
+	int		i;
+
+	if (lex && lex->type == '$' && lex->in_quotes == 0)
+	{
+		i = 0;
+		tmp = lex->value;
+		while (tmp[i])
+		{
+			if (tmp[i] <= 32)
+			{
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(tmp, 2);
+				ft_putendl_fd(": ambiguous redirec", 2);
+				env->exit_status = 1;
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
+int	pars_files(t_data **data, t_lexer **lex, int flag)
 {
 	char	*file_name;
 	t_files	*tmp;
@@ -31,6 +56,8 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	{
 		if (is_valid_type(*lex))
 			break ;
+		if (is_ambiguous(*lex))
+			return (1);
 		if ((*lex)->value)
 			file_name = my_strjoin(file_name, (*lex)->value);
 		*lex = (*lex)->next;
@@ -41,6 +68,7 @@ void	pars_files(t_data **data, t_lexer **lex, int flag)
 	if (file_name[0] == '\'' || file_name[0] == '\"')
 		tmp->type = 1;
 	heredoc_lstadd_back(head, tmp);
+	return (0);
 }
 
 void	new_node(t_lexer **lex, t_data	**data)
@@ -78,23 +106,35 @@ void	fill_args(t_lexer **lex, t_data	**data)
 		*lex = (*lex)->next;
 }
 
-void	parsing(t_lexer **lex, t_data	**data)
+static int	is_redirection(t_lexer *lex)
+{
+	return (lex->type == 'I' || lex->type == 'O'\
+	 || lex->type == 'H' || lex->type == 'A');
+}
+
+int	parsing(t_lexer **lex, t_data	**data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
+	int		flag;
 
 	lex_tmp = *lex;
 	data_tmp = *data;
 	while (lex_tmp)
 	{
-		if (lex_tmp->type == 'I' && !lex_tmp->in_quotes)
-			pars_files(&data_tmp, &lex_tmp, 1);
-		else if (lex_tmp->type == 'O' && !lex_tmp->in_quotes)
-			pars_files(&data_tmp, &lex_tmp, 0);
-		else if (lex_tmp->type == 'H' && !lex_tmp->in_quotes)
-			pars_files(&data_tmp, &lex_tmp, 2);
-		else if (lex_tmp->type == 'A' && !lex_tmp->in_quotes)
-			pars_files(&data_tmp, &lex_tmp, 3);
+		if (!lex_tmp->in_quotes && is_redirection(lex_tmp))
+		{
+			if (lex_tmp->type == 'I' && !lex_tmp->in_quotes)
+				flag = pars_files(&data_tmp, &lex_tmp, 1);
+			else if (lex_tmp->type == 'O' && !lex_tmp->in_quotes)
+				flag = pars_files(&data_tmp, &lex_tmp, 0);
+			else if (lex_tmp->type == 'H' && !lex_tmp->in_quotes)
+				flag = pars_files(&data_tmp, &lex_tmp, 2);
+			else if (lex_tmp->type == 'A' && !lex_tmp->in_quotes)
+				flag = pars_files(&data_tmp, &lex_tmp, 3);
+			if (flag)
+				return (1);
+		}
 		else if (lex_tmp->type == 'P' && !lex_tmp->in_quotes)
 		{
 			if (data_tmp->args && data_tmp->args[0])
@@ -108,5 +148,5 @@ void	parsing(t_lexer **lex, t_data	**data)
 		remove_quotes(data_tmp);
 	}
 	initialize_cmd(data_tmp);
-	return ;
+	return (0);
 }

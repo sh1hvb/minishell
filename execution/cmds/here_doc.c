@@ -18,7 +18,9 @@ void heredoc_read_and_put(t_data *data, int *fdp)
                 if (!line)
                 {
                     ft_putstr_fd("\n", 2);
-                    ft_putendl_fd("minishell: warning: here-document at line 126 delimited by end-of-file", 2);
+                    ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+                    write(2, delimiter, ft_strlen(delimiter) - 1);
+                    ft_putendl_fd("')", 2);
                 }
 				free(delimiter);
 				// delimiter = NULL;
@@ -41,6 +43,21 @@ int check_heredoc(t_data * data)
 	{
 		if(p->heredoc)
 			return 1;
+		p= p->next;
+	}
+	return 0;
+}
+int check_heredoc_two(t_data * data)
+{
+	t_data *p;
+	p = data ;
+	while(p)
+	{
+		if(!p->next)
+        {
+            if(check_heredoc(p))
+                return 1;
+        }
 		p= p->next;
 	}
 	return 0;
@@ -78,7 +95,9 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
                 if (!line)
                 {
                     ft_putstr_fd("\n", 2);
-                    ft_putendl_fd("minishell: warning: here-document at line 126 delimited by end-of-file", 2);
+                    ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+                    write(2, delimiter, ft_strlen(delimiter) - 1);
+                    ft_putendl_fd("')", 2);
                 }
                 free(delimiter);
 				// delimiter =NULL;
@@ -103,11 +122,9 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
     }
 }
 
-void heredoc_mult(t_data *data)
+void heredoc_mult(t_data *data , int *fdp)
 {
     t_data *p = data;
-    int fdp[2];
-    pipe(fdp);
 
     int pid = fork();
     if (pid == 0) 
@@ -117,11 +134,12 @@ void heredoc_mult(t_data *data)
         {
 			while(p->heredoc)
 			{
+                
             	heredoc_read_and_put_mult(p, fdp);
 				p->heredoc = p->heredoc->next;
 			}
         	close(fdp[0]);
-            // exec(p);
+            
             if (dup2(fdp[1], STDOUT_FILENO) == -1)
                 perror("dup2");
             p = p->next;
@@ -136,6 +154,7 @@ void heredoc_mult(t_data *data)
         if (dup2(fdp[0], STDIN_FILENO) == -1)
             perror("dup2");
         close(fdp[0]);
+        
     }
     else
     {
