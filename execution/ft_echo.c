@@ -10,6 +10,8 @@ static	int		nb_args(char **args)
 		size++;
 	return (size);
 }
+
+
 void ft_echo(t_data *data, t_envp *env)
 {
     int		i;
@@ -27,13 +29,12 @@ void ft_echo(t_data *data, t_envp *env)
 		while (data->args[i])
 		{
 			ft_putstr_fd(data->args[i], 1);
-			if (data->args[i + 1] && data->args[i][0] != '\0')
+			if (data->args[i + 1])
 				write(1, " ", 1);
 			i++;
 		}
 	}
-    else if (data->args && !data->args[1])
-        env->exit_status = 0;
    if (n_option == 0)
 		write(1, "\n", 1);
+	env->exit_status = 0;
 }
