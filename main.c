@@ -39,7 +39,7 @@ void	minishell(char *envp[])
 			free(prompt);
 			continue ;
 		}
-		if (prompt && strcmp(prompt, "") )
+		if (prompt && strcmp(prompt, ""))
 			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
