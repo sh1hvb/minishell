@@ -39,7 +39,7 @@ void	minishell(char *envp[])
 			free(prompt);
 			continue ;
 		}
-		if (prompt && strcmp(prompt, ""))
+		if (prompt && ft_strcmp(prompt, ""))
 			add_history(prompt);
 		status = valid_quotes(prompt);
 		if (status)
@@ -57,7 +57,11 @@ void	minishell(char *envp[])
 			expand(prompt, &lex);
 			// print_expand(lex_tmp);
 			// printf("========= end expand\n");
-			parsing(&lex, &data);
+			if (parsing(&lex, &data))
+			{
+				free(prompt);
+				continue;
+			}
 			// print_parsing(data);
 			// printf("\n\n");
 			// printf("========= end pars\n");

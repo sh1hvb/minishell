@@ -161,7 +161,7 @@ char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
 void    expand(char *prompt, t_lexer **lex);
-void	parsing(t_lexer **lex, t_data	**data);
+int		parsing(t_lexer **lex, t_data	**data);
 char	*my_strdup( char *s1);
 void	*my_calloc(int count, int size);
 char	*my_strjoin(char *s1, char *s2);
