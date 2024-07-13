@@ -178,4 +178,5 @@ int		ft_append_file(t_files *file);
 void	sigint_handler(int sig);
 void	sigint_int(int sig);
 void	signal_quit(int sig);
+char	*my_strjoin2(char *s1, char *s2);
 #endif

@@ -67,17 +67,27 @@ char	*heredoc_expand(char *line)
 		{
 			i++;
 			start = i;
-			while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i]) || line[i] == '_'))
-				i++;
-			tmp = ft_malloc((i - start) + 1, 0);
-			if (!tmp)
+			if (line[i] == '?')
 			{
-				free(line);
-				return (NULL);
+				tmp = ft_itoa(env->exit_status);
+				new = my_strjoin2(new, tmp);
+				free(tmp);
+				i++;
 			}
-			ft_strlcpy(tmp, line + start, (i - start) + 1);
-			tmp = my_get_env(env, tmp);
-			new = ft_strjoin_s(new, tmp);
+			else
+			{
+				while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i]) || line[i] == '_'))
+					i++;
+				tmp = ft_malloc((i - start) + 1, 0);
+				if (!tmp)
+				{
+					free(line);
+					return (NULL);
+				}
+				ft_strlcpy(tmp, line + start, (i - start) + 1);
+				tmp = my_get_env(env, tmp);
+				new = ft_strjoin_s(new, tmp);
+			}
 			i--;
 		}
 		else
