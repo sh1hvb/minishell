@@ -122,11 +122,9 @@ void heredoc_read_and_put_mult(t_data *data, int *fdp)
     }
 }
 
-void heredoc_mult(t_data *data)
+void heredoc_mult(t_data *data , int *fdp)
 {
     t_data *p = data;
-    int fdp[2];
-    pipe(fdp);
 
     int pid = fork();
     if (pid == 0) 

@@ -34,7 +34,7 @@ void handle_child_redirections(t_data *data, int fds[]) {
     
     close(fds[0]);
     
-    if (!flag)
+    if (!flag && !check_heredoc_two(data) )
         dup2(fds[1], 1);
     else
         close(fds[1]);
@@ -62,13 +62,17 @@ void handle_parent_redirections(int fds[]) {
 
 void create_pipes(t_data *data) {
     int fds[2];
-    int pid;
+    int pid, status;
     
     if (pipe(fds) == -1) {
         perror("pipe:");
         return;
     }
-    
+    if(data && check_heredoc(data)){
+
+		heredoc_mult(data,fds);
+		while (waitpid(-1, &status, 0) != -1);
+	}
     if ((pid = fork()) == -1) {
         perror("fork");
         return;
@@ -78,11 +82,10 @@ void create_pipes(t_data *data) {
         handle_child_redirections(data, fds);
         handle_child_execution(data);
     } else {
-        handle_parent_redirections(fds);
+        if(!check_heredoc_two(data) )
+            handle_parent_redirections(fds);
     }
-
-
-	if (!check_heredoc_two(data))
+	if (!check_heredoc(data))
 	{
 		close(fds[1]);
 		dup2(fds[0], 0);
