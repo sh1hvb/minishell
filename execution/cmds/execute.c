@@ -31,13 +31,12 @@ void handle_child_redirections(t_data *data, int fds[]) {
     
     if (!data->cmd || !data->cmd[0])
         exit(127);
-    
-    close(fds[0]);
-    
-    if (!flag && !check_heredoc_two(data) )
-        dup2(fds[1], 1);
-    else
-        close(fds[1]);
+    close(fds[1]);
+    if (check_heredoc(data))
+    {
+        exit (0);
+    }
+    // (void) fds;
 }
 static bool is_directory(char *path)
 {
@@ -48,49 +47,42 @@ static bool is_directory(char *path)
 void handle_child_execution(t_data *data) {
     if (!check_builts(data))
         execute(data);
-    else {
+    else 
+    {
         handle_builts(data);
         exit(0);
     }
 }
 
 void handle_parent_redirections(int fds[]) {
-    close(fds[1]);
     dup2(fds[0], 0);
-    close(fds[0]);
 }
 
 void create_pipes(t_data *data) {
     int fds[2];
-    int pid, status;
+    int pid;
     
     if (pipe(fds) == -1) {
         perror("pipe:");
-        return;
+        return ;
     }
-    if(data && check_heredoc(data)){
-
-		heredoc_mult(data,fds);
-		while (waitpid(-1, &status, 0) != -1);
+    if(data && check_heredoc(data))
+    {
+		heredoc_mult(data, fds);
 	}
     if ((pid = fork()) == -1) {
         perror("fork");
         return;
     }
-    
-    if (pid == 0) {
+    if (pid == 0) 
+    {
+        dup2(fds[1], 1);
+        close(fds[0]);
         handle_child_redirections(data, fds);
         handle_child_execution(data);
-    } else {
-        if(!check_heredoc_two(data) )
-            handle_parent_redirections(fds);
     }
-	if (!check_heredoc(data))
-	{
-		close(fds[1]);
-		dup2(fds[0], 0);
-		close(fds[0]);
-	}
+    close(fds[1]);
+    dup2(fds[0], 0);
 }
 void exec(t_data *data)
 {
@@ -157,20 +149,23 @@ void ft_execute_multiple(t_data *data) {
     // t_data *original_data = data;?
     int pid, status;
     
-    while (data && data->next) {
+    while (data && data->next)
+    {
         create_pipes(data);
         data = data->next;
     }
-    
     pid = fork();
     if (!pid) {
         handle_process_redirections(data);
         handle_process_execution(data);
-    } else {
+    } 
+    else 
+    {
         waitpid(pid, &status, 0);
         env->exit_status = WEXITSTATUS(status);
         if (WIFSIGNALED(status))
             env->exit_status = WTERMSIG(status) + 128;
+        
     }
 }
 
