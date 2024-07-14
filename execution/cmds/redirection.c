@@ -76,7 +76,7 @@ int	ft_append_file(t_files *file)
 int	ft_heredoc(t_files *file)
 {
 	int	fd;
-	char *path ="../../../../../tmp/";
+	char *path ="~/tmp/";
 	int i = 0;
 	char *joined;
 	char *s;
