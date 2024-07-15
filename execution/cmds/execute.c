@@ -28,14 +28,24 @@ void handle_child_redirections(t_data *data, int fds[]) {
         dup2(file->index, 1);
         close(file->index);
     }
-    
-    if (!data->cmd || !data->cmd[0])
-        exit(127);
+
     if (check_heredoc(data))
     {
-        exit (0);
+        int fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
+        if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
+			perror(" ");
+			ft_putstr_fd("", 2);
+			env->exit_status = 1;
+			exit (1);
+		}
+        dup2(fd, 0);
+        close(fd);
     }
-    (void) fds;
+    if (!data->cmd || !data->cmd[0])
+        exit(127);
+    close(fds[1]);
 }
 static bool is_directory(char *path)
 {
@@ -53,9 +63,6 @@ void handle_child_execution(t_data *data) {
     }
 }
 
-void handle_parent_redirections(int fds[]) {
-    dup2(fds[0], 0);
-}
 
 void create_pipes(t_data *data) {
     int fds[2];
@@ -63,23 +70,19 @@ void create_pipes(t_data *data) {
     
     if (pipe(fds) == -1) {
         perror("pipe:");
-        return ;
+        return;
     }
-    if(data && check_heredoc(data))
-    {
-		heredoc_mult(data, fds);
-	}
     if ((pid = fork()) == -1) {
         perror("fork");
         return;
     }
-    if (pid == 0) 
+    if (pid == 0)
     {
         close(fds[0]);
         dup2(fds[1], 1);
         handle_child_redirections(data, fds);
         handle_child_execution(data);
-    }
+    } 
     close(fds[1]);
     dup2(fds[0], 0);
     close(fds[0]);
@@ -132,6 +135,20 @@ void handle_process_redirections(t_data *data) {
         dup2(file->index, 1);
         close(file->index);
     }
+    if (check_heredoc(data))
+    {
+        int fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
+        if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
+			perror(" ");
+			ft_putstr_fd("", 2);
+			env->exit_status = 1;
+			exit (1);
+		}
+        dup2(fd, 0);
+        close(fd);
+    }
     if (!data->cmd || !data->cmd[0])
         exit(127);
 }
@@ -153,11 +170,12 @@ void ft_execute_multiple(t_data *data) {
         create_pipes(data);
         data = data->next;
     }
+    
     pid = fork();
     if (!pid) {
         handle_process_redirections(data);
         handle_process_execution(data);
-    } 
+    }
     else 
     {
         waitpid(pid, &status, 0);
@@ -173,8 +191,9 @@ void ft_execute_multiple(t_data *data) {
 // }
 void process_pipe(t_data *data)
 {
+	if(data && !ft_strcmp(data->args[0],"./minishell"))
+		inc_shell();
+    // if(data && !ft_strcmp(data->args[0],"exit"))
+	// 	dec_shell();
 	ft_execute_multiple(data);
 }
-
-
-
