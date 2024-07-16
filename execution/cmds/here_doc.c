@@ -9,8 +9,8 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		delimiter = ft_strjoin(data->heredoc->delimiter, "\n");
 		while (1)
 		{
-			write(1, ">", 1);
-			line = get_next_line(STDIN_FILENO);
+			// write(1, ">", 1);
+			line = readline(">");
 			if(line && !data->heredoc->type)
 				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)

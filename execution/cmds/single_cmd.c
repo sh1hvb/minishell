@@ -52,12 +52,13 @@ void handle_execve(t_data *data, char *path, char **envp) {
     if ((data && !data->cmd) || !data->cmd[0])
         exit(127);
     
-    if (execve(path, data->args, envp) == -1 || access(path, X_OK & F_OK) != 0) {
+    if (access(path, X_OK & F_OK) != 0 || execve(path, data->args, envp) == -1) {
         ft_putstr_fd(data->cmd, 2);
         if (access(path, X_OK & F_OK) != 0 && (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/' || (data->cmd[0] == '.' && data->cmd[1] == '/')))
             ft_putstr_fd(": No such file or directory\n", 2);
         else
             ft_putendl_fd(" : command not found", 2);
+        ft_freed(envp);
         exit(127);
     }
 }
@@ -73,13 +74,17 @@ void execute(t_data *data) {
     
     if (path) {
         handle_path_access(data, path, envp);
+        handle_redirections(data);
+        handle_execve(data, path, envp);
     }
-
-    handle_redirections(data);
-    handle_execve(data, path, envp);
+    else
+    {
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(data->cmd, 2);
+        ft_putstr_fd(" :command not found\n", 2);
+        exit(127);
+    }
 }
-
-
 
 void handle_heredoc(t_data *data) {
     if (data && check_heredoc(data))
@@ -126,6 +131,7 @@ void close_file_descriptors(t_data *data) {
 
 void execute_built_in_or_fork(t_data *data) {
     int pid, status;
+
     if (check_builts(data))
         handle_builts(data);
     else

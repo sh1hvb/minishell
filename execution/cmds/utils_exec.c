@@ -47,7 +47,7 @@ char	*get_path(char *cmd)
 	if (!allpath)
 		return (NULL);
 	i = -1;
-	while (allpath[++i] )
+	while (allpath[++i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd);

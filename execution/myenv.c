@@ -42,11 +42,6 @@ void handle_env(char *envp[])
 	p = NULL;
 	tmp = NULL;
 	char **new_env = NULL;
-    // if (env)
-    // {
-    //     inc_shell();
-    //     printf("-----------------\n------------------");
-    // }
     if(!envp)
 	{
 		p = ft_strjoin(getenv("PWD"),getenv("SHLVL"));
