@@ -89,18 +89,18 @@ void	expand(char *prompt, t_lexer **lex)
 	(void) prompt;
 	while (lst)
 	{
-		if (lst->value[0] == '$' && lst->in_quotes != 2 && lst->value[1]
-		&& !is_heredoc(lst))
+		if (lst->value[0] == '$' && lst->in_quotes != 2 && !is_heredoc(lst) 
+		&& (lst->value[1]  || (lst->next && lst->in_quotes == 0 && (lst->next->value[0] == '\"' || lst->next->value[0] == '\''))))
 		{
 			lst->value++;
 			if (lst->value[0] == '?')
 				lst->value = my_strjoin2(ft_itoa(env->exit_status), lst->value + 1);
 			else
 				lst->value = my_strdup(my_get_env(env, lst->value));
-			if (lst->value[0] == '\"')
-				rmv_d_qts(&lst->value);
-			if (lst->value[0] == '\'')
-				rmv_d_qts(&lst->value);
+			// if (lst->value[0] == '\"')
+			// 	rmv_d_qts(&lst->value);
+			// if (lst->value[0] == '\'')
+			// 	rmv_d_qts(&lst->value);
 		}
 		else if (lst->value[0] == '~' && !lst->in_quotes)
 		{
