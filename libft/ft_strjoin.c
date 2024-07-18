@@ -22,9 +22,9 @@ char	*ft_strjoin(char  *s1, char  *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	lens1 = ft_strlen((char *)s2);
-	lens2 = ft_strlen((char *)s1);
-	p = (char *)malloc(sizeof(char) * lens1 + lens2 + 1);
+	lens1 = ft_strlen((char *)s1);
+	lens2 = ft_strlen((char *)s2);
+	p = (char *)malloc(sizeof(char) * (lens1 + lens2 + 1));
 	if (!p)
 		return (0);
 	i = -1;

@@ -73,36 +73,36 @@ int	ft_append_file(t_files *file)
 	return (0);
 }
 
-int	ft_heredoc(t_files *file)
-{
-	int	fd;
-	char *path ="~/tmp/";
-	int i = 0;
-	char *joined;
-	char *s;
-	while (file && i <=16)
-	{
-		i++;
-		s = ft_itoa(i);
-		joined = ft_strjoin(path,s);		
-		fd = open(joined, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if (fd == -1)
-		{
-			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
-			perror(" ");
-			ft_putstr_fd("", 2);
-			return (1);
-		}
-		free(joined);
-		free(s);
-		if (file->next)
-			close(fd); 
-		else
-			file->index = fd; 
-		file = file->next;
-	}
-	return (0);
-}
+// int	ft_heredoc(t_files *file)
+// {
+// 	int	fd;
+// 	char *path ="/tmp";
+// 	int i = 0;
+// 	char *joined;
+// 	char *s;
+// 	while (file && i <=16)
+// 	{
+// 		i++;
+// 		s = ft_itoa(i);
+// 		joined = ft_strjoin(path,s);		
+// 		fd = open(joined, O_CREAT | O_RDWR | O_APPEND, 0644);
+// 		if (fd == -1)
+// 		{
+// 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
+// 			perror(" ");
+// 			ft_putstr_fd("", 2);
+// 			return (1);
+// 		}
+// 		free(joined);
+// 		free(s);
+// 		if (file->next)
+// 			close(fd); 
+// 		else
+// 			file->index = fd; 
+// 		file = file->next;
+// 	}
+// 	return (0);
+// }
 // void	ft_append(t_files *file)
 // {
 // 	int	fd;

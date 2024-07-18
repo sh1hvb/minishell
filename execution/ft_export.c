@@ -50,7 +50,7 @@ char *my_get_env(t_envp *env_list, const char *key) {
         if (ft_strcmp(current->key, key) == 0) {
             if(!current->value)
                 current->value = ft_strdup("");
-            return current->value;
+            return ft_strdup(current->value);
         }
         current = current->next;
     }
@@ -178,11 +178,12 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         ft_putstr_fd(data->args[1], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        exit (1);
+        ft_freed(arr);
+        return ;
     }
     if (handle_no_first_element(arr)) {
         // return;
-    }
+}
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
     }
@@ -199,7 +200,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         ft_putstr_fd(data->args[1], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        exit (1);
+        return ;
 
     }
     ft_freed(arr);
