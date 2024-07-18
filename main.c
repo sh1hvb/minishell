@@ -32,6 +32,7 @@ void	minishell(char *envp[])
 		if (!prompt)
 		{
 			printf("exit\n");
+			ft_malloc(0, 1);
 			exit (env->exit_status);
 		}
 		else if (!prompt[0])
@@ -86,15 +87,7 @@ int	main(int ac, char *av[], char *envp[])
 	// exit(0);
 	handle_env(envp);
 	inc_shell();
-	// char **test =NULL;
-	// test = list_to_pointer();
-	// int i = 0;
-	// while(test[i])
-	// {
-	// 	printf("%s\n", test[i]);
-	// 	i++;
-	// }
-	// exit(0);
+
 	minishell(envp);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
