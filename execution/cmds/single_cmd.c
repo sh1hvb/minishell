@@ -80,13 +80,9 @@ void execute(t_data *data) {
     {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(data->cmd, 2);
-        if (access(path, X_OK & F_OK) != 0 &&  ((data->cmd[ft_strlen(data->cmd) - 1] == '/') || (data->cmd[0] == '.' && data->cmd[1] == '/' )|| data->cmd[0] == '/' ))
-        {
-            if (access(data->cmd , X_OK))
-                ft_putstr_fd(": Permission denied\n", 2);
-            ft_putstr_fd(": No such file or directory\n", 2);
 
-        }
+        if (access(data->cmd, X_OK &F_OK) != 0 && (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/' || (data->cmd[0] == '.' && data->cmd[1] == '/')))
+            ft_putstr_fd(": No such file or directory\n", 2);
         else
             ft_putstr_fd(" : command not found\n", 2);
         free(path);
