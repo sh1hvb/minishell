@@ -82,6 +82,8 @@ void execute(t_data *data) {
         ft_putstr_fd("minishell: ", 2);
         ft_putstr_fd(data->cmd, 2);
         ft_putstr_fd(" :command not found\n", 2);
+        ft_malloc(0,1);
+	    ft_lstclear_env(&env);
         exit(127);
     }
 }

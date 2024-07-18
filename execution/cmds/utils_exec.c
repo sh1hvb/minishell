@@ -41,7 +41,7 @@ char	*get_path(char *cmd)
 	if (!cmd)
 		return NULL;
 	if (!access(cmd, X_OK) || cmd[0] == '/')
-		return (ft_strdup(cmd));
+		return (my_strdup(cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
 	if (!allpath)
@@ -49,9 +49,8 @@ char	*get_path(char *cmd)
 	i = -1;
 	while (allpath[++i])
 	{
-		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, cmd);
-		free(path_part);
+		path_part = my_strjoin(allpath[i], "/");
+		exec = my_strjoin(path_part, cmd);
 
 		if (access(exec, X_OK) == 0)
         {
@@ -59,7 +58,6 @@ char	*get_path(char *cmd)
 			free(value);
 			return (exec);
         }
-		free(exec);
 	}
 	if ((access(cmd , F_OK) == 0 && access(cmd , X_OK) != 0) && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/' ||(cmd[0] == '.' && cmd[1] == '/')))
 	{

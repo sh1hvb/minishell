@@ -11,7 +11,6 @@ void handle_child_redirections(t_data *data, int fds[]) {
         dup2(file->index, 0);
         close(file->index);
     }
-    
     if (data && data->redir_out) {
         if (ft_output(data->redir_out))
             exit(1);
@@ -20,7 +19,6 @@ void handle_child_redirections(t_data *data, int fds[]) {
         close(file->index);
         flag = 1;
     }
-    
     if (data && data->append) {
         if (ft_append_file(data->append))
             exit(1);
@@ -28,7 +26,6 @@ void handle_child_redirections(t_data *data, int fds[]) {
         dup2(file->index, 1);
         close(file->index);
     }
-
     if (check_heredoc(data))
     {
         int fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
@@ -62,7 +59,6 @@ void handle_child_execution(t_data *data) {
         exit(0);
     }
 }
-
 
 void create_pipes(t_data *data) {
     int fds[2];
@@ -163,7 +159,6 @@ void handle_process_execution(t_data *data) {
 }
 
 void ft_execute_multiple(t_data *data) {
-    // t_data *original_data = data;?
     int pid, status;
     
     while (data && data->next) {

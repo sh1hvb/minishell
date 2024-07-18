@@ -35,20 +35,6 @@ void inc_shell() {
         tmpenv = tmpenv->next;
     }
 }
-void dec_shell() {
-    int tmp;
-    t_envp *tmpenv = env;
-
-    while (tmpenv) {
-        if (!ft_strcmp(tmpenv->key, "SHLVL")) {
-            tmp = ft_atoi(tmpenv->value) - 1;
-            free(tmpenv->value);
-            tmpenv->value = ft_itoa(tmp);
-			break;
-        }
-        tmpenv = tmpenv->next;
-    }
-}
 
 void process_cmd(t_data *data)
 {
