@@ -24,7 +24,8 @@ char **list_to_pointer()
 void inc_shell() {
     int tmp;
     t_envp *tmpenv = env;
-
+	char *a;
+	a  = NULL ;
     while (tmpenv) {
         if (!ft_strcmp(tmpenv->key, "SHLVL")) {
             tmp = ft_atoi(tmpenv->value) + 1;
@@ -44,8 +45,6 @@ void process_cmd(t_data *data)
 	if(data && !data->next)
 	{
 		execute_single_cmd(data);
-		// close(data->redir_in->index);
-		// close(data->redir_out->index);
 		dup2(199,0);
 		dup2(200, 1);
 	}
@@ -72,13 +71,4 @@ void process_cmd(t_data *data)
         }
     }
 	}
-	// else if(data && !data->next)
-	// {
-
-	// 	execute_single_cmd(data);
-	// 	// close(data->redir_in->index);
-	// 	// close(data->redir_out->index);
-	// 	dup2(199,0);
-	// 	dup2(200, 1);
-	// }
 }
