@@ -59,7 +59,18 @@ void process_cmd(t_data *data)
 		process_pipe(data);
 		dup2(199,0);
 		dup2(200, 1);
-		while (waitpid(-1, &status, 0) != -1);
+		 while (waitpid(-1, &status, 0) != -1) {
+        if (WIFEXITED(status)) {
+            status = WEXITSTATUS(status);
+            env->exit_status = status;
+            if (status == 127 || status == 126 || status == 1 || status == 0) {
+                break;
+            }
+        } else if (WIFSIGNALED(status)) {
+            env->exit_status = WTERMSIG(status) + 128;
+            break;
+        }
+    }
 	}
 	// else if(data && !data->next)
 	// {

@@ -89,7 +89,7 @@ t_envp *get_env(char **env)
     while (env[i])
     {
         splited = builtins_split(env[i], "+=");
-        new_node = malloc(sizeof(t_envp));
+        new_node =(t_envp *)malloc(sizeof(t_envp));
         if (!new_node)
             return 0;
         new_node->key = ft_strdup(splited[0]);
