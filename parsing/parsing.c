@@ -142,9 +142,16 @@ int	parsing(t_lexer **lex, t_data	**data)
 			else
 				data_tmp->cmd = NULL;
 			new_node(&lex_tmp, &data_tmp);
-		}
+		}	
 		else
+		{
+			if (lex_tmp->type == '$' && lex_tmp->in_quotes == 0)
+			{
+				lex_tmp->value = my_strjoin("\"", lex_tmp->value);
+				lex_tmp->value = my_strjoin(lex_tmp->value, "\"");
+			}
 			fill_args(&lex_tmp, &data_tmp);
+		}
 		remove_quotes(data_tmp);
 	}
 	initialize_cmd(data_tmp);
