@@ -64,7 +64,7 @@ tmp = env_list;
         {
             if (tmp->value)
                 free(tmp->value);
-            tmp->value = value;
+            tmp->value = ft_strdup(value);
         }
         tmp = tmp->next;
     }
