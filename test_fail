@@ -21,6 +21,10 @@ cat <minishell.h
 echo - "" "  " hello
 
 segfault here ====> ""
+ginal with heredoc
+
+minishell$ <Makefile <<her cat -e
+>$PATH$USER$XXX
 
 minishell$ $EMPTY echo hi
 
