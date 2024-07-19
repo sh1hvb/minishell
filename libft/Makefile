@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror #-g3
 
 AR = ar -r
 

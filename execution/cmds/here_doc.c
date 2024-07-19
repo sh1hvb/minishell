@@ -11,7 +11,7 @@ void heredoc_read_and_put(t_data *data, int *fdp)
 		{
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
-			if(line && !data->heredoc->type)
+			if(line && !data->heredoc->type && ft_strcmp(line, delimiter))
 				line = heredoc_expand(line);
 			if (!line || ft_strcmp(line, delimiter) == 0)
 			{
