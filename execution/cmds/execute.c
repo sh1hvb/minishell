@@ -42,8 +42,7 @@ char	*get_path_two(char *cmd)
 }
 void handle_child_redirections(t_data *data, int fds[]) {
     t_files *file;
-    int flag = 0;
-    
+
     if (data && data->redir_in) {
         if (ft_input(data->redir_in))
             exit(1);
@@ -57,7 +56,6 @@ void handle_child_redirections(t_data *data, int fds[]) {
         file = ft_lstlast_file(data->redir_out);
         dup2(file->index, 1);
         close(file->index);
-        flag = 1;
     }
     if (data && data->append) {
         if (ft_append_file(data->append))
