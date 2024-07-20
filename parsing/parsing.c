@@ -100,10 +100,24 @@ void	fill_args(t_lexer **lex, t_data	**data)
 	lex_tmp = *lex;
 	data_tmp = *data;
 	data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
-	data_tmp->args = lexer_split(data_tmp->cmd, " \t\n");
+	data_tmp->args = lexer_split(data_tmp->cmd, " \t\n");	
 	data_tmp->in_quotes = lex_tmp->in_quotes;
 	if (*lex)
 		*lex = (*lex)->next;
+}
+
+void	check_empty_cmd(t_data	*data_tmp)
+{
+	int	i;
+
+	i = 0;
+	if (data_tmp->args&& data_tmp->args[0])
+	{
+		while (data_tmp->args[0][i] && data_tmp->args[0][i] <= 32)
+			i++;
+		if (!data_tmp->args[0][i])
+			data_tmp->cmd = NULL;
+	}
 }
 
 static int	is_redirection(t_lexer *lex)
@@ -153,6 +167,7 @@ int	parsing(t_lexer **lex, t_data	**data)
 			fill_args(&lex_tmp, &data_tmp);
 		}
 		remove_quotes(data_tmp);
+		check_empty_cmd(data_tmp);
 	}
 	initialize_cmd(data_tmp);
 	return (0);

@@ -24,8 +24,7 @@ char **list_to_pointer()
 void inc_shell() {
     int tmp;
     t_envp *tmpenv = env;
-	char *a;
-	a  = NULL ;
+
     while (tmpenv) {
         if (!ft_strcmp(tmpenv->key, "SHLVL")) {
             tmp = ft_atoi(tmpenv->value) + 1;
