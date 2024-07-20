@@ -103,7 +103,7 @@ void ft_append(t_data *data, t_envp *env, int i) {
     char *join;
     int flag = 0;
 
-    splited = builtins_split(data->args[i], "+=");
+    splited = lexer_split(data->args[i], "+=");
     append = my_get_env(env, splited[0]);
 
     if (!append) {
@@ -111,7 +111,7 @@ void ft_append(t_data *data, t_envp *env, int i) {
         flag = if_flag(data->args[i]);
         ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
     } else {
-        char **temp_splited = builtins_split(data->args[i], "+=");
+        char **temp_splited = lexer_split(data->args[i], "+=");
         join = ft_strjoin(append, temp_splited[1]);
         env = my_append_env(env, temp_splited[0], join);
         ft_freed(temp_splited);
@@ -171,7 +171,7 @@ void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
 void process_arguments(t_data *data, t_envp *env, int i) {
     char **arr;
 
-    arr = builtins_split(data->args[i], "+=");
+    arr = lexer_split(data->args[i], "+=");
     if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
     {
         ft_putstr_fd("minishell: export: `", 2);
@@ -182,7 +182,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         return ;
     }
     if (handle_no_first_element(arr)) {
-        // return;
+        return;
 }
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);

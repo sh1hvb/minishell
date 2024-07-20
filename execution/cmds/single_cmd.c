@@ -138,8 +138,11 @@ void close_file_descriptors(t_data *data) {
 
 void execute_built_in_or_fork(t_data *data) {
     int pid, status;
-    if (check_builts(data))
+    if (check_builts(data)){
         handle_builts(data);
+        env->exit_status = 0;
+        return;
+    }
     else if(!data || !data->cmd || !data->cmd[0])
         return;
     else
