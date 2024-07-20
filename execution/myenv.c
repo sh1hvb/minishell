@@ -17,15 +17,15 @@ void print_env_list(char *x)
         {
             printf("%s\n", current->key);
         }
-        else if(!current->value && current->flag == 1 && !ft_strcmp(x,"ex"))
-        {
-            current->value=ft_strdup("\"\"");
-            printf("%s=%s\n", current->key, current->value);
-        }
+        // else if(!current->value && current->flag == 1 && !ft_strcmp(x,"ex"))
+        // {
+        //     // current->value=ft_strdup("\"\"");
+        //     printf("%s=%s\n", current->key, current->value);
+        // }
         else
         {
-            if(!current->value)
-                current->value=ft_strdup("\"\"");
+            // if(!current->value &&  ft_strcmp(current->value,"\"\""))
+            //     current->value=ft_strdup("\"\"");
             if(!ft_strcmp(x,"ex"))
                 printf("%s=\"%s\"\n", current->key, current->value);
             else

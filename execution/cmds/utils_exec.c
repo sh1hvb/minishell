@@ -23,6 +23,7 @@ t_files	*ft_lstlast_file(t_files *lst)
 		lst = lst->next;
 	return (lst);
 }
+
 void handle_directory_error(char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -30,6 +31,7 @@ void handle_directory_error(char *cmd)
 	ft_putstr_fd(": Is a directory\n", 2);
 	exit(126);
 }
+
 char	*get_path(char *cmd)
 {
 	int		i;
@@ -65,7 +67,7 @@ char	*get_path(char *cmd)
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
-		return (NULL);
+		exit (126);
 	}
 	free(value);
 	ft_freed(allpath);

@@ -110,7 +110,7 @@ t_envp	*ft_lstnew_env(char *value, t_envp *env, int flag)
 
 	splited = NULL;
     last = ft_lstlast_env(env);
-    splited = builtins_split(value ,"+=");
+    splited = lexer_split(value ,"+=");
 	head = malloc(sizeof(t_envp));
 	if (!head)
 		return (NULL);
