@@ -43,6 +43,7 @@ static void set_previous_pointers(t_envp *lst)
         tmp = tmp->next;
     }
 }
+
 char *my_get_env(t_envp *env_list, const char *key) {
     t_envp *current = env_list;
     
@@ -56,6 +57,7 @@ char *my_get_env(t_envp *env_list, const char *key) {
     }
     return NULL;
 }
+
 t_envp *my_append_env(t_envp *env_list, const char *key, char *value) {
 t_envp *tmp;
 tmp = env_list;
@@ -71,6 +73,7 @@ tmp = env_list;
     env_list = tmp;
     return env_list;
 }
+
 t_envp *sort_list(t_envp *lst, int (*cmp)(int, int))
 {
     int swapped;
@@ -97,6 +100,7 @@ t_envp *sort_list(t_envp *lst, int (*cmp)(int, int))
     set_previous_pointers(lst);
     return lst;
  }
+
 void ft_append(t_data *data, t_envp *env, int i) {
     char *append;
     char **splited;
@@ -118,7 +122,6 @@ void ft_append(t_data *data, t_envp *env, int i) {
     }
     ft_freed(splited);
 }
-
 
 int check_equal(char *s)
 {
@@ -178,21 +181,22 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         ft_putstr_fd(data->args[1], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        ft_freed(arr);
-        return ;
+        // return ;
     }
-    if (handle_no_first_element(arr)) {
+    if (handle_no_first_element(arr)) 
+    {
+
         return;
-}
+    }
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
+        // return;
     }
     // if(check_sp(data->args[i]))
     // {
     //     printf("export: `=': not a valid identifier\n");
     //     env->exit_status = 1;
     //     return;
-
     // }
     else 
     {
@@ -200,10 +204,8 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         ft_putstr_fd(data->args[1], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
-        return ;
-
+        // return ;
     }
-    ft_freed(arr);
 }
 
 void ft_export(t_data *data, t_envp *env) {
@@ -214,13 +216,11 @@ void ft_export(t_data *data, t_envp *env) {
         return;
     }
 
-    while (data->args[i]) {
+    while (data->args[i]) 
+    {
         if(!ft_strcmp(data->args[i], "export"))
             i++;
         process_arguments(data, env, i);
         i++;
     }
 }
-
-
-
