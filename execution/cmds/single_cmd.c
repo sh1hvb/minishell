@@ -71,7 +71,16 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		ft_malloc(0, 1);       // Free allocated memory
 		exit(127);
 	}
-
+	path = get_path(data->cmd);
+	if (path)
+	{
+		if (is_directory(path))
+		{
+			free(path);
+			ft_freed(envp);
+			handle_directory_error(data->cmd);
+		}
+	}
 	if (!path)
 	{
 		ft_putendl_fd("Invalid path", 2);
@@ -80,10 +89,15 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		exit(127);
 	}
 
-	if (access(path, X_OK) != 0)
+	if (access(path, X_OK) != 0 )
 	{
 		ft_putstr_fd(data->cmd, 2);
-		if (errno == ENOENT)
+		if(errno == ENOENT)
+		{
+			ft_putendl_fd(": Command not found", 2);
+		}
+		else if (errno == ENOENT && (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/'
+			|| (data->cmd[0] == '.' && data->cmd[1] == '/')))
 		{
 			ft_putendl_fd(": No such file or directory", 2);
 		}
@@ -95,15 +109,19 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		{
 			ft_putendl_fd(": Error accessing file", 2);
 		}
-		ft_lstclear_env(&env); // Free allocated resources
-		ft_malloc(0, 1);       // Free allocated memory
+		ft_lstclear_env(&env); 
+		ft_malloc(0, 1); 
 		exit(127);
 	}
-    
+    envp = list_to_pointer();
 	if (execve(path, data->args, envp) == -1)
 	{
 		ft_putstr_fd(data->cmd, 2);
-		if (errno == ENOENT)
+		if(errno == ENOENT)
+		{
+			ft_putendl_fd(": Command not found", 2);
+		}
+		else if (errno == ENOENT )
 		{
 			ft_putendl_fd(": No such file or directory", 2);
 		}
@@ -111,12 +129,9 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		{
 			ft_putendl_fd(": Permission denied", 2);
 		}
-		else
-		{
-			ft_putendl_fd(": Command not found", 2);
-		}
-		ft_lstclear_env(&env); // Free allocated resources
-		ft_malloc(0, 1);       // Free allocated memory
+		
+		ft_lstclear_env(&env); 
+		ft_malloc(0, 1); 
 		exit(127);
 	}
 }
