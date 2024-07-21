@@ -2,21 +2,24 @@
 
 int	files_syntax(t_lexer *lex)
 {
+	char	*msg;
+
+	msg = "minishell: syntax error near unexpected token `newline'";
 	if (lex)
 	{
 		lex = lex->next;
 		while (lex && lex->type == 'W')
 			lex = lex->next;
 		if (!lex)
-			ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
+			ft_putendl_fd(msg, 2);
 		else if (lex->type == 'I')
-			ft_putendl_fd("minishell: syntax error near unexpected token `<'", 2);
+			ft_putendl_fd(msg, 2);
 		else if (lex->type == 'O')
-			ft_putendl_fd("minishell: syntax error near unexpected token `>'", 2);
+			ft_putendl_fd(msg, 2);
 		else if (lex->type == 'H')
-			ft_putendl_fd("minishell: syntax error near unexpected token `<<'", 2);
+			ft_putendl_fd(msg, 2);
 		else if (lex->type == 'A')
-			ft_putendl_fd("minishell: syntax error near unexpected token `>>'", 2);
+			ft_putendl_fd(msg, 2);
 		if (!lex || lex->type == 'I' || lex->type == 'O'
 			|| lex->type == 'H' || lex->type == 'A')
 		{

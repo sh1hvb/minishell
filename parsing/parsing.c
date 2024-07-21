@@ -1,4 +1,5 @@
 #include "../minishell.h"
+
 int		is_heredoc(t_lexer *lst);
 int		heredoc_lstsize(t_files *lst);
 t_data	*pars_lstnew(char *value, int quotes);
@@ -84,7 +85,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 	if (!data_tmp->next)
 	{
 		ft_malloc(0, 1);
-		exit(1);
+		return (1);
 	}
 	if (*data)
 		*data = (*data)->next;
@@ -100,7 +101,7 @@ void	fill_args(t_lexer **lex, t_data	**data)
 	lex_tmp = *lex;
 	data_tmp = *data;
 	data_tmp->cmd = my_strjoin(data_tmp->cmd, lex_tmp->value);
-	data_tmp->args = lexer_split(data_tmp->cmd, " \t\n");	
+	data_tmp->args = lexer_split(data_tmp->cmd, " \t\n");
 	data_tmp->in_quotes = lex_tmp->in_quotes;
 	if (*lex)
 		*lex = (*lex)->next;
@@ -111,7 +112,7 @@ void	check_empty_cmd(t_data	*data_tmp)
 	int	i;
 
 	i = 0;
-	if (data_tmp->args&& data_tmp->args[0])
+	if (data_tmp->args && data_tmp->args[0])
 	{
 		while (data_tmp->args[0][i] && data_tmp->args[0][i] <= 32)
 			i++;
@@ -123,7 +124,7 @@ void	check_empty_cmd(t_data	*data_tmp)
 static int	is_redirection(t_lexer *lex)
 {
 	return (lex->type == 'I' || lex->type == 'O'\
-	 || lex->type == 'H' || lex->type == 'A');
+	|| lex->type == 'H' || lex->type == 'A');
 }
 
 int	parsing(t_lexer **lex, t_data	**data)
@@ -156,7 +157,7 @@ int	parsing(t_lexer **lex, t_data	**data)
 			else
 				data_tmp->cmd = NULL;
 			new_node(&lex_tmp, &data_tmp);
-		}	
+		}
 		else
 		{
 			if (lex_tmp->type == '$' && lex_tmp->in_quotes == 0)

@@ -41,7 +41,7 @@ void	split_quotes(char *target, char delimiter, int *index)
 			if (target[i] == '\'' || target[i] == '\"')
 				delimiter = target[i];
 			else
-				break;
+				break ;
 		}
 		i++;
 	}

@@ -2,13 +2,16 @@
 
 int	helper_line(int flag, int flag2)
 {
+	char	*msg;
+
+	msg = "minishell: unexpected EOF while looking for matching `\"'";
 	if (flag == 1)
-		ft_putendl_fd("minishell: unexpected EOF while looking for matching `\"'", 2);
+		ft_putendl_fd(msg, 2);
 	if (flag2)
-		ft_putendl_fd("minishell: unexpected EOF while looking for matching `\''", 2);
+		ft_putendl_fd(msg, 2);
 	if (flag2 | flag)
 	{
-		ft_putendl_fd("minishell: syntax error: unexpected end of file ", 2);
+		ft_putendl_fd(msg, 2);
 		return (2);
 	}
 	return (0);
