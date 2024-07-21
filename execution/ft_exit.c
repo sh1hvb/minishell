@@ -7,7 +7,8 @@ long long	ft_atoi2(char *str)
 
 	digit = 0;
 	signe = 1;
-	if (!ft_strcmp(str, "-9223372036854775808") || !ft_strcmp(str, "9223372036854775807"))
+	if (!ft_strcmp(str, "-9223372036854775808") || !ft_strcmp(str,
+			"9223372036854775807"))
 		return (1);
 	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
@@ -30,7 +31,7 @@ long long	ft_atoi2(char *str)
 }
 int	is_number(char *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg[i])
@@ -54,8 +55,8 @@ int	is_number(char *arg)
 void	ft_exit(t_data *data)
 {
 	int	ext;
-	// int tmp;
 
+	// int tmp;
 	ext = 0;
 	if (data && !data->next)
 	{
@@ -74,8 +75,10 @@ void	ft_exit(t_data *data)
 				env->exit_status = 1;
 				return ;
 			}
-			ext =  ft_atoi(data->args[1]);
+			ext = ft_atoi(data->args[1]);
 		}
-		exit ((char) ext);
+		ft_malloc(1, 0);
+		ft_lstclear_env(&env);
+		exit((char)ext);
 	}
 }
