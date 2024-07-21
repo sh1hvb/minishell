@@ -1,7 +1,9 @@
 #include "../../minishell.h"
- int	ft_lstsize_file(t_files *lst)
+
+
+int	ft_lstsize_file(t_files *lst)
 {
-	int	count;
+	int count;
 
 	if (!lst)
 		return (0);
@@ -16,7 +18,7 @@
 
 t_files	*ft_lstlast_file(t_files *lst)
 {
-	int	last;
+	int last;
 
 	last = ft_lstsize_file(lst);
 	while (last-- > 1)
@@ -24,7 +26,7 @@ t_files	*ft_lstlast_file(t_files *lst)
 	return (lst);
 }
 
-void handle_directory_error(char *cmd)
+void	handle_directory_error(char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
@@ -34,16 +36,16 @@ void handle_directory_error(char *cmd)
 
 char	*get_path(char *cmd)
 {
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
-    t_envp *tmp = env;
+	int i;
+	char *exec;
+	char **allpath;
+	char *path_part;
+	t_envp *tmp = env;
 
 	if (!cmd)
-		return NULL;
+		return (NULL);
 	if (!access(cmd, X_OK) || cmd[0] == '/')
-		return (ft_strdup(cmd));
+		return ((cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
 	if (!allpath)
@@ -56,20 +58,22 @@ char	*get_path(char *cmd)
 		free(path_part);
 
 		if (access(exec, X_OK) == 0)
-        {
+		{
 			ft_freed(allpath);
 			free(value);
 			return (exec);
-        }
+		}
 		free(exec);
 	}
-	if ((access(cmd , F_OK) == 0 && access(cmd , X_OK) != 0) && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/' ||(cmd[0] == '.' && cmd[1] == '/')))
+	if ((access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0) && (cmd[0] == '/'
+			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
+				&& cmd[1] == '/')))
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
-		exit (126);
+		return (cmd);
 	}
 	free(value);
 	ft_freed(allpath);
-	return (NULL);
+	return (cmd);
 }

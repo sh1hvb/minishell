@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	free_lstadd_back(t_leaks **lst, t_leaks *new)
@@ -32,36 +31,49 @@ void	free_lstclear(t_leaks **lst)
 {
 	t_leaks	*next;
 
-	if (!lst || *lst)
+	if (!lst)
 		return ;
 	while (*lst)
 	{
 		next = (*lst)->next;
-        if (*lst)
-	    {
+		if (*lst)
+		{
 			if ((*lst)->add)
-            	free((*lst)->add);
-            free(*lst);
-			lst = NULL;
-	    }
+				free((*lst)->add);
+			free(*lst);
+		}
 		*lst = next;
 	}
+	*lst = NULL;
 }
 
-void *ft_malloc(int size, int flag)
+void	*ft_malloc(int size, int flag)
 {
-   	static t_leaks *address;
-    void *p;
+	static t_leaks	*address;
+	void			*p;
+	t_leaks			*new_node;
 
 	p = NULL;
-    if (flag)
-        free_lstclear(&address);
-    else
-    {
-        p = malloc(size);
+	if (flag)
+	{
+		free_lstclear(&address);
+	}
+	else
+	{
+		p = malloc(size);
 		if (!p)
+		{
 			ft_malloc(0, 1);
-        free_lstadd_back(&address, free_lstnew(p));
-    }
+			return (NULL);
+		}
+		new_node = free_lstnew(p);
+		if (!new_node)
+		{
+			free(p);
+			ft_malloc(0, 1);
+			return (NULL);
+		}
+		free_lstadd_back(&address, new_node);
+	}
 	return (p);
 }

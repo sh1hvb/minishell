@@ -77,6 +77,8 @@ void	ft_exit(t_data *data)
 			}
 			ext = ft_atoi(data->args[1]);
 		}
-		exit ((char) ext);
+		ft_malloc(1, 0);
+		ft_lstclear_env(&env);
+		exit((char)ext);
 	}
 }
