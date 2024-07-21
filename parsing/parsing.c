@@ -32,7 +32,7 @@ static int	is_ambiguous(t_lexer *lex)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(tmp, 2);
-				ft_putendl_fd(": ambiguous redirec", 2);
+				ft_putendl_fd(": ambiguous redirect", 2);
 				env->exit_status = 1;
 				return (1);
 			}

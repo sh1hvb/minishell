@@ -36,7 +36,8 @@ void inc_shell() {
     }
 }
 
-void process_cmd(t_data *data)
+void 
+process_cmd(t_data *data)
 {
 	dup2(0, 199);
 	dup2(1, 200);
@@ -47,8 +48,8 @@ void process_cmd(t_data *data)
 		dup2(199,0);
 		dup2(200, 1);
 	}
-	else if(data && check_heredoc_two(data)){
-
+	else if(data && check_heredoc_two(data))
+	{
 		heredoc_mult(data);
 		while (waitpid(-1, &status, 0) != -1);
 	}

@@ -85,6 +85,7 @@ void	expand(char *prompt, t_lexer **lex)
 	t_lexer	*lst;
 	char	*tmp;
 
+	tmp = NULL;
 	lst = *lex;
 	(void) prompt;
 	while (lst)
@@ -96,7 +97,11 @@ void	expand(char *prompt, t_lexer **lex)
 			if (lst->value[0] == '?')
 				lst->value = my_strjoin2(ft_itoa(env->exit_status), lst->value + 1);
 			else
-				lst->value = my_strdup(my_get_env(env, lst->value));
+			{
+				tmp = my_get_env(env, lst->value);
+				lst->value = my_strdup(tmp);
+				free(tmp);
+			}
 			// if (lst->value[0] == '\"')
 			// 	rmv_d_qts(&lst->value);
 			// if (lst->value[0] == '\'')
@@ -105,9 +110,9 @@ void	expand(char *prompt, t_lexer **lex)
 		else if (lst->value[0] == '~' && !lst->in_quotes)
 		{
 			lst->value++;
-			tmp = lst->value;
-			lst->value = my_strdup(my_get_env(env, "HOME"));
-			lst->value = my_strjoin(lst->value, tmp);
+			tmp = my_get_env(env, "HOME");
+			lst->value = my_strjoin(tmp, lst->value);
+			free(tmp);
 		}
 		lst = lst->next;
 	}

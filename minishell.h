@@ -27,6 +27,7 @@ typedef struct s_envp
 	char *key;
 	char *value;
 	int flag;
+	int signal_heredoc;
     int exit_status;
 	struct s_envp *next;
 	struct s_envp *prev;
@@ -178,5 +179,7 @@ int		ft_append_file(t_files *file);
 void	sigint_handler(int sig);
 void	sigint_int(int sig);
 void	signal_quit(int sig);
+void	sig_quit_heredoc(int sig);
+void	sigint_heredoc(int sig);
 char	*my_strjoin2(char *s1, char *s2);
 #endif
