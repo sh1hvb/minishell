@@ -134,7 +134,7 @@ void	heredoc_mult(t_data *data)
 	if (!fds)
 	{
 		printf("error\n");
-		ft_malloc(1, 0);
+		ft_malloc(0, 1);
 		ft_lstclear_env(&env);
 		exit(0);
 	}
