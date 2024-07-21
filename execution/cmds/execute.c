@@ -106,6 +106,8 @@ void	handle_child_execution(t_data *data)
 	else
 	{
 		handle_builts(data);
+		ft_lstclear_env(&env); // Free allocated resources
+		ft_malloc(0, 1);
 		exit(0);
 	}
 }
@@ -148,7 +150,7 @@ void	exec(t_data *data)
 		return ;
 	}
 	path = get_path(data->cmd);
-	envp = NULL;
+	envp = list_to_pointer();
 	if (path)
 	{
 		if (is_directory(path))
@@ -212,12 +214,14 @@ void	handle_process_execution(t_data *data)
 	if (!check_builts(data))
 	{
 		exec(data);
+		ft_malloc(0, 1);
+		ft_lstclear_env(&env); // Free allocated resources
 	}
 	else
 	{
 		handle_builts(data);
-		ft_malloc(0, 1);
 		ft_lstclear_env(&env);
+		ft_malloc(0, 1);
 		exit(0);
 	}
 }

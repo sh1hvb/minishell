@@ -99,7 +99,7 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		ft_malloc(0, 1);       // Free allocated memory
 		exit(127);
 	}
-
+    
 	if (execve(path, data->args, envp) == -1)
 	{
 		ft_putstr_fd(data->cmd, 2);

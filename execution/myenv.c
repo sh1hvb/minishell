@@ -84,48 +84,33 @@ void	ft_env(void)
 }
 t_envp	*get_env(char **env)
 {
+	char	**splited;
 	t_envp	*env_list;
 	t_envp	*current;
 	t_envp	*new_node;
-	char	*equal_sign;
 	int		i;
 
 	env_list = NULL;
 	current = NULL;
-	new_node = NULL;
-	equal_sign = NULL;
 	i = 0;
 	while (env[i])
 	{
-		equal_sign = ft_sstrchr(env[i], '=');
-		if (equal_sign)
-		{
-			new_node = (t_envp *)malloc(sizeof(t_envp));
-			if (!new_node)
-				return (NULL); // Handle memory allocation failure
-			new_node->key = ft_substr(env[i], 0, equal_sign - env[i]);
-			if (!new_node->key)
-			{
-				free(new_node);
-				return (NULL); // Handle memory allocation failure
-			}
-			new_node->value = ft_strdup(equal_sign + 1);
-			if (!new_node->value)
-			{
-				free(new_node->key);
-				free(new_node);
-				return (NULL); // Handle memory allocation failure
-			}
-			new_node->next = NULL;
-			new_node->flag = 0;
-			new_node->prev = current;
-			new_node->exit_status = 0;
-			if (current)
-				current->next = new_node;
-			else
-				env_list = new_node;
-			current = new_node;
-		}
+		splited = builtins_split(env[i], "+=");
+		new_node = (t_envp *)malloc(sizeof(t_envp));
+		if (!new_node)
+			return (0);
+		new_node->key = ft_strdup(splited[0]);
+		new_node->value = ft_strdup(getenv(splited[0]));
+		new_node->next = NULL;
+		new_node->flag = 0;
+		new_node->prev = current;
+		new_node->exit_status = 0;
+		if (current)
+			current->next = new_node;
+		else
+			env_list = new_node;
+		current = new_node;
+		ft_freed(splited);
 		i++;
 	}
 	return (env_list);
