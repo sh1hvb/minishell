@@ -91,7 +91,7 @@ void	handle_child_redirections(t_data *data, int fds[])
 		exit(127);
 	close(fds[1]);
 }
-static bool	is_directory(char *path)
+ bool	is_directory(char *path)
 {
 	int	fd;
 
@@ -103,11 +103,11 @@ void	handle_child_execution(t_data *data)
 {
 	if (!check_builts(data))
 		exec(data);
-	else
+	else if(check_builts(data))
 	{
 		handle_builts(data);
-		ft_lstclear_env(&env); // Free allocated resources
-		ft_malloc(0, 1);
+		// ft_lstclear_env(&env);
+		// ft_malloc(0, 1);
 		exit(0);
 	}
 }
@@ -149,17 +149,9 @@ void	exec(t_data *data)
 		ft_putendl_fd(": command not found", 2);
 		return ;
 	}
-	path = get_path(data->cmd);
-	envp = list_to_pointer();
-	if (path)
-	{
-		if (is_directory(path))
-		{
-			free(path);
-			ft_freed(envp);
-			handle_directory_error(data->cmd);
-		}
-	}
+	path =NULL;
+	envp =NULL;
+	
 	handle_execve(data, path, envp);
 }
 void	handle_process_redirections(t_data *data)
@@ -214,8 +206,6 @@ void	handle_process_execution(t_data *data)
 	if (!check_builts(data))
 	{
 		exec(data);
-		ft_malloc(0, 1);
-		ft_lstclear_env(&env); // Free allocated resources
 	}
 	else
 	{
