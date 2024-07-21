@@ -40,14 +40,14 @@ static char	*ft_strjoin_s(char  *s1, char  *s2)
 		return (ft_strdup(s2));
 	lens1 = ft_strlen((char *)s2);
 	lens2 = ft_strlen((char *)s1);
-	p = (char *)malloc(sizeof(char) * lens1 + lens2 + 1);
+	p = (char *)malloc(sizeof(char) * (lens1 + lens2 + 1));
 	if (!p)
 		return (0);
 	i = -1;
-	while (s1[++i])
+	while (s1 && s1[++i])
 		p[i] = s1[i];
 	j = -1;
-	while (s2[++j])
+	while (s2 && s2[++j])
 		p[i++] = s2[j];
 	p[i] = '\0';
 	free(s1);

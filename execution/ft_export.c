@@ -50,8 +50,8 @@ char *my_get_env(t_envp *env_list, const char *key) {
     while (current != NULL) {
         if (ft_strcmp(current->key, key) == 0) {
             if(!current->value)
-                current->value = ft_strdup("");
-            return ft_strdup(current->value);
+                current->value = my_strdup("");
+            return (ft_strdup(current->value));
         }
         current = current->next;
     }
