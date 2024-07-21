@@ -216,6 +216,8 @@ void	handle_process_execution(t_data *data)
 	else
 	{
 		handle_builts(data);
+		ft_malloc(0, 1);
+		ft_lstclear_env(&env);
 		exit(0);
 	}
 }
