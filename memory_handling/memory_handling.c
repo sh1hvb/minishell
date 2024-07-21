@@ -44,7 +44,7 @@ void	free_lstclear(t_leaks **lst)
 		}
 		*lst = next;
 	}
-	*lst = NULL; // Ensure the list pointer itself is set to NULL after clearing
+	*lst = NULL;
 }
 
 void	*ft_malloc(int size, int flag)
@@ -64,14 +64,14 @@ void	*ft_malloc(int size, int flag)
 		if (!p)
 		{
 			ft_malloc(0, 1);
-			return (NULL); // Return NULL to indicate memory allocation failure
+			return (NULL);
 		}
 		new_node = free_lstnew(p);
 		if (!new_node)
 		{
-			free(p); // Free the allocated memory if node creation fails
+			free(p);
 			ft_malloc(0, 1);
-			return (NULL); // Return NULL to indicate memory allocation failure
+			return (NULL);
 		}
 		free_lstadd_back(&address, new_node);
 	}
