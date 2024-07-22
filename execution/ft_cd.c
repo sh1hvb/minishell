@@ -53,10 +53,12 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 	{
 		perror(my_strjoin(msg, ": "));
 		env->exit_status = 1;
+		free(tmp);
 		return ;
 	}
 	get_old_pwd(cwd);
 	env->exit_status = 0;
+	free(tmp);
 	return ;
 }
 
@@ -78,8 +80,10 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 		{
 			perror(my_strjoin(msg, ": "));
 			env->exit_status = 1;
+			free(tmp);
 			return ;
 		}
+		free(tmp);
 	}
 	else
 	{
@@ -88,9 +92,11 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 		env->exit_status = 1;
 		return ;
 	}
-	ft_putstr_fd(my_get_env(env, "OLDPWD"), 1);
+	tmp = my_get_env(env, "OLDPWD");
+	ft_putstr_fd(tmp, 1);
 	ft_putstr_fd("\n", 1);
 	get_old_pwd(cwd);
+	free(tmp);
 }
 
 void	ft_cd(t_data *data)

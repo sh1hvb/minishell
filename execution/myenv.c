@@ -45,11 +45,17 @@ void	handle_env(char *envp[])
 	p = NULL;
 	tmp = NULL;
 	new_env = NULL;
-	if (!envp)
+	if (!envp || (envp && !envp[0]))
 	{
 		p = ft_strjoin(getenv("PWD"), getenv("SHLVL"));
 		tmp = ft_strjoin(p, getenv("_"));
 		new_env = ft_split(tmp, '\n');
+		if (!new_env)
+		{
+			free(p);
+			free(tmp);
+			exit(1);
+		}
 		free(p);
 		free(tmp);
 		env = get_env(new_env);
@@ -93,7 +99,7 @@ t_envp	*get_env(char **env)
 	env_list = NULL;
 	current = NULL;
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		splited = builtins_split(env[i], "+=");
 		new_node = (t_envp *)malloc(sizeof(t_envp));
