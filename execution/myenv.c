@@ -19,15 +19,8 @@ void	print_env_list(char *x)
 		{
 			printf("%s\n", current->key);
 		}
-		// else if(!current->value && current->flag == 1 && !ft_strcmp(x,"ex"))
-		// {
-		//     // current->value=ft_strdup("\"\"");
-		//     printf("%s=%s\n", current->key, current->value);
-		// }
 		else
 		{
-			// if(!current->value &&  ft_strcmp(current->value,"\"\""))
-			//     current->value=ft_strdup("\"\"");
 			if (!ft_strcmp(x, "ex"))
 				printf("%s=\"%s\"\n", current->key, current->value);
 			else
@@ -91,10 +84,8 @@ void	ft_env(void)
 t_envp	*get_env(char **env)
 {
 	char	**splited;
-	t_envp	*env_list;
-	t_envp	*current;
-	t_envp	*new_node;
 	int		i;
+	t_envp(*env_list), (*current), (*new_node);
 
 	env_list = NULL;
 	current = NULL;

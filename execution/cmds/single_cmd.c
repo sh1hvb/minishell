@@ -2,48 +2,48 @@
 #include <errno.h>
 
 
-void	handle_command_not_found(t_data *data)
-{
-	if (data && data->cmd && !ft_strcmp("minishell", data->args[0]))
-	{
-		ft_putstr_fd(data->cmd, 2);
-		ft_putendl_fd(": command not found", 2);
-		return ;
-	}
-}
+// void	handle_command_not_found(t_data *data)
+// {
+// 	if (data && data->cmd && !ft_strcmp("minishell", data->args[0]))
+// 	{
+// 		ft_putstr_fd(data->cmd, 2);
+// 		ft_putendl_fd(": command not found", 2);
+// 		return ;
+// 	}
+// }
 
-void	handle_path_access(t_data *data, char *path, char **envp)
-{
-	if (!data->cmd[0])
-		exit(127);
-	if (data->cmd[0] == '/' && access(path, X_OK) != 0)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(data->cmd, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(127);
-	}
+// void	handle_path_access(t_data *data, char *path, char **envp)
+// {
+// 	if (!data->cmd[0])
+// 		exit(127);
+// 	if (data->cmd[0] == '/' && access(path, X_OK) != 0)
+// 	{
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(data->cmd, 2);
+// 		ft_putstr_fd(": No such file or directory\n", 2);
+// 		exit(127);
+// 	}
 
-	int fd = open(path, __O_DIRECTORY);
-	if (fd != -1)
-	{
-		free(path);
-		ft_freed(envp);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(data->cmd, 2);
-		if (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/'
-			|| (data->cmd[0] == '.' && data->cmd[1] == '/'))
-		{
-			ft_putstr_fd(": Is a directory\n", 2);
-			exit(126);
-		}
-		else
-		{
-			ft_putstr_fd(": command not found\n", 2);
-			exit(127);
-		}
-	}
-}
+// 	int fd = open(path, __O_DIRECTORY);
+// 	if (fd != -1)
+// 	{
+// 		free(path);
+// 		ft_freed(envp);
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(data->cmd, 2);
+// 		if (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/'
+// 			|| (data->cmd[0] == '.' && data->cmd[1] == '/'))
+// 		{
+// 			ft_putstr_fd(": Is a directory\n", 2);
+// 			exit(126);
+// 		}
+// 		else
+// 		{
+// 			ft_putstr_fd(": command not found\n", 2);
+// 			exit(127);
+// 		}
+// 	}
+// }
 
 void	handle_redirections(t_data *data)
 {
@@ -62,17 +62,48 @@ void	handle_redirections(t_data *data)
 	}
 }
 
+void	handle_invalid_command(void)
+{
+	ft_putendl_fd("Invalid command", 2);
+	ft_lstclear_env(&env);
+	ft_malloc(0, 1);
+	exit(127);
+}
+
+void	handle_access_error(char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	if (errno == EACCES)
+		ft_putendl_fd(": Permission denied", 2);
+	else if (errno == ENOENT)
+		ft_putendl_fd(": No such file or directory", 2);
+	else
+		ft_putendl_fd(": Command not found", 2);
+	ft_lstclear_env(&env);
+	ft_malloc(0, 1);
+	exit(127);
+}
+
+void	handle_execve_error(char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	if (errno == EACCES)
+		ft_putendl_fd(": Permission denied", 2);
+	else if (errno == ENOENT)
+		ft_putendl_fd(": No such file or directory", 2);
+	else
+		ft_putendl_fd(": Command not found", 2);
+	ft_lstclear_env(&env);
+	ft_malloc(0, 1);
+	exit(127);
+}
+
 void	handle_execve(t_data *data, char *path, char **envp)
 {
 	if (!data || !data->cmd || !data->cmd[0])
-	{
-		ft_putendl_fd("Invalid command", 2);
-		ft_lstclear_env(&env); // Free allocated resources
-		ft_malloc(0, 1);       // Free allocated memory
-		exit(127);
-	}
+		handle_invalid_command();
 	path = get_path(data->cmd);
-    envp = list_to_pointer();
+	envp = list_to_pointer();
 	if (path)
 	{
 		if (is_directory(path))
@@ -82,98 +113,52 @@ void	handle_execve(t_data *data, char *path, char **envp)
 			handle_directory_error(data->cmd);
 		}
 	}
-	if (!path)
-	{
-		ft_putendl_fd("Invalid path", 2);
-		ft_lstclear_env(&env); // Free allocated resources
-		ft_malloc(0, 1);       // Free allocated memory
-		exit(127);
-	}
-
-	if (access(path, X_OK) != 0 )
-	{
-		ft_putstr_fd(data->cmd, 2);
-		if(errno == ENOENT)
-		{
-			ft_putendl_fd(": Command not found", 2);
-		}
-		else if (errno == ENOENT && (data->cmd[0] == '/' || data->cmd[ft_strlen(data->cmd) - 1] == '/'
-			|| (data->cmd[0] == '.' && data->cmd[1] == '/')))
-		{
-			ft_putendl_fd(": No such file or directory", 2);
-		}
-		else if (errno == EACCES)
-		{
-			ft_putendl_fd(": Permission denied", 2);
-		}
-		else
-		{
-			ft_putendl_fd(": Error accessing file", 2);
-		}
-		ft_lstclear_env(&env); 
-		ft_malloc(0, 1); 
-		exit(127);
-	}
-	if (execve(path, data->args, envp) == -1)
-	{
-		ft_putstr_fd(data->cmd, 2);
-		if(errno == ENOENT)
-		{
-			ft_putendl_fd(": Command not found", 2);
-		}
-		else if (errno == ENOENT )
-		{
-			ft_putendl_fd(": No such file or directory", 2);
-		}
-		else if (errno == EACCES)
-		{
-			ft_putendl_fd(": Permission denied", 2);
-		}
-		
-		ft_lstclear_env(&env); 
-		ft_malloc(0, 1); 
-		exit(127);
-	}
-}
-
-void	execute(t_data *data)
-{
-	char *path;
-	char **envp;
-
-	handle_command_not_found(data);
-	
-	path = get_path(data->cmd);
-	if (path)
-	{
-		envp = list_to_pointer();
-		handle_path_access(data, path, envp);
-		handle_redirections(data);
-		handle_execve(data, path, envp);
-	}
 	else
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(data->cmd, 2);
-
-		if (access(data->cmd, X_OK & F_OK) != 0 && (data->cmd[0] == '/'
-				|| data->cmd[ft_strlen(data->cmd) - 1] == '/'
-				|| (data->cmd[0] == '.' && data->cmd[1] == '/')))
-			ft_putstr_fd(": No such file or directory\n", 2);
-		else
-			ft_putstr_fd(" : command not found\n", 2);
-		free(path);
-		ft_malloc(0, 1);
-		ft_lstclear_env(&env);
-		exit(127);
-	}
+		handle_access_error(data->cmd);
+	if (access(path, X_OK) != 0)
+		handle_access_error(data->cmd);
+	if (execve(path, data->args, envp) == -1)
+		handle_execve_error(data->cmd);
 }
 
-void	handle_heredoc(t_data *data)
-{
-	if (data && check_heredoc(data))
-		heredoc(data);
-}
+// void	execute(t_data *data)
+// {
+// 	char *path;
+// 	char **envp;
+
+// 	handle_command_not_found(data);
+
+// 	path = get_path(data->cmd);
+// 	if (path)
+// 	{
+// 		envp = list_to_pointer();
+// 		handle_path_access(data, path, envp);
+// 		handle_redirections(data);
+// 		handle_execve(data, path, envp);
+// 	}
+// 	else
+// 	{
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(data->cmd, 2);
+
+// 		if (access(data->cmd, X_OK & F_OK) != 0 && (data->cmd[0] == '/'
+// 				|| data->cmd[ft_strlen(data->cmd) - 1] == '/'
+// 				|| (data->cmd[0] == '.' && data->cmd[1] == '/')))
+// 			ft_putstr_fd(": No such file or directory\n", 2);
+// 		else
+// 			ft_putstr_fd(" : command not found\n", 2);
+// 		free(path);
+// 		ft_malloc(0, 1);
+// 		ft_lstclear_env(&env);
+// 		exit(127);
+// 	}
+// }
+
+// void	handle_heredoc(t_data *data)
+// {
+// 	if (data && check_heredoc(data))
+// 		heredoc(data);
+// }
 
 int	handle_file_redirections(t_data *data)
 {
@@ -239,7 +224,7 @@ void	execute_built_in_or_fork(t_data *data)
 		{
 			if (!data->cmd)
 				exit(0);
-			execute(data);
+			exec(data);
 			ft_malloc(0, 1);
 			ft_lstclear_env(&env);
 		}

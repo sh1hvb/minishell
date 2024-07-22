@@ -1,49 +1,46 @@
+void	handle_process_redirections(t_data *data)
+{
+	t_files	*file;
+	int		fd;
 
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
-
-NAME = minishell
-
-NAME_LIBFT = libft/libft.a
-
-LIBFT_PATH = libft/
-
-SRC_MCHIHAB = main.c \
-	execution/myenv.c execution/ft_export.c execution/utils_env.c \
-	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
-	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c execution/cmds/redirection.c execution/cmds/execute.c execution/ft_exit.c \
-	execution/cmds/here_doc.c execution/cmds/heredoc_expand.c execution/cmds/single_cmd.c \
-	execution/cmds/utils_exec.c
-
-SRC_SMARSI =  parsing/parsing.c parsing/quotes_remover.c parsing/signal.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
-	helpers/errors.c\
-	lexer/lexer.c lexer/lexer_helper.c lexer/lexer_split.c lexer/lexer_strchr.c lexer/lexer_functions.c \
-	memory_handling/memory_handling.c memory_handling/memory_helpers.c \
-	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
-
-
-OBJ_MCHIHAB = $(SRC_MCHIHAB:.c=.o)
-
-OBJ_SMARSI = $(SRC_SMARSI:.c=.o)
-
-all : $(NAME)
-
-$(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT)
-	cc $(CFLAGS) -lreadline  $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o  $(NAME)
-
-$(NAME_LIBFT):
-	make -C $(LIBFT_PATH)
-
-clean :
-	make clean -C $(LIBFT_PATH)
-	rm -f $(OBJ_SMARSI) $(OBJ_MCHIHAB)
-
-re : fclean all
-
-fclean : clean
-	make fclean -C $(LIBFT_PATH)
-	rm -f $(NAME)
-
-.SECONDARY : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
-
-run : re clean
-	./minishell
+	if (data && data->redir_in)
+	{
+		if (ft_input(data->redir_in))
+			exit(1);
+		file = ft_lstlast_file(data->redir_in);
+		dup2(file->index, 0);
+		close(file->index);
+	}
+	if (data && data->redir_out)
+	{
+		if (ft_output(data->redir_out))
+			exit(1);
+		file = ft_lstlast_file(data->redir_out);
+		dup2(file->index, 1);
+		close(file->index);
+	}
+	if (data && data->append)
+	{
+		if (ft_append_file(data->append))
+			exit(1);
+		file = ft_lstlast_file(data->append);
+		dup2(file->index, 1);
+		close(file->index);
+	}
+	if (check_heredoc(data))
+	{
+		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
+		if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
+			perror(" ");
+			ft_putstr_fd("", 2);
+			env->exit_status = 1;
+			exit(1);
+		}
+		dup2(fd, 0);
+		close(fd);
+	}
+	if (!data->cmd || !data->cmd[0])
+		exit(127);
+}

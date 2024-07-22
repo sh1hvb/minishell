@@ -1,97 +1,22 @@
 #include "../../minishell.h"
 
-char	*get_path_two(char *cmd)
-{
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
-	t_envp	*tmp;
-	char	*value;
-
-	tmp = env;
-	if (!cmd)
-		return (NULL);
-	if (!access(cmd, X_OK) || cmd[0] == '/')
-		return (ft_strdup(cmd));
-	value = my_get_env(tmp, "PATH");
-	allpath = ft_split(value, ':');
-	if (!allpath)
-		return (NULL);
-	i = -1;
-	while (allpath[++i])
-	{
-		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, cmd);
-		free(path_part);
-		if (access(exec, X_OK) == 0)
-		{
-			ft_freed(allpath);
-			free(value);
-			return (exec);
-		}
-		free(exec);
-	}
-	if ((access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0) && (cmd[0] == '/'
-			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
-				&& cmd[1] == '/')))
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		exit(126);
-	}
-	free(value);
-	ft_freed(allpath);
-	return (NULL);
-}
 void	handle_child_redirections(t_data *data, int fds[])
 {
-	t_files	*file;
-	int		fd;
-
-	if (data && data->redir_in)
+	if (data)
 	{
-		if (ft_input(data->redir_in))
-			exit(1);
-		file = ft_lstlast_file(data->redir_in);
-		dup2(file->index, 0);
-		close(file->index);
+		if (data->redir_in)
+			handle_input_redirection(data);
+		if (data->redir_out)
+			handle_output_redirection(data);
+		if (data->append)
+			handle_append_redirection(data);
+		handle_heredoc(data);
+		if (!data->cmd || !data->cmd[0])
+			exit(127);
 	}
-	if (data && data->redir_out)
-	{
-		if (ft_output(data->redir_out))
-			exit(1);
-		file = ft_lstlast_file(data->redir_out);
-		dup2(file->index, 1);
-		close(file->index);
-	}
-	if (data && data->append)
-	{
-		if (ft_append_file(data->append))
-			exit(1);
-		file = ft_lstlast_file(data->append);
-		dup2(file->index, 1);
-		close(file->index);
-	}
-	if (check_heredoc(data))
-	{
-		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
-		if (fd == -1)
-		{
-			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
-			perror(" ");
-			ft_putstr_fd("", 2);
-			env->exit_status = 1;
-			exit(1);
-		}
-		dup2(fd, 0);
-		close(fd);
-	}
-	if (!data->cmd || !data->cmd[0])
-		exit(127);
 	close(fds[1]);
 }
- bool	is_directory(char *path)
+bool	is_directory(char *path)
 {
 	int	fd;
 
@@ -103,7 +28,7 @@ void	handle_child_execution(t_data *data)
 {
 	if (!check_builts(data))
 		exec(data);
-	else if(check_builts(data))
+	else if (check_builts(data))
 	{
 		handle_builts(data);
 		// ft_lstclear_env(&env);
@@ -151,54 +76,22 @@ void	exec(t_data *data)
 	}
 	path = NULL;
 	envp = NULL;
-	
 	handle_execve(data, path, envp);
 }
 void	handle_process_redirections(t_data *data)
 {
-	t_files	*file;
-	int		fd;
-
-	if (data && data->redir_in)
+	if (data)
 	{
-		if (ft_input(data->redir_in))
-			exit(1);
-		file = ft_lstlast_file(data->redir_in);
-		dup2(file->index, 0);
-		close(file->index);
+		if (data->redir_in)
+			handle_input_redirection(data);
+		if (data->redir_out)
+			handle_output_redirection(data);
+		if (data->append)
+			handle_append_redirection(data);
+		handle_heredoc(data);
+		if (!data->cmd || !data->cmd[0])
+			exit(127);
 	}
-	if (data && data->redir_out)
-	{
-		if (ft_output(data->redir_out))
-			exit(1);
-		file = ft_lstlast_file(data->redir_out);
-		dup2(file->index, 1);
-		close(file->index);
-	}
-	if (data && data->append)
-	{
-		if (ft_append_file(data->append))
-			exit(1);
-		file = ft_lstlast_file(data->append);
-		dup2(file->index, 1);
-		close(file->index);
-	}
-	if (check_heredoc(data))
-	{
-		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
-		if (fd == -1)
-		{
-			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
-			perror(" ");
-			ft_putstr_fd("", 2);
-			env->exit_status = 1;
-			exit(1);
-		}
-		dup2(fd, 0);
-		close(fd);
-	}
-	if (!data->cmd || !data->cmd[0])
-		exit(127);
 }
 
 void	handle_process_execution(t_data *data)
@@ -241,10 +134,6 @@ void	ft_execute_multiple(t_data *data)
 	}
 }
 
-// void check_shlvl(t_data *data)
-// {
-
-// }
 void	process_pipe(t_data *data)
 {
 	ft_execute_multiple(data);
