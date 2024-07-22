@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 char	*ft_strchr(const char *s, char c)
@@ -12,7 +11,7 @@ char	*ft_strchr(const char *s, char c)
 
 char	*ft_strchrs(char *s, char *c)
 {
-    int i;
+	int	i;
 
 	while (*s && *s != (char) c[i])
 	{

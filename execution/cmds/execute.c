@@ -149,8 +149,8 @@ void	exec(t_data *data)
 		ft_putendl_fd(": command not found", 2);
 		return ;
 	}
-	path =NULL;
-	envp =NULL;
+	path = NULL;
+	envp = NULL;
 	
 	handle_execve(data, path, envp);
 }
@@ -210,7 +210,7 @@ void	handle_process_execution(t_data *data)
 	else
 	{
 		handle_builts(data);
-		ft_lstclear_env(&env);
+		// ft_lstclear_env(&env);
 		ft_malloc(0, 1);
 		exit(0);
 	}

@@ -11,6 +11,7 @@ void	sigint_handler(int sig)
 		rl_redisplay();
 	}
 }
+
 void	sigint_int(int sig)
 {
 	(void) sig;

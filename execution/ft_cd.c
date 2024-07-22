@@ -14,7 +14,7 @@ void	get_old_pwd(char *cwd)
 			tmp_env->value = ft_strdup(cwd);
 			break ;
 		}
-		tmp_env = tmp_env->next; 
+		tmp_env = tmp_env->next;
 	}
 }
 
@@ -29,15 +29,14 @@ void	set_pwd(char *cwd)
 		{
 			if (tmp_env && tmp_env->value)
 			{
-				free(tmp_env->value );
+				free(tmp_env->value);
 				tmp_env->value = ft_strdup(cwd);
 			}
 			break ;
 		}
-		tmp_env = tmp_env->next; 
+		tmp_env = tmp_env->next;
 	}
 }
-
 
 void	cd_home(t_data *data, char *msg, char *cwd)
 {
@@ -47,12 +46,12 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 	tmp = my_get_env(env, "HOME");
 	if (!tmp)
 	{
-	    msg = my_strjoin(msg, "HOME not set\n");
+		msg = my_strjoin(msg, "HOME not set\n");
 		ft_putstr_fd(msg, 2);
 	}
 	else if (chdir(tmp) == -1)
 	{
-        perror(my_strjoin(msg, ": "));
+		perror(my_strjoin(msg, ": "));
 		env->exit_status = 1;
 		return ;
 	}
@@ -63,7 +62,7 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 
 void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 {
-	char (*tmp);
+	char	*tmp;
 
 	if (!data->args[1][1])
 	{
@@ -84,7 +83,8 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 	}
 	else
 	{
-		ft_putstr_fd("bash: cd: --: invalid option\ncd: usage: cd [-L|-P] [dir]\n", 2);
+		ft_putstr_fd("bash: cd: --: invalid option\ncd: usage: \
+		cd [-L|-P] [dir]\n", 2);
 		env->exit_status = 1;
 		return ;
 	}
@@ -95,12 +95,13 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 
 void	ft_cd(t_data *data)
 {
-	char buff[PATH_MAX];
+	char	buff[PATH_MAX];
+	char	*msg;
+	char	*cwd;
 
-    char (*msg), (*cwd);
-    cwd = getcwd(buff, PATH_MAX);
-    msg = my_strjoin("minishell: cd: ", data->args[1]);
-	if ((!data || !data->args || !cwd ) && ft_strcmp(data->args[1], ".."))
+	cwd = getcwd(buff, PATH_MAX);
+	msg = my_strjoin("minishell: cd: ", data->args[1]);
+	if ((!data || !data->args || !cwd) && ft_strcmp(data->args[1], ".."))
 	{
 		if (!cwd)
 			perror("getcwd : ");
@@ -115,13 +116,13 @@ void	ft_cd(t_data *data)
 	else if (data->args[1] && !data->args[1][0])
 	{
 		env->exit_status = 0;
-        return ;
+		return ;
 	}
-    if (!data->args[1] || !ft_strcmp(data->args[1], "--"))
-        cd_home(data, msg, cwd);
-    else if (data->args[1][0] == '-')
+	if (!data->args[1] || !ft_strcmp(data->args[1], "--"))
+		cd_home(data, msg, cwd);
+	else if (data->args[1][0] == '-')
 		cd_old_pwd(data, msg, cwd);
-    else
+	else
 	{
 		if (chdir(data->args[1]) == -1)
 		{

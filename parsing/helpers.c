@@ -24,4 +24,3 @@ void	helpers_lines(t_data **data, t_files ***head, int flag, char *name)
 	if (!name)
 		name = my_strdup("");
 }
-

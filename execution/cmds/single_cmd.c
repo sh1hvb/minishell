@@ -72,6 +72,7 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		exit(127);
 	}
 	path = get_path(data->cmd);
+    envp = list_to_pointer();
 	if (path)
 	{
 		if (is_directory(path))
@@ -113,7 +114,6 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		ft_malloc(0, 1); 
 		exit(127);
 	}
-    envp = list_to_pointer();
 	if (execve(path, data->args, envp) == -1)
 	{
 		ft_putstr_fd(data->cmd, 2);
@@ -142,7 +142,7 @@ void	execute(t_data *data)
 	char **envp;
 
 	handle_command_not_found(data);
-
+	
 	path = get_path(data->cmd);
 	if (path)
 	{
@@ -224,11 +224,10 @@ void	close_file_descriptors(t_data *data)
 
 void	execute_built_in_or_fork(t_data *data)
 {
-	int pid, status;
+	int pid;
 	if (check_builts(data))
 	{
 		handle_builts(data);
-		env->exit_status = 0;
 		return ;
 	}
 	else if (!data || !data->cmd || !data->cmd[0])
@@ -243,24 +242,6 @@ void	execute_built_in_or_fork(t_data *data)
 			execute(data);
 			ft_malloc(0, 1);
 			ft_lstclear_env(&env);
-		}
-		while (waitpid(pid, &status, 0) != -1)
-		{
-			if (WIFEXITED(status))
-			{
-				status = WEXITSTATUS(status);
-				env->exit_status = status;
-				if (status == 127 || status == 126 || status == 1
-					|| status == 0)
-				{
-					break ;
-				}
-			}
-			else if (WIFSIGNALED(status))
-			{
-				env->exit_status = WTERMSIG(status) + 128;
-				break ;
-			}
 		}
 	}
 }

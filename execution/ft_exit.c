@@ -7,8 +7,8 @@ long long	ft_atoi2(char *str)
 
 	digit = 0;
 	signe = 1;
-	if (!ft_strcmp(str, "-9223372036854775808") || !ft_strcmp(str,
-			"9223372036854775807"))
+	if (!ft_strcmp(str, "-9223372036854775808") || \
+		!ft_strcmp(str, "9223372036854775807"))
 		return (1);
 	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
@@ -29,6 +29,7 @@ long long	ft_atoi2(char *str)
 		return (0);
 	return (1);
 }
+
 int	is_number(char *arg)
 {
 	int	i;
@@ -56,8 +57,7 @@ void	ft_exit(t_data *data)
 {
 	int	ext;
 
-	// int tmp;
-	ext = 0;
+	ext = env->exit_status;
 	if (data && !data->next)
 	{
 		ft_putstr_fd("exit\n", 1);

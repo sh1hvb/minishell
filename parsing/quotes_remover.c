@@ -38,7 +38,7 @@ static void	string_quotes(t_data *data)
 		while (data->args[i][j])
 		{
 			if ((data->args[i][j] == '\"' || data->args[i][j] == '\''))
-			{				
+			{
 				delimiter = data->args[i][j];
 				j++;
 				while (data->args[i][j] && data->args[i][j] != delimiter)
@@ -60,8 +60,8 @@ static void	rmv_file_qts(t_files *data)
 {
 	char	*tmp;
 	char	delimiter;
+
 	int (i);
-	
 	while (data && data->delimiter)
 	{
 		i = 0;

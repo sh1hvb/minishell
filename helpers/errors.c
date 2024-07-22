@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int	ft_error(char *msg, int ext)
@@ -9,10 +8,12 @@ int	ft_error(char *msg, int ext)
 
 void	ft_freed(char **p)
 {
-	int i = 0;
-	while(p[i])
+	int	i;
+
+	i = 0;
+	while (p[i])
 	{
-		free(p[i]);
+		free (p[i]);
 		p[i++] = NULL;
 	}
 	free(p);
