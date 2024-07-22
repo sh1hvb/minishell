@@ -96,8 +96,10 @@ void	expand(char *prompt, t_lexer **lex)
 		{
 			lst->value++;
 			if (lst->value[0] == '?')
-				lst->value = my_strjoin2(ft_itoa(env->exit_status), \
-				lst->value + 1);
+			{
+				lst->value = my_strjoin2(ft_itoa(env->exit_status)\
+				,lst->value + 1);
+			}
 			else
 			{
 				tmp = my_get_env(env, lst->value);

@@ -85,7 +85,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 	if (!data_tmp->next)
 	{
 		ft_malloc(0, 1);
-		return (1);
+		exit (1);
 	}
 	if (*data)
 		*data = (*data)->next;
@@ -132,11 +132,15 @@ int	parsing(t_lexer **lex, t_data	**data)
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
 	int		flag;
+	int		export_flag;
 
+	export_flag = 0;
 	lex_tmp = *lex;
 	data_tmp = *data;
 	while (lex_tmp)
 	{
+		if (!ft_strcmp(lex_tmp->value, "export"))
+			export_flag = 1;
 		if (!lex_tmp->in_quotes && is_redirection(lex_tmp))
 		{
 			if (lex_tmp->type == 'I' && !lex_tmp->in_quotes)
@@ -157,10 +161,11 @@ int	parsing(t_lexer **lex, t_data	**data)
 			else
 				data_tmp->cmd = NULL;
 			new_node(&lex_tmp, &data_tmp);
+			export_flag = 0;
 		}
 		else
 		{
-			if (lex_tmp->type == '$' && lex_tmp->in_quotes == 0)
+			if (lex_tmp->type == '$' && lex_tmp->in_quotes == 0 && export_flag)
 			{
 				lex_tmp->value = my_strjoin("\"", lex_tmp->value);
 				lex_tmp->value = my_strjoin(lex_tmp->value, "\"");

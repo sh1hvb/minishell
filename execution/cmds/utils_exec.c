@@ -48,19 +48,21 @@ char	*get_path(char *cmd)
 		return ((cmd));
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
+	free(value);
 	if (!allpath)
+	{
+		ft_freed(allpath);
 		return (NULL);
+	}
 	i = -1;
 	while (allpath[++i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, cmd);
 		free(path_part);
-
 		if (access(exec, X_OK) == 0)
 		{
 			ft_freed(allpath);
-			free(value);
 			return (exec);
 		}
 		free(exec);
@@ -69,11 +71,11 @@ char	*get_path(char *cmd)
 			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
 				&& cmd[1] == '/')))
 	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		// ft_putstr_fd(cmd, 2);
+		// ft_putstr_fd(": Permission denied\n", 2);
+		ft_freed(allpath);
 		return (cmd);
 	}
-	free(value);
 	ft_freed(allpath);
 	return (cmd);
 }

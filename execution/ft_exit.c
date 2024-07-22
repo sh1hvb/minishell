@@ -57,7 +57,7 @@ void	ft_exit(t_data *data)
 {
 	int	ext;
 
-	ext = 0;
+	ext = env->exit_status;
 	if (data && !data->next)
 	{
 		ft_putstr_fd("exit\n", 1);

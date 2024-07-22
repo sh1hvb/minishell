@@ -153,8 +153,7 @@ void	heredoc_mult(t_data *data)
 		ft_lstclear_env(&env);
 		exit(0);
 	}
-	while (waitpid(-1, &status, 0) != -1)
-		;
+	while (waitpid(pid, &status, 0) != -1);
 	env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		env->exit_status = WTERMSIG(status) + 128;

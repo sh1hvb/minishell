@@ -71,6 +71,7 @@ tmp = env_list;
         tmp = tmp->next;
     }
     env_list = tmp;
+    free(value);
     return env_list;
 }
 
@@ -146,24 +147,29 @@ void handle_no_arguments(t_envp *env) {
 }
 int handle_no_first_element(char **arr) {
     if (!arr[0]) {
-        ft_freed(arr);
+        // ft_freed(arr);
         return 1;
     }
     return 0;
 }
 
 void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
-    int flag;
+    int     flag;
+    char    *tmp;
+
+    tmp = NULL;
     flag = if_flag(data->args[i]);
     if (check_string(data->args[i]) == 2) {
         ft_append(data, env, i);
     } else if (check_string(data->args[i]) == 1) {
-        if (my_get_env(env, arr[0])) {
+        tmp = my_get_env(env, arr[0]);
+        if (tmp) {
             if (arr[1]) {
                 my_append_env(env, arr[0], ft_strdup(arr[1]));
             } else if (check_equal(data->args[i])) {
-                my_append_env(env, arr[0], ft_strdup("\"\""));
+                my_append_env(env, arr[0], ft_strdup(""));
             }
+            free(tmp);
         } else if (!my_get_env(env, arr[0]) || check_equal(data->args[i])) {
             ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
         }
