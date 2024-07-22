@@ -10,7 +10,6 @@ void	heredoc_read_and_put(t_data *data, int *fdp)
 		delimiter = ft_strjoin(data->heredoc->delimiter, "\n");
 		while (1)
 		{
-			env->signal_heredoc = 0;
 			write(1, ">", 1);
 			line = get_next_line(STDIN_FILENO);
 			if (line && !data->heredoc->type && ft_strcmp(line, delimiter))
@@ -121,6 +120,15 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 	}
 }
 
+// void	sigint_test(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		printf("=======");
+// 		env->signal_heredoc = 1;
+// 	}
+// }
+
 void	heredoc_mult(t_data *data)
 {
 	t_data *p = data;
@@ -128,6 +136,7 @@ void	heredoc_mult(t_data *data)
 	int fds;
 
 	int status, pid;
+
 	if ((pid = fork()) == -1)
 		perror("fork");
 	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -138,8 +147,10 @@ void	heredoc_mult(t_data *data)
 		ft_lstclear_env(&env);
 		exit(0);
 	}
+	signal(SIGQUIT, sig_quit_heredoc);
 	if (pid == 0)
 	{
+		signal(SIGINT, sigint_heredoc);
 		while (p)
 		{
 			while (p->heredoc)
@@ -153,9 +164,11 @@ void	heredoc_mult(t_data *data)
 		ft_lstclear_env(&env);
 		exit(0);
 	}
-	while (waitpid(pid, &status, 0) != -1);
+	waitpid(pid, &status, 0);
 	env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		env->exit_status = WTERMSIG(status) + 128;
+	if (env->exit_status == 130)
+		env->signal_heredoc = 1;
 	close(fds);
 }

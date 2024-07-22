@@ -221,14 +221,16 @@ void	ft_execute_multiple(t_data *data)
 	int pid, status;
 	while (data && data->next)
 	{
-		create_pipes(data);
+		if (data->cmd)
+			create_pipes(data);
 		data = data->next;
 	}
 	pid = fork();
 	if (!pid)
 	{
 		handle_process_redirections(data);
-		handle_process_execution(data);
+		if (data->cmd)
+			handle_process_execution(data);
 	}
 	else
 	{
@@ -245,9 +247,5 @@ void	ft_execute_multiple(t_data *data)
 // }
 void	process_pipe(t_data *data)
 {
-	if (data && !ft_strcmp(data->args[0], "./minishell"))
-		inc_shell();
-	// if(data && !ft_strcmp(data->args[0],"exit"))
-	// 	dec_shell();
 	ft_execute_multiple(data);
 }

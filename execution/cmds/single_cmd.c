@@ -250,7 +250,6 @@ void	execute_single_cmd(t_data *data)
 {
 	if (!data)
 		return ;
-	handle_heredoc(data);
 	if (data->redir_in || data->redir_out || data->append || data->heredoc)
 	{
 		if (handle_file_redirections(data))
