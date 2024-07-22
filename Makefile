@@ -1,4 +1,5 @@
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 NAME = minishell
 
@@ -19,27 +20,28 @@ SRC_SMARSI =  parsing/parsing.c parsing/quotes_remover.c parsing/signal.c parsin
 	memory_handling/memory_handling.c memory_handling/memory_helpers.c \
 	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
 
+
 OBJ_MCHIHAB = $(SRC_MCHIHAB:.c=.o)
+
 OBJ_SMARSI = $(SRC_SMARSI:.c=.o)
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT)
-	gcc $(CFLAGS) $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -lreadline -o $(NAME)
-
-$(NAME_LIBFT):
+$(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 	make -C $(LIBFT_PATH)
+	cc $(CFLAGS) -lreadline  $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o  $(NAME)
 
-clean:
+clean :
 	make clean -C $(LIBFT_PATH)
 	rm -f $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 
-fclean: clean
+re : fclean all
+
+fclean : clean
 	make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
-re: fclean all
+.SECONDARY : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 
-.SECONDARY: $(OBJ_SMARSI) $(OBJ_MCHIHAB)
-run: re clean
+run : re clean
 	./minishell
