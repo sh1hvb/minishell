@@ -183,4 +183,16 @@ void	signal_quit(int sig);
 void	sig_quit_heredoc(int sig);
 void	sigint_heredoc(int sig);
 char	*my_strjoin2(char *s1, char *s2);
+int		is_heredoc(t_lexer *lst);
+int		heredoc_lstsize(t_files *lst);
+t_data	*pars_lstnew(char *value, int quotes);
+void	pars_lstadd_back(t_data **lst, t_data *new);
+void	heredoc_lstadd_back(t_files **lst, t_files *new);
+t_files	*heredoc_lstnew(char *value);
+t_files	*heredoc_lstlast(t_files *lst);
+int		is_valid_type(t_lexer *lex);
+int		is_ambiguous(t_lexer *lex);
+int		pars_files(t_data **data, t_lexer **lex, int flag);
+void	fill_args(t_lexer **lex, t_data	**data, int export_flag);
+void	new_node(t_lexer **lex, t_data	**data);
 #endif

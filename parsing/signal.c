@@ -37,7 +37,6 @@ void	signal_quit(int sig)
 void	sig_quit_heredoc(int sig)
 {
 	write(0, "", 0);
-	
 	env->exit_status = 131;
 	return ;
 	(void)sig;
