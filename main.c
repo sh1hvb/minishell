@@ -100,5 +100,3 @@ int	main(int ac, char *av[], char *envp[])
 	// ft_freed(arr);
 	return (exit_status);
 }
-
-
