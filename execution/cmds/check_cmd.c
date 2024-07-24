@@ -37,7 +37,13 @@ void	inc_shell(void)
 		{
 			tmp = ft_atoi(tmpenv->value) + 1;
 			free(tmpenv->value);
-			tmpenv->value = (ft_itoa(tmp));
+			if(tmp > 1000)
+			{
+				tmpenv->value = (ft_itoa(1));
+				ft_putendl_fd("bash: warning: shell level (1001) too high, resetting to 1",2);
+			}
+			else
+				tmpenv->value = (ft_itoa(tmp));
 			break ;
 		}
 		tmpenv = tmpenv->next;
@@ -54,6 +60,11 @@ void	process_cmd(t_data *data)
 
 	flag = 0;
 	env->signal_heredoc = 0;
+	if(data && data->cmd && data->cmd[0] == '\0')
+	{
+		ft_putendl_fd("command '' not found",2);
+		return;
+	}
 	if (data && check_heredoc_two(data))
 	{
 		heredoc_mult(data);
@@ -65,16 +76,12 @@ void	process_cmd(t_data *data)
 		dup2(200, 1);
 		flag = 1;
 	}
-	if (data && !flag && !env->signal_heredoc)
+	else if (data && !flag && !env->signal_heredoc)
 	{
 		process_pipe(data);
 		dup2(199, 0);
 		dup2(200, 1);
 		while (waitpid(-1, &status, 0) != -1);
-	}
-	else if(data && data->cmd && data->cmd[0] == '\0')
-	{
-		ft_putendl_fd("command '' not found",2);
 	}
 	else if (data)
 	{

@@ -84,6 +84,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 	pars_lstadd_back(&data_tmp, tmp);
 	if (!data_tmp->next)
 	{
+		ft_lstclear_env(env);
 		ft_malloc(0, 1);
 		exit (1);
 	}
@@ -160,6 +161,7 @@ int	parsing(t_lexer **lex, t_data	**data)
 				data_tmp->cmd = data_tmp->args[0];
 			else
 				data_tmp->cmd = NULL;
+			remove_quotes(data_tmp);
 			new_node(&lex_tmp, &data_tmp);
 			export_flag = 0;
 		}
@@ -172,9 +174,9 @@ int	parsing(t_lexer **lex, t_data	**data)
 			}
 			fill_args(&lex_tmp, &data_tmp);
 		}
-		remove_quotes(data_tmp);
 		check_empty_cmd(data_tmp);
 	}
+	remove_quotes(data_tmp);
 	initialize_cmd(data_tmp);
 	return (0);
 }
