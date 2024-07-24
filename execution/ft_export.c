@@ -108,19 +108,19 @@ void ft_append(t_data *data, t_envp *env, int i) {
     char *join;
     int flag = 0;
 
-    splited = lexer_split(data->args[i], "+=");
+    splited = builtins_split(data->args[i], "+=");
     append = my_get_env(env, splited[0]);
 
     if (!append) {
-            printf("%s\n", splited[0]);
         flag = if_flag(data->args[i]);
         ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
     } else {
-        char **temp_splited = lexer_split(data->args[i], "+=");
+        char **temp_splited = builtins_split(data->args[i], "+=");
         join = ft_strjoin(append, temp_splited[1]);
         env = my_append_env(env, temp_splited[0], join);
         ft_freed(temp_splited);
     }
+    free(append);
     ft_freed(splited);
 }
 
@@ -147,7 +147,7 @@ void handle_no_arguments(t_envp *env) {
 }
 int handle_no_first_element(char **arr) {
     if (!arr[0]) {
-        // ft_freed(arr);
+        ft_freed(arr);
         return 1;
     }
     return 0;
@@ -170,10 +170,10 @@ void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
                 my_append_env(env, arr[0], ft_strdup(""));
             }
             free(tmp);
-        }
-        else if (!tmp || check_equal(data->args[i]))
-        {
+
+        } else if (!tmp|| check_equal(data->args[i])) {
             ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
+            free(tmp);
         }
     }
     env->exit_status = 0;
@@ -182,7 +182,6 @@ void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
 void process_arguments(t_data *data, t_envp *env, int i) {
     char **arr;
 
-    arr = lexer_split(data->args[i], "+=");
     if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
     {
         ft_putstr_fd("minishell: export: `", 2);
@@ -191,15 +190,13 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         env->exit_status = 1;
         // return ;
     }
+    arr = builtins_split(data->args[i], "+=");
     if (handle_no_first_element(arr)) 
-    {
-
         return;
-    }
     if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]) ) {
         handle_flag_set(data, env, i, arr);
-        // return;
     }
+
     // if(check_sp(data->args[i]))
     // {
     //     printf("export: `=': not a valid identifier\n");
@@ -214,6 +211,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
         env->exit_status = 1;
         // return ;
     }
+    ft_freed(arr);
 }
 
 void ft_export(t_data *data, t_envp *env) {

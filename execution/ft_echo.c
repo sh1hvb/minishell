@@ -1,40 +1,56 @@
 #include "../minishell.h"
 
-
-static	int		nb_args(char **args)
+void	echo_without_flag(t_data *parce)
 {
-	int		size;
-
-	size = 0;
-	while (args[size])
-		size++;
-	return (size);
-}
-
-
-void ft_echo(t_data *data, t_envp *env)
-{
-    int		i;
-	int		n_option;
+	int i;
 
 	i = 1;
-	n_option = 0;
-    if (nb_args(data->args) > 1)
+	while (parce->args[i] != NULL)
 	{
-		while (data->args[i] && ft_strcmp(data->args[i], "-n") == 0)
-		{
-			n_option = 1;
-			i++;
-		}
-		while (data->args[i])
-		{
-			ft_putstr_fd(data->args[i], 1);
-			if (data->args[i + 1])
-				write(1, " ", 1);
-			i++;
-		}
+		ft_putstr_fd(parce->args[i], 1);
+		if (parce->args[i + 1] != NULL)
+			ft_putstr_fd(" ", 1);
+		i++;
 	}
-   if (n_option == 0)
-		write(1, "\n", 1);
-	env->exit_status = 0;
+	ft_putstr_fd("\n", 1);
+}
+
+void	echo_print(t_data *parce, int i)
+{
+	while (parce->args[i] != NULL)
+		{
+			ft_putstr_fd(parce->args[i], 1);
+			if (parce->args[i + 1] != NULL)
+				ft_putstr_fd(" ", 1);
+			i++;
+		}
+}
+
+void	ft_echo(t_data *parce)
+{
+	int i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	if (parce->args[i] == NULL)
+		ft_putstr_fd("\n", 1);
+	else if (parce->args[1][j] == '-')
+	{
+		j++;
+		if (parce->args[i][j] == '\0')
+			echo_without_flag(parce);
+		while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
+			j++;
+		if (parce->args[i][j] == '\0')
+			echo_print(parce, 2);
+		else
+		{
+			echo_print(parce, 1);
+			ft_putstr_fd("\n", 1);
+		}	
+	}
+	else
+		echo_without_flag(parce);
+	
 }

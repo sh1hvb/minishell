@@ -93,7 +93,6 @@ typedef struct s_leaks
 }t_leaks;
 // made by mchihab
 // made by mchihab
-void	ft_lstclear_env(t_envp **lst);
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
 void	print_env_list(char *x);
 void	ft_export(t_data *data , t_envp *env);
@@ -110,8 +109,8 @@ int		check_equal(char *s);
 void	ft_pwd(t_data *data);
 void	ft_lstdelone_env(t_envp *lst);
 void	ft_unset(t_data *data);
-void	ft_echo(t_data *data, t_envp *env);
-void	ft_lstclear_env(t_envp **lst);
+void	ft_echo(t_data *data);
+void ft_lstclear_env(t_envp *env_list);
 void 	ft_freed(char **p);
 char	**builtins_split(char *s, char *delimiters);
 char 	*my_get_env(t_envp *env_list, const char *key);
@@ -146,6 +145,10 @@ void handle_execve(t_data *data, char *path, char **envp);
 void handle_directory_error(char *cmd);
 void check_shlvl(t_data *data);
  bool	is_directory(char *path);
+ void				handle_heredoc(t_data *data);
+void				handle_append_redirection(t_data *data);
+void				handle_output_redirection(t_data *data);
+void				handle_input_redirection(t_data *data);
 /**************************************************************************************************/
 // made by smarsi 
 void	*ft_malloc(int size, int flag);
@@ -157,7 +160,7 @@ int		in_delimiters(char target, char *delimiters);
 void	get_cmds(char *prompt, t_data **data, int *index);
 void	get_quotes(char *prompt, t_data **data, int *index);
 void	skip_quotes(char *target, char delimiter, int *index);
-t_envp 	*get_env(char **env);
+t_envp	*get_env(char **env , int c);
 void 	ft_freed(char **p);
 char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
