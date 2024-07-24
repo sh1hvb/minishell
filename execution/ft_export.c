@@ -170,7 +170,9 @@ void handle_flag_set(t_data *data, t_envp *env, int i, char **arr) {
                 my_append_env(env, arr[0], ft_strdup(""));
             }
             free(tmp);
-        } else if (!my_get_env(env, arr[0]) || check_equal(data->args[i])) {
+        }
+        else if (!tmp || check_equal(data->args[i]))
+        {
             ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
         }
     }

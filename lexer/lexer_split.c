@@ -26,7 +26,7 @@ static int	count_word(char *s, char *delimiters)
 		if (s[i] == '\"')
 		{
 			split_quotes(s, '\"', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+			while (s[i] && !in_delimiters(s[i], " \t\n"))
 				i++;
 			if (flag)
 				count++;
@@ -34,7 +34,7 @@ static int	count_word(char *s, char *delimiters)
 		else if (s[i] && s[i] == '\'')
 		{
 			split_quotes(s, '\'', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
+			while (s[i] && !in_delimiters(s[i], " \t\n"))
 				i++;
 			if (flag)
 				count++;
@@ -66,13 +66,13 @@ static char	*get_word(char *dst, char *src, char *delimiters, int	*index)
 	if (src[i] == '\"')
 	{
 		split_quotes(src, '\"', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+		while (src[i] && !in_delimiters(src[i], " \t\n"))
 			i++;
 	}
 	else if (src[i] == '\'')
 	{
 		split_quotes(src, '\'', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+		while (src[i] && !in_delimiters(src[i], " \t\n"))
 			i++;
 	}
 	else
@@ -83,13 +83,13 @@ static char	*get_word(char *dst, char *src, char *delimiters, int	*index)
 			if (src[i] == '\"')
 			{
 				split_quotes(src, '\"', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+				while (src[i] && !in_delimiters(src[i], " \t\n"))
 					i++;
 			}
 			else if (src[i] == '\'')
 			{
 				split_quotes(src, '\'', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
+				while (src[i] && !in_delimiters(src[i], " \t\n"))
 					i++;
 			}
 		}
