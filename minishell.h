@@ -2,33 +2,40 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft/libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "libft/libft.h"
 # include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include <sys/types.h>
-# include <signal.h>
-# include <termios.h>
-# include <stdbool.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <termios.h>
+#include <stdbool.h>
 
-typedef struct	s_env
+// typedef struct s_data
+// {
+// 	char			**args;
+// 	struct s_data	*data;
+// 	struct s_data	*next;
+// }	t_data;
+typedef struct s_envp
 {
-	char			*key;
-	char			*value;
-	int				flag;
-	int				signal_heredoc;
-    int				exit_status;
-	struct s_envp	*next;
-	struct s_envp	*prev;
-}	t_envp;
+	char *key;
+	char *value;
+	int flag;
+	int signal_heredoc;
+    int exit_status;
+	struct s_envp *next;
+	struct s_envp *prev;
+} t_envp;
 
-extern t_envp	*env;
-enum	token
+extern t_envp *env;
+extern int a;
+enum token
 {
 	STRING = 'S',
 	IN_FILE = 'I',
@@ -83,7 +90,7 @@ typedef struct s_leaks
 {
     void *add;
     struct s_leaks *next;
-}	t_leaks;
+}t_leaks;
 // made by mchihab
 // made by mchihab
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int));
@@ -153,12 +160,12 @@ int		in_delimiters(char target, char *delimiters);
 void	get_cmds(char *prompt, t_data **data, int *index);
 void	get_quotes(char *prompt, t_data **data, int *index);
 void	skip_quotes(char *target, char delimiter, int *index);
-t_envp	*get_env(char **env, int c);
-void	ft_freed(char **p);
+t_envp	*get_env(char **env , int c);
+void 	ft_freed(char **p);
 char	**lexer_split(char *s, char *delimiters);
 void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f);
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag);
-void	expand(char *prompt, t_lexer **lex);
+void    expand(char *prompt, t_lexer **lex);
 int		parsing(t_lexer **lex, t_data	**data);
 char	*my_strdup( char *s1);
 void	*my_calloc(int count, int size);
@@ -171,7 +178,7 @@ int		files_syntax(t_lexer *lex);
 void	helpers_lines(t_data **data, t_files ***head, int flag, char *name);
 void	initialize_cmd(t_data *data_tmp);
 void	remove_quotes(t_data *data_tmp);
-void	process_cmd(t_data *data);
+void 	process_cmd(t_data *data);
 int		ft_append_file(t_files *file);
 void	sigint_handler(int sig);
 void	sigint_int(int sig);

@@ -17,7 +17,7 @@ void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag)
 	ft_strlcpy(value, prompt + i, *index - i + 1);
 	new = ft_lstnew(value, 'W', flag);
 	ft_lstadd_back(lex, new);
-}<<$
+}
 
 
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
