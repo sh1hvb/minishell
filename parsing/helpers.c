@@ -1,5 +1,26 @@
 #include "../minishell.h"
 
+void	heredoc_counter(t_lexer *lex)
+{
+	int	i;
+
+	i = 0;
+	while (lex)
+	{
+		if (lex->type == 'H')
+			i++;
+		lex =lex->next;
+	}
+	if (i > 16)
+	{
+		ft_putendl_fd("bash: maximum here-document count exceeded", 2);
+		env->exit_status = 2;
+		ft_lstclear_env(env);
+		ft_malloc(0, 1);
+		exit (2);
+	}
+}
+
 void	initialize_cmd(t_data *data_tmp)
 {
 	if (!data_tmp->args)
@@ -44,9 +65,9 @@ int	is_ambiguous(t_lexer *lex)
 	{
 		i = 0;
 		tmp = lex->value;
-		while (tmp[i])
+		while (!tmp[0] || tmp[i])
 		{
-			if (tmp[i] <= 32)
+			if (!tmp[0] || tmp[i] <= 32)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(tmp, 2);

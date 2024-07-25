@@ -199,4 +199,5 @@ int		pars_files(t_data **data, t_lexer **lex, int flag);
 void	fill_args(t_lexer **lex, t_data	**data, int export_flag);
 void	new_node(t_lexer **lex, t_data	**data);
 void	split_quotes(char *target, char delimiter, int *index);
+void	heredoc_counter(t_lexer *lex);
 #endif
