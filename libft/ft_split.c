@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:11:26 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/10 12:18:28 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:24:22 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	char	*get_word(char *dst, char const *src, char c, int	*index)
 	while (src[i] && src[i] != c)
 		i++;
 	len = (i - start) + 1;
-	dst = malloc(len* sizeof(char));
+	dst = malloc(len * sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);

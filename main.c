@@ -12,7 +12,7 @@ void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
 
-void	minishell(char *envp[])
+void	minishell()
 {
 	char	*prompt;
 	t_lexer  *lex;
@@ -32,8 +32,7 @@ void	minishell(char *envp[])
 		if (!prompt)
 		{
 			printf("exit\n");
-			ft_malloc(0, 1);
-			exit (env->exit_status);
+			return ;
 		}
 		else if (!prompt[0])
 		{
@@ -66,7 +65,6 @@ void	minishell(char *envp[])
 			// print_parsing(data);
 			// printf("\n\n");
 			// printf("========= end pars\n");
-			(void) envp;
 			process_cmd(data);
 			// handle_builts(data);
 			// printf("========= end parsing\n");
@@ -80,22 +78,22 @@ void	minishell(char *envp[])
 
 int	main(int ac, char *av[], char *envp[])
 {
+	int	exit_status;
+
+	exit_status = 0;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
 	(void)av;
 
 	// exit(0);
 	handle_env(envp);
-	inc_shell();
-
-	minishell(envp);
+	// inc_shell();
+	minishell();
+	ft_lstclear_env(env);
     // env = sort_list(env , ascending);
 	// print_env_list(env,"en");
-	ft_lstclear_env(&env);
 	ft_malloc(0, 1);
 	// exit(0); 
 	// ft_freed(arr);
-	return (0);
+	return (exit_status);
 }
-
-

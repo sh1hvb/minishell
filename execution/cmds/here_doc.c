@@ -144,7 +144,7 @@ void	heredoc_mult(t_data *data)
 	{
 		printf("error\n");
 		ft_malloc(0, 1);
-		ft_lstclear_env(&env);
+		ft_lstclear_env(env);
 		exit(0);
 	}
 	signal(SIGQUIT, sig_quit_heredoc);
@@ -161,7 +161,7 @@ void	heredoc_mult(t_data *data)
 			p = p->next;
 		}
 		ft_malloc(0, 1);
-		ft_lstclear_env(&env);
+		ft_lstclear_env(env);
 		exit(0);
 	}
 	waitpid(pid, &status, 0);

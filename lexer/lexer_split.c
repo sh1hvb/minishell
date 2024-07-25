@@ -1,15 +1,29 @@
 #include "../minishell.h"
 
-void	split_quotes(char *target, char delimiter, int *index);
+char	**fill_array(char **dst, char *src, char *delimiters, int num_word);
 
-static	void	ft_free(char **s)
+static void	handle_quotes(char *s, int *index, int *count, int flag)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
-		free(s[i++]);
-	free(s);
+	i = *index;
+	if (s[i] == '\"')
+	{
+		split_quotes(s, '\"', &i);
+		while (s[i] && !in_delimiters(s[i], " \t\n"))
+			i++;
+		if (flag)
+			(*count)++;
+	}
+	else if (s[i] == '\'')
+	{
+		split_quotes(s, '\'', &i);
+		while (s[i] && !in_delimiters(s[i], " \t\n"))
+			i++;
+		if (flag)
+			(*count)++;
+	}
+	*index = i;
 }
 
 static int	count_word(char *s, char *delimiters)
@@ -23,22 +37,8 @@ static int	count_word(char *s, char *delimiters)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"')
-		{
-			split_quotes(s, '\"', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
-				i++;
-			if (flag)
-				count++;
-		}
-		else if (s[i] && s[i] == '\'')
-		{
-			split_quotes(s, '\'', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
-				i++;
-			if (flag)
-				count++;
-		}
+		if (s[i] == '\"' || s[i] == '\'')
+			handle_quotes(s, &i, &count, flag);
 		if (s[i] && !in_delimiters(s[i], delimiters) && flag)
 		{
 			count++;
@@ -51,71 +51,6 @@ static int	count_word(char *s, char *delimiters)
 		i++;
 	}
 	return (count);
-}
-
-static char	*get_word(char *dst, char *src, char *delimiters, int	*index)
-{
-	int	i;
-	int	start;
-	int	len;
-
-	i = *index;
-	while (src[i] && in_delimiters(src[i], delimiters))
-		i++;
-	start = i;
-	if (src[i] == '\"')
-	{
-		split_quotes(src, '\"', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-	}
-	else if (src[i] == '\'')
-	{
-		split_quotes(src, '\'', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-	}
-	else
-	{
-		while (src[i] && !in_delimiters(src[i], delimiters))
-		{
-			i++;
-			if (src[i] == '\"')
-			{
-				split_quotes(src, '\"', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-					i++;
-			}
-			else if (src[i] == '\'')
-			{
-				split_quotes(src, '\'', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-					i++;
-			}
-		}
-	}
-	len = (i - start) + 1;
-	dst = my_calloc(len, sizeof(char));
-	ft_strlcpy(dst, src + start, len);
-	*index = i;
-	return (dst);
-}
-
-static char	**fill_array(char **dst, char *src, char *delimiters, int num_word)
-{
-	int	i;
-	int	index_word;
-
-	index_word = 0;
-	i = 0;
-	while (i < num_word)
-	{
-		dst[i] = get_word(dst[i], src, delimiters, &index_word);
-		if (!dst[i])
-			ft_free(dst);
-		i++;
-	}
-	return (dst);
 }
 
 char	**lexer_split(char *s, char *delimiters)

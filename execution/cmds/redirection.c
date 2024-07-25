@@ -16,7 +16,7 @@ int	ft_input(t_files *file)
 			return (1);
 		}
 		if (file->next)
-			close(fd); 
+			close(fd);
 		else
 			file->index = fd;
 		file = file->next;
@@ -38,12 +38,11 @@ int	ft_output(t_files *file)
 			ft_putstr_fd("", 2);
 			env->exit_status = 1;
 			return (1);
-
 		}
 		if (file->next)
-			close(fd); 
+			close(fd);
 		else
-			file->index = fd; 
+			file->index = fd;
 		file = file->next;
 	}
 	return (0);
@@ -62,17 +61,67 @@ int	ft_append_file(t_files *file)
 			ft_putstr_fd("", 2);
 			env->exit_status = 1;
 			return (1);
-
 		}
 		if (file->next)
-			close(fd); 
+			close(fd);
 		else
-			file->index = fd; 
+			file->index = fd;
 		file = file->next;
 	}
 	return (0);
 }
 
+void	handle_input_redirection(t_data *data)
+{
+	t_files	*file;
+
+	if (ft_input(data->redir_in))
+		exit(1);
+	file = ft_lstlast_file(data->redir_in);
+	dup2(file->index, 0);
+	close(file->index);
+}
+
+void	handle_output_redirection(t_data *data)
+{
+	t_files	*file;
+
+	if (ft_output(data->redir_out))
+		exit(1);
+	file = ft_lstlast_file(data->redir_out);
+	dup2(file->index, 1);
+	close(file->index);
+}
+
+void	handle_append_redirection(t_data *data)
+{
+	t_files	*file;
+
+	if (ft_append_file(data->append))
+		exit(1);
+	file = ft_lstlast_file(data->append);
+	dup2(file->index, 1);
+	close(file->index);
+}
+
+void	handle_heredoc(t_data *data)
+{
+	int	fd;
+
+	if (check_heredoc(data))
+	{
+		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
+		if (fd == -1)
+		{
+			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
+			perror(" ");
+			env->exit_status = 1;
+			exit(1);
+		}
+		dup2(fd, 0);
+		close(fd);
+	}
+}
 // int	ft_heredoc(t_files *file)
 // {
 // 	int	fd;
@@ -84,7 +133,7 @@ int	ft_append_file(t_files *file)
 // 	{
 // 		i++;
 // 		s = ft_itoa(i);
-// 		joined = ft_strjoin(path,s);		
+// 		joined = ft_strjoin(path,s);
 // 		fd = open(joined, O_CREAT | O_RDWR | O_APPEND, 0644);
 // 		if (fd == -1)
 // 		{
@@ -96,9 +145,9 @@ int	ft_append_file(t_files *file)
 // 		free(joined);
 // 		free(s);
 // 		if (file->next)
-// 			close(fd); 
+// 			close(fd);
 // 		else
-// 			file->index = fd; 
+// 			file->index = fd;
 // 		file = file->next;
 // 	}
 // 	return (0);

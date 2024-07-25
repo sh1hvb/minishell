@@ -29,7 +29,7 @@ void handle_builts(t_data *data)
     if(!check_builts(data))
         ft_error(" command not found",127);
     if(check_builts(data)== 1)
-        ft_echo(data , envtmp);
+        ft_echo(data );
     if(check_builts(data)== 2)
         ft_cd(data);
     if(check_builts(data)== 3)

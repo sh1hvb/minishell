@@ -6,13 +6,13 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:55:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/08 12:05:58 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:24:46 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char  *s1, char  *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*p;
 	int		i;

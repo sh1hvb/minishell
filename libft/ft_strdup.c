@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:57:17 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/23 09:57:10 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:27:09 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char	*s1_dup;
-	int		len;
+	char	*dest;
+	size_t	i;
 
-	if (!s1)
+	dest = (char *) malloc(ft_strlen(s1) + 1);
+	if (!dest)
 		return (ft_strdup(""));
-	len = ft_strlen(s1);
-	s1_dup = malloc((len + 1) * sizeof(char));
-	if (!s1_dup)
-		return (NULL);
-	ft_strlcpy(s1_dup, s1, len + 1);
-	// free((char *)s1);
-	return (s1_dup);
+	i = 0;
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }
