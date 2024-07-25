@@ -19,15 +19,13 @@ void	heredoc_read_and_put(t_data *data, int *fdp)
 				if (!line)
 				{
 					ft_putstr_fd("\n", 2);
-					ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `",
-									2);
+					ft_putstr_fd("minishell: warning: here-document\
+						delimited by end-of-file (wanted `", 2);
 					write(2, delimiter, ft_strlen(delimiter) - 1);
 					ft_putendl_fd("')", 2);
 				}
 				free(delimiter);
-				// delimiter = NULL;
 				free(line);
-				// line = NULL;
 				break ;
 			}
 			if (!data->heredoc->next)
@@ -77,8 +75,6 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 	char	*line;
 	char	*delimiter;
 
-	// while (data->heredoc)
-	// {
 	delimiter = ft_strjoin(data->heredoc->delimiter, "\n");
 	while (1)
 	{
@@ -91,8 +87,8 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 			if (!line)
 			{
 				ft_putstr_fd("\n", 2);
-				ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `",
-								2);
+				ft_putstr_fd("minishell: warning: here-document delimited\
+					by end-of-file (wanted `", 2);
 				write(2, delimiter, ft_strlen(delimiter) - 1);
 				ft_putendl_fd("')", 2);
 			}
@@ -106,38 +102,24 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 		{
 			if (data->next && !data->next->heredoc && !data->next->next
 				&& data->next->cmd)
-			{
 				ft_putstr_fd(line, fdp);
-			}
 			else if (!data->next)
-			{
 				ft_putstr_fd(line, fdp);
-			}
 		}
 		free(line);
-		// }
-		// data->heredoc = data->heredoc->next;
 	}
 }
 
-// void	sigint_test(int sig)
-// {
-// 	if (sig == SIGINT)
-// 	{
-// 		printf("=======");
-// 		env->signal_heredoc = 1;
-// 	}
-// }
-
 void	heredoc_mult(t_data *data)
 {
-	t_data *p = data;
-	char *tmp_path = "/tmp/heredoc.txt";
-	int fds;
+	t_data	*p;
+	char	*tmp_path;
 
-	int status, pid;
-
-	if ((pid = fork()) == -1)
+	int (status), (pid), (fds);
+	p = data;
+	tmp_path = "/tmp/heredoc.txt";
+	pid = fork();
+	if (pid == -1)
 		perror("fork");
 	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fds)

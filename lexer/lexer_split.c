@@ -1,8 +1,8 @@
 #include "../minishell.h"
 
-void	split_quotes(char *target, char delimiter, int *index);
+void		split_quotes(char *target, char delimiter, int *index);
 
-static	void	ft_free(char **s)
+static void	ft_free(char **s)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ static int	count_word(char *s, char *delimiters)
 	return (count);
 }
 
-static char	*get_word(char *dst, char *src, char *delimiters, int	*index)
+static char	*get_word(char *dst, char *src, char *delimiters, int *index)
 {
 	int	i;
 	int	start;

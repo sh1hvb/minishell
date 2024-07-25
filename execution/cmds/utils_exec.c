@@ -1,9 +1,8 @@
 #include "../../minishell.h"
 
-
 int	ft_lstsize_file(t_files *lst)
 {
-	int count;
+	int	count;
 
 	if (!lst)
 		return (0);
@@ -18,7 +17,7 @@ int	ft_lstsize_file(t_files *lst)
 
 t_files	*ft_lstlast_file(t_files *lst)
 {
-	int last;
+	int	last;
 
 	last = ft_lstsize_file(lst);
 	while (last-- > 1)
@@ -49,8 +48,8 @@ char	*get_path(char *cmd)
 	char *value = my_get_env(tmp, "PATH");
 	allpath = ft_split(value, ':');
 	free(value);
-	if(!allpath)
-		return ft_strdup(cmd);
+	if (!allpath)
+		return (ft_strdup(cmd));
 	i = -1;
 	while (allpath[++i])
 	{

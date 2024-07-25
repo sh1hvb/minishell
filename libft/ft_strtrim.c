@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	int	searche_value(int search, char const *set)
+static int	searche_value(int search, char const *set)
 {
 	while (*set)
 	{
@@ -27,7 +27,7 @@ static char	*start_trim(char const *s1, char const *set)
 {
 	while (searche_value(*s1, set))
 		s1++;
-	return ((char *) s1);
+	return ((char *)s1);
 }
 
 static int	end_trim(char const *s1, char const *set)

@@ -16,12 +16,14 @@ void	handle_child_redirections(t_data *data, int fds[])
 	}
 	close(fds[1]);
 }
+
 bool	is_directory(char *path)
 {
 	int	fd;
 
 	fd = open(path, __O_DIRECTORY);
-	return (fd != -1);
+	return (fd != -1 && (path[0] == '/' || (path[ft_strlen(path) - 1] == '/'
+				&& (path[0] == '.') && path[1] == '/')));
 }
 
 void	handle_child_execution(t_data *data)
@@ -51,7 +53,8 @@ void	create_pipes(t_data *data)
 		perror("pipe:");
 		return ;
 	}
-	if ((pid = fork()) == -1)
+	pid = fork();
+	if (pid == -1)
 	{
 		perror("fork");
 		return ;
@@ -67,6 +70,7 @@ void	create_pipes(t_data *data)
 	dup2(fds[0], 0);
 	close(fds[0]);
 }
+
 void	exec(t_data *data)
 {
 	char	*path;
@@ -82,6 +86,7 @@ void	exec(t_data *data)
 	envp = NULL;
 	handle_execve(data, path, envp);
 }
+
 void	handle_process_redirections(t_data *data)
 {
 	if (data)
@@ -103,7 +108,6 @@ void	handle_process_execution(t_data *data)
 	if (!check_builts(data))
 	{
 		exec(data);
-	
 	}
 	else
 	{
@@ -112,12 +116,11 @@ void	handle_process_execution(t_data *data)
 		ft_malloc(0, 1);
 		exit(0);
 	}
-	
 }
 
 void	ft_execute_multiple(t_data *data)
 {
-	int pid;
+	int (pid), (status);
 	while (data && data->next)
 	{
 		if (data->cmd)
@@ -131,6 +134,10 @@ void	ft_execute_multiple(t_data *data)
 		if (data->cmd)
 			handle_process_execution(data);
 	}
+	waitpid(pid, &status, 0);
+	env->exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		env->exit_status = WTERMSIG(status) + 128;
 }
 
 void	process_pipe(t_data *data)

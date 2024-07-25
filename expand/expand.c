@@ -87,18 +87,19 @@ void	expand(char *prompt, t_lexer **lex)
 
 	tmp = NULL;
 	lst = *lex;
-	(void) prompt;
+	(void)prompt;
 	while (lst)
 	{
 		if (lst->value[0] == '$' && lst->in_quotes != 2 && !is_heredoc(lst)
-			&& (lst->value[1] || (lst->next && lst->in_quotes == 0 && \
-		(lst->next->value[0] == '\"' || lst->next->value[0] == '\''))))
+			&& (lst->value[1] || (lst->next && lst->in_quotes == 0
+					&& (lst->next->value[0] == '\"'
+						|| lst->next->value[0] == '\''))))
 		{
 			lst->value++;
 			if (lst->value[0] == '?')
 			{
-				lst->value = my_strjoin2(ft_itoa(env->exit_status)\
-				,lst->value + 1);
+				lst->value = my_strjoin2(ft_itoa(env->exit_status), lst->value
+						+ 1);
 			}
 			else
 			{

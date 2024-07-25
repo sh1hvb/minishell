@@ -1,7 +1,6 @@
 #include "../../minishell.h"
 #include <errno.h>
 
-
 // void	handle_command_not_found(t_data *data)
 // {
 // 	if (data && data->cmd && !ft_strcmp("minishell", data->args[0]))
@@ -47,7 +46,8 @@
 
 void	handle_redirections(t_data *data)
 {
-	int index;
+	int	index;
+
 	if (ft_lstlast_file(data->redir_out))
 	{
 		index = ft_lstlast_file(data->redir_out)->index;
@@ -73,42 +73,44 @@ void	handle_invalid_command(void)
 void	handle_access_error(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
-	if (errno == EACCES)
+	if (errno == EACCES && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
+			|| (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		ft_putendl_fd(": Permission denied", 2);
-		ft_lstclear_env(env);
-			ft_malloc(0, 1);
-		exit(126);
-	}
-	else if (errno == ENOENT && (cmd[0] == '/'
-			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
-				&& cmd[1] == '/')))
-	{
-		ft_putendl_fd(": No such file or directory", 2);
 		ft_lstclear_env(env);
 		ft_malloc(0, 1);
 		exit(126);
 	}
+	else if (errno == ENOENT && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
+				|| (cmd[0] == '.' && cmd[1] == '/')))
+	{
+		ft_putendl_fd(": No such file or directory", 2);
+		ft_malloc(0, 1);
+		ft_lstclear_env(env);
+		exit(126);
+	}
 	else
+	{
+		ft_lstclear_env(env);
 		ft_putendl_fd(": command not found", 2);
-	ft_lstclear_env(env);
-	ft_malloc(0, 1);
-	exit(127);
+		ft_malloc(0, 1);
+		exit(127);
+	}
 }
 
 void	handle_execve_error(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
-	if (errno == EACCES)
+	if (errno == EACCES && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
+			|| (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		ft_putendl_fd(": Permission denied", 2);
-			ft_lstclear_env(env);
-			ft_malloc(0, 1);
+		ft_lstclear_env(env);
+		ft_malloc(0, 1);
 		exit(126);
 	}
-	else if (errno == ENOENT && (cmd[0] == '/'
-			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
-				&& cmd[1] == '/')))
+	else if (errno == ENOENT && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
+				|| (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_malloc(0, 1);
@@ -118,7 +120,7 @@ void	handle_execve_error(char *cmd)
 	else
 	{
 		ft_lstclear_env(env);
-		ft_putendl_fd(": Command not found", 2);
+		ft_putendl_fd(": command not found", 2);
 		ft_malloc(0, 1);
 		exit(127);
 	}
@@ -203,7 +205,8 @@ int	handle_file_redirections(t_data *data)
 
 void	setup_redirections(t_data *data)
 {
-	int index;
+	int	index;
+
 	if (ft_lstlast_file(data->append))
 	{
 		index = ft_lstlast_file(data->append)->index;
@@ -232,14 +235,14 @@ void	close_file_descriptors(t_data *data)
 	if (ft_lstlast_file(data->redir_out)
 		&& ft_lstlast_file(data->redir_out)->index)
 		close(ft_lstlast_file(data->redir_out)->index);
-	if (ft_lstlast_file(data->heredoc)
-		&& ft_lstlast_file(data->heredoc)->index)
+	if (ft_lstlast_file(data->heredoc) && ft_lstlast_file(data->heredoc)->index)
 		close(ft_lstlast_file(data->heredoc)->index);
 }
 
 void	execute_built_in_or_fork(t_data *data)
 {
-	int pid;
+	int	pid;
+
 	if (check_builts(data))
 	{
 		handle_builts(data);

@@ -99,7 +99,7 @@ void	is_quotes(char *prompt, t_lexer **lex, int *index, int flag)
 
 void	is_pipe(char *prompt, t_lexer **lex, int *index, int flag)
 {
-	t_lexer	*new;	
+	t_lexer	*new;
 
 	new = NULL;
 	if (!prompt || !lex || !index)

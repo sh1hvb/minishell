@@ -29,7 +29,7 @@ static void	string_quotes(t_data *data)
 	char	*tmp;
 	char	delimiter;
 
-	int (i), (j);
+	int(i), (j);
 	i = 0;
 	while (data && data->args && data->args[i])
 	{
@@ -61,7 +61,7 @@ static void	rmv_file_qts(t_files *data)
 	char	*tmp;
 	char	delimiter;
 
-	int (i);
+	int(i);
 	while (data && data->delimiter)
 	{
 		i = 0;

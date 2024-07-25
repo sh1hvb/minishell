@@ -42,7 +42,7 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 {
 	char	*tmp;
 
-	(void) data;
+	(void)data;
 	tmp = my_get_env(env, "HOME");
 	if (!tmp)
 	{
@@ -88,7 +88,8 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 	else
 	{
 		ft_putstr_fd("bash: cd: --: invalid option\ncd: usage: \
-		cd [-L|-P] [dir]\n", 2);
+		cd [-L|-P] [dir]\n",
+						2);
 		env->exit_status = 1;
 		return ;
 	}

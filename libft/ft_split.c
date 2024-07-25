@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	void	ft_free(char **s)
+static void	ft_free(char **s)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ static	void	ft_free(char **s)
 	free(s);
 }
 
-static	int	count_word(char const *s, char c)
+static int	count_word(char const *s, char c)
 {
 	int	count;
 	int	flag;
@@ -45,7 +45,7 @@ static	int	count_word(char const *s, char c)
 	return (count);
 }
 
-static	char	*get_word(char *dst, char const *src, char c, int	*index)
+static char	*get_word(char *dst, char const *src, char c, int *index)
 {
 	int	i;
 	int	start;
@@ -58,7 +58,7 @@ static	char	*get_word(char *dst, char const *src, char c, int	*index)
 	while (src[i] && src[i] != c)
 		i++;
 	len = (i - start) + 1;
-	dst = malloc(len* sizeof(char));
+	dst = malloc(len * sizeof(char));
 	ft_strlcpy(dst, src + start, len);
 	*index = i;
 	return (dst);

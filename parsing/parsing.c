@@ -1,19 +1,18 @@
 #include "../minishell.h"
 
-int		is_heredoc(t_lexer *lst);
-int		heredoc_lstsize(t_files *lst);
-t_data	*pars_lstnew(char *value, int quotes);
-void	pars_lstadd_back(t_data **lst, t_data *new);
-void	heredoc_lstadd_back(t_files **lst, t_files *new);
-t_files	*heredoc_lstnew(char *value);
-t_files	*heredoc_lstlast(t_files *lst);
+int			is_heredoc(t_lexer *lst);
+int			heredoc_lstsize(t_files *lst);
+t_data		*pars_lstnew(char *value, int quotes);
+void		pars_lstadd_back(t_data **lst, t_data *new);
+void		heredoc_lstadd_back(t_files **lst, t_files *new);
+t_files		*heredoc_lstnew(char *value);
+t_files		*heredoc_lstlast(t_files *lst);
 
 static int	is_valid_type(t_lexer *lex)
 {
-	if ((lex && lex->type == 'W' && lex->in_quotes == 0)
-		|| (lex->type != 'S' && (lex->type != '$') && (lex->type != 'W')
-			&& lex->type != '\"' && lex->type != '\'')
-		|| lex->type == '|')
+	if ((lex && lex->type == 'W' && lex->in_quotes == 0) || (lex->type != 'S'
+			&& (lex->type != '$') && (lex->type != 'W') && lex->type != '\"'
+			&& lex->type != '\'') || lex->type == '|')
 		return (1);
 	return (0);
 }
@@ -72,7 +71,7 @@ int	pars_files(t_data **data, t_lexer **lex, int flag)
 	return (0);
 }
 
-void	new_node(t_lexer **lex, t_data	**data)
+void	new_node(t_lexer **lex, t_data **data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
@@ -86,7 +85,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 	{
 		ft_lstclear_env(env);
 		ft_malloc(0, 1);
-		exit (1);
+		exit(1);
 	}
 	if (*data)
 		*data = (*data)->next;
@@ -94,7 +93,7 @@ void	new_node(t_lexer **lex, t_data	**data)
 		*lex = (*lex)->next;
 }
 
-void	fill_args(t_lexer **lex, t_data	**data)
+void	fill_args(t_lexer **lex, t_data **data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
@@ -108,7 +107,7 @@ void	fill_args(t_lexer **lex, t_data	**data)
 		*lex = (*lex)->next;
 }
 
-void	check_empty_cmd(t_data	*data_tmp)
+void	check_empty_cmd(t_data *data_tmp)
 {
 	int	i;
 
@@ -124,11 +123,11 @@ void	check_empty_cmd(t_data	*data_tmp)
 
 static int	is_redirection(t_lexer *lex)
 {
-	return (lex->type == 'I' || lex->type == 'O'\
-	|| lex->type == 'H' || lex->type == 'A');
+	return (lex->type == 'I' || lex->type == 'O' || lex->type == 'H'
+		|| lex->type == 'A');
 }
 
-int	parsing(t_lexer **lex, t_data	**data)
+int	parsing(t_lexer **lex, t_data **data)
 {
 	t_lexer	*lex_tmp;
 	t_data	*data_tmp;
