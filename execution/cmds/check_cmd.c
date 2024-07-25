@@ -6,21 +6,22 @@ char	**list_to_pointer(void)
 	char	**arr;
 	char	*tmp;
 	int		size;
-
+	t_envp *ls;
+	ls = env;
 	i = 0;
 	arr = NULL;
 	tmp = NULL;
-	size = ft_lstsize_env(env);
+	size = ft_lstsize_env(ls);
 	arr = malloc((size + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (env)
+	while (ls)
 	{
-		tmp = ft_strjoin(env->key, "=");
-		arr[i] = ft_strjoin(tmp, env->value);
+		tmp = ft_strjoin(ls->key, "=");
+		arr[i] = ft_strjoin(tmp, ls->value);
 		free(tmp);
 		i++;
-		env = env->next;
+		ls = ls->next;
 	}
 	arr[i] = NULL;
 	return (arr);

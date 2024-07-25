@@ -73,7 +73,9 @@ void	handle_invalid_command(void)
 void	handle_access_error(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
-	if (errno == EACCES)
+	if (errno == EACCES &&  (cmd[0] == '/'
+			|| cmd[ft_strlen(cmd) - 1] == '/' || (cmd[0] == '.'
+				&& cmd[1] == '/')))
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		ft_lstclear_env(env);
@@ -91,8 +93,12 @@ void	handle_access_error(char *cmd)
 	}
 	else
 		ft_putendl_fd(": command not found", 2);
+	while (env)
+		{
+			printf("%s=%s", env->key, env->value);
+			env = env->next;
+		}
 	ft_lstclear_env(env);
-	ft_malloc(0, 1);
 	exit(127);
 }
 
@@ -117,8 +123,9 @@ void	handle_execve_error(char *cmd)
 	}
 	else
 	{
-		ft_lstclear_env(env);
 		ft_putendl_fd(": Command not found", 2);
+		
+		ft_lstclear_env(env);
 		ft_malloc(0, 1);
 		exit(127);
 	}
@@ -143,6 +150,15 @@ void	handle_execve(t_data *data, char *path, char **envp)
 		handle_access_error(data->cmd);
 	}
 	envp = list_to_pointer();
+	// if (env)
+	// 		ft_putendl_fd("==========================", 2);
+	// 	else
+	// 		ft_putendl_fd("", 2);
+	// 	while (env)
+	// 	{
+	// 		printf("%s=%s", env->key, env->value);
+	// 		env = env->next;
+	// 	}
 	if (execve(path, data->args, envp) == -1)
 	{
 		free(path);

@@ -198,6 +198,5 @@ int		is_ambiguous(t_lexer *lex);
 int		pars_files(t_data **data, t_lexer **lex, int flag);
 void	fill_args(t_lexer **lex, t_data	**data, int export_flag);
 void	new_node(t_lexer **lex, t_data	**data);
-char	**fill_array(char **dst, char *src, char *delimiters, int num_word);
 void	split_quotes(char *target, char delimiter, int *index);
 #endif

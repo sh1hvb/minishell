@@ -185,7 +185,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     if(!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
     {
         ft_putstr_fd("minishell: export: `", 2);
-        ft_putstr_fd(data->args[1], 2);
+        ft_putstr_fd(data->args[i], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
         // return ;
@@ -206,7 +206,7 @@ void process_arguments(t_data *data, t_envp *env, int i) {
     else 
     {
         ft_putstr_fd("minishell: export: `", 2);
-        ft_putstr_fd(data->args[1], 2);
+        ft_putstr_fd(data->args[i], 2);
         ft_putendl_fd("': not a valid identifier", 2);
         env->exit_status = 1;
         // return ;

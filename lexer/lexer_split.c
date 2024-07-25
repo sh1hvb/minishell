@@ -1,5 +1,7 @@
 #include "../minishell.h"
 
+char	**fill_array(char **dst, char *src, char *delimiters, int num_word);
+
 static void	handle_quotes(char *s, int *index, int *count, int flag)
 {
 	int	i;

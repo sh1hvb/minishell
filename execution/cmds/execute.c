@@ -80,6 +80,7 @@ void	exec(t_data *data)
 	}
 	path = NULL;
 	envp = NULL;
+	
 	handle_execve(data, path, envp);
 }
 void	handle_process_redirections(t_data *data)
@@ -102,6 +103,7 @@ void	handle_process_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
+		
 		exec(data);
 	
 	}
@@ -117,7 +119,7 @@ void	handle_process_execution(t_data *data)
 
 void	ft_execute_multiple(t_data *data)
 {
-	int pid;
+	int (pid), (status);
 	while (data && data->next)
 	{
 		if (data->cmd)
@@ -131,6 +133,10 @@ void	ft_execute_multiple(t_data *data)
 		if (data->cmd)
 			handle_process_execution(data);
 	}
+	waitpid(pid, &status, 0);
+	env->exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	env->exit_status = WTERMSIG(status) + 128;
 }
 
 void	process_pipe(t_data *data)

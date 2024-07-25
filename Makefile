@@ -16,7 +16,7 @@ SRC_MCHIHAB = main.c \
 
 SRC_SMARSI =  parsing/parsing.c parsing/parsing_file_args.c parsing/quotes_remover.c parsing/signal.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
 	helpers/errors.c\
-	lexer/lexer.c lexer/lexer_helper.c lexer/lexer_split.c lexer/lexer_split_helper.c lexer/lexer_strchr.c lexer/lexer_functions.c \
+	lexer/lexer.c lexer/lexer_helper.c lexer/lexer_split.c lexer/lexer_split_helper.c lexer/lexer_strchr.c lexer/lexer_functions.c lexer/lexer_functions2.c\
 	memory_handling/memory_handling.c memory_handling/memory_helpers.c \
 	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
 
