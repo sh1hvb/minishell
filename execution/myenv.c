@@ -116,10 +116,11 @@ t_envp	*get_env(char **env, int c)
 
 	env_list = NULL;
 	current = NULL;
+	splited = NULL;
 	i = 0;
 	while (env[i])
 	{
-		splited = lexer_split(env[i], "+=");
+		splited = builtins_split(env[i], "+=");
 		new_node = malloc(sizeof(t_envp));
 		if (!new_node)
 			return (0);
@@ -138,6 +139,7 @@ t_envp	*get_env(char **env, int c)
 		else
 			env_list = new_node;
 		current = new_node;
+		ft_freed(splited);
 		i++;
 	}
 	return (env_list);

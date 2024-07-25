@@ -29,7 +29,7 @@ void	sigint_heredoc(int sig)
 
 void	signal_quit(int sig)
 {
-	printf("Quit: 3\n");
+	printf("Quit: (core dumped)\n");
 	env->exit_status = 131;
 	(void)sig;
 }

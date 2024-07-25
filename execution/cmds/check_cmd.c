@@ -12,17 +12,17 @@ char	**list_to_pointer(void)
 	i = 0;
 	arr = NULL;
 	tmp = NULL;
-	size = ft_lstsize_env(lst);
+	size = ft_lstsize_env(ls);
 	arr = malloc((size + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (lst)
+	while (ls)
 	{
-		tmp = ft_strjoin(lst->key, "=");
-		arr[i] = ft_strjoin(tmp, lst->value);
+		tmp = ft_strjoin(ls->key, "=");
+		arr[i] = ft_strjoin(tmp, ls->value);
 		free(tmp);
 		i++;
-		lst = lst->next;
+		ls = ls->next;
 	}
 	arr[i] = NULL;
 	return (arr);

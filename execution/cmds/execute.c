@@ -84,6 +84,7 @@ void	exec(t_data *data)
 	}
 	path = NULL;
 	envp = NULL;
+	
 	handle_execve(data, path, envp);
 }
 
@@ -107,6 +108,7 @@ void	handle_process_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
+		
 		exec(data);
 	}
 	else
@@ -120,6 +122,7 @@ void	handle_process_execution(t_data *data)
 
 void	ft_execute_multiple(t_data *data)
 {
+	int (pid), (status);
 	int (pid), (status);
 	while (data && data->next)
 	{

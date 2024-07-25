@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:57:17 by smarsi            #+#    #+#             */
-/*   Updated: 2024/05/23 09:57:10 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:27:09 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *s1)
 	char	*dest;
 	size_t	i;
 
-	dest = (char *)malloc(ft_strlen(s1) + 1);
+	dest = (char *) malloc(ft_strlen(s1) + 1);
 	if (!dest)
 		return (ft_strdup(""));
 	i = 0;

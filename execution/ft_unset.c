@@ -1,33 +1,43 @@
 #include "../minishell.h"
 
+
 void	ft_unset(t_data *data)
 {
-	int i = 1;
-	t_envp *head;
+	int		i;
+	t_envp	*head;
+	t_envp	*tmp;
 
-	head = env;
+	i = 1;
 	while (data->args[i])
 	{
+		head = env;
 		while (head)
 		{
 			if (!ft_strcmp(data->args[i], head->key))
 			{
 				if (!head->prev)
 				{
-					env = env->next;
-					env->prev = NULL;
-					free(head->key);
-					free(head->value);
-					free(head);
-					break ;
+					env = head->next;
+					if (env)
+						env->prev = NULL;
 				}
-				head->prev->next = head->next;
+				else
+				{
+					head->prev->next = head->next;
+					if (head->next)
+						head->next->prev = head->prev;
+				}
 				free(head->key);
 				free(head->value);
-				head = env;
+				tmp = head;
+				head = head->next;
+				free(tmp);
 				break ;
 			}
-			head = head->next;
+			else
+			{
+				head = head->next;
+			}
 		}
 		i++;
 	}

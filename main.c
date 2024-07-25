@@ -60,6 +60,7 @@ void	minishell()
 			expand(prompt, &lex);
 			// print_expand(lex_tmp);
 			// printf("========= end expand\n");
+			heredoc_counter(lex);
 			if (parsing(&lex, &data))
 			{
 				free(prompt);
@@ -81,13 +82,15 @@ void	minishell()
 
 int	main(int ac, char *av[], char *envp[])
 {
+	int	exit_status;
+
+	exit_status = 0;
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
 	(void)av;
 
-	// exit(0);
 	handle_env(envp);
-	// inc_shell();
+	inc_shell();
 	minishell();
 	ft_lstclear_env(env);
     // env = sort_list(env , ascending);
@@ -95,7 +98,5 @@ int	main(int ac, char *av[], char *envp[])
 	ft_malloc(0, 1);
 	// exit(0); 
 	// ft_freed(arr);
-	return (0);
+	return (exit_status);
 }
-
-

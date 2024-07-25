@@ -1,17 +1,19 @@
 #include "../minishell.h"
 
-void	get_old_pwd(char *cwd)
+void	get_old_pwd(void)
 {
 	t_envp	*tmp_env;
+	char	*tmp;
 
 	tmp_env = env;
+	tmp = my_get_env(env, "PWD");
 	while (tmp_env)
 	{
 		if (!ft_strcmp(tmp_env->key, "OLDPWD"))
 		{
 			if (tmp_env && tmp_env->value)
 				free(tmp_env->value);
-			tmp_env->value = ft_strdup(cwd);
+			tmp_env->value = tmp;
 			break ;
 		}
 		tmp_env = tmp_env->next;
@@ -27,7 +29,7 @@ void	set_pwd(char *cwd)
 	{
 		if (!ft_strcmp(tmp_env->key, "PWD"))
 		{
-			if (tmp_env && tmp_env->value)
+			if (tmp_env && tmp_env->value && cwd)
 			{
 				free(tmp_env->value);
 				tmp_env->value = ft_strdup(cwd);
@@ -38,7 +40,7 @@ void	set_pwd(char *cwd)
 	}
 }
 
-void	cd_home(t_data *data, char *msg, char *cwd)
+void	cd_home(t_data *data, char *msg)
 {
 	char	*tmp;
 
@@ -56,13 +58,13 @@ void	cd_home(t_data *data, char *msg, char *cwd)
 		free(tmp);
 		return ;
 	}
-	get_old_pwd(cwd);
+	get_old_pwd();
 	env->exit_status = 0;
 	free(tmp);
 	return ;
 }
 
-void	cd_old_pwd(t_data *data, char *msg, char *cwd)
+void	cd_old_pwd(t_data *data, char *msg)
 {
 	char	*tmp;
 
@@ -96,7 +98,7 @@ void	cd_old_pwd(t_data *data, char *msg, char *cwd)
 	tmp = my_get_env(env, "OLDPWD");
 	ft_putstr_fd(tmp, 1);
 	ft_putstr_fd("\n", 1);
-	get_old_pwd(cwd);
+	get_old_pwd();
 	free(tmp);
 }
 
@@ -114,10 +116,11 @@ void	ft_cd(t_data *data)
 			perror("getcwd : ");
 		return ;
 	}
-	if (data->args[1] && data->args[2])
+	if (data->args[1])
 	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
-		env->exit_status = 1;
+		if (data->args[2])
+			(ft_putendl_fd("minishell: cd: too many arguments", 2), env->exit_status = 1);
+		
 		return ;
 	}
 	else if (data->args[1] && !data->args[1][0])
@@ -126,9 +129,9 @@ void	ft_cd(t_data *data)
 		return ;
 	}
 	if (!data->args[1] || !ft_strcmp(data->args[1], "--"))
-		cd_home(data, msg, cwd);
+		cd_home(data, msg);
 	else if (data->args[1][0] == '-')
-		cd_old_pwd(data, msg, cwd);
+		cd_old_pwd(data, msg);
 	else
 	{
 		if (chdir(data->args[1]) == -1)
@@ -140,7 +143,7 @@ void	ft_cd(t_data *data)
 			env->exit_status = 1;
 			return ;
 		}
-		get_old_pwd(cwd);
+		get_old_pwd();
 	}
 	set_pwd(getcwd(buff, PATH_MAX));
 	env->exit_status = 0;

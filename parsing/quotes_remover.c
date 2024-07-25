@@ -24,12 +24,9 @@ static char	*my_strjoin_c(char *s1, char s2)
 	return (str);
 }
 
-static void	string_quotes(t_data *data)
+static void	string_quotes(t_data *data, char *tmp, char delimiter)
 {
-	char	*tmp;
-	char	delimiter;
-
-	int(i), (j);
+	int (i), (j);
 	i = 0;
 	while (data && data->args && data->args[i])
 	{
@@ -56,12 +53,9 @@ static void	string_quotes(t_data *data)
 	}
 }
 
-static void	rmv_file_qts(t_files *data)
+static void	rmv_file_qts(t_files *data, char *tmp, char delimiter)
 {
-	char	*tmp;
-	char	delimiter;
-
-	int(i);
+	int (i);
 	while (data && data->delimiter)
 	{
 		i = 0;
@@ -89,9 +83,14 @@ static void	rmv_file_qts(t_files *data)
 
 void	remove_quotes(t_data *data_tmp)
 {
-	string_quotes(data_tmp);
-	rmv_file_qts(data_tmp->append);
-	rmv_file_qts(data_tmp->heredoc);
-	rmv_file_qts(data_tmp->redir_in);
-	rmv_file_qts(data_tmp->redir_out);
+	char	*tmp;
+	char	delimiter;
+
+	delimiter = '\0';
+	tmp = NULL;
+	string_quotes(data_tmp, tmp, delimiter);
+	rmv_file_qts(data_tmp->append, tmp, delimiter);
+	rmv_file_qts(data_tmp->heredoc, tmp, delimiter);
+	rmv_file_qts(data_tmp->redir_in, tmp, delimiter);
+	rmv_file_qts(data_tmp->redir_out, tmp, delimiter);
 }

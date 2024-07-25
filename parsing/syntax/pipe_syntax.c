@@ -19,8 +19,8 @@ int	pipe_syntax(t_lexer *lex)
 			|| tmp->type == 'I' || tmp->type == 'O'
 			|| tmp->type == 'H' || tmp->type == 'A')
 		{
-			ft_putendl_fd("minishell: syntax error \
-			near unexpected token `|'", 2);
+			ft_putendl_fd(\
+			"minishell: syntax error near unexpected token `|'", 2);
 			env->exit_status = 2;
 			return (2);
 		}
