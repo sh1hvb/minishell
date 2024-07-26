@@ -7,7 +7,7 @@ long long	ft_atoi2(char *str)
 
 	digit = 0;
 	signe = 1;
-	if (!ft_strcmp(str, "-9223372036854775808") || \
+	if (!ft_strcmp(str, "-9223372036854775808") ||
 		!ft_strcmp(str, "9223372036854775807"))
 		return (1);
 	while (*str == 32 || (*str >= 9 && *str <= 13))

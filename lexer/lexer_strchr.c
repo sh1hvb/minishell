@@ -14,8 +14,8 @@ void	lexer_strchr_d(char *str, char *dlmtrs, int *ind, int f)
 {
 	int	i;
 
-	(void) dlmtrs;
-	(void) f;
+	(void)dlmtrs;
+	(void)f;
 	i = *ind;
 	if (str[i] == '?')
 		i++;

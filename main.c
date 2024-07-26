@@ -32,7 +32,10 @@ void	minishell()
 		if (!prompt)
 		{
 			printf("exit\n");
-			return ;
+			ft_malloc(0, 1);
+			int ex = env->exit_status;
+			ft_lstclear_env(env);
+			exit (ex);
 		}
 		else if (!prompt[0])
 		{

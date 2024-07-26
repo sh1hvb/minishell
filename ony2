@@ -1,4 +1,0 @@
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
-	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
-all : $(NAME)
-re : fclean all

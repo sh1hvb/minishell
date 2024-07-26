@@ -6,13 +6,25 @@ NAME = minishell
 NAME_LIBFT = libft/libft.a
 
 LIBFT_PATH = libft/
+SRC_CMDS = execution/cmds/check_cmd.c execution/cmds/execute.c execution/cmds/single_cmd.c \
+	execution/cmds/utils_exec.c execution/cmds/errors_cmd.c execution/cmds/piping.c \
+	execution/cmds/utils_single.c
+
+SRC_RED = execution/redirections/redirection.c execution/redirections/here_doc.c \
+		execution/redirections/heredoc_expand.c execution/redirections/linked_list_file.c \
+		execution/redirections/utils_redirection.c execution/redirections/utils_heredoc.c
+
+SRC_UTILS_BUILTS = execution/utils_builts/mini_utils_export.c  execution/utils_builts/utils_export.c 
+
+SRC_BUILTS = execution/myenv.c execution/ft_export.c execution/utils_env.c execution/ft_exit.c \
+	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
+	execution/builtins_split.c execution/ft_cd.c execution/linked_list_env.c
 
 SRC_MCHIHAB = main.c \
-	execution/myenv.c execution/ft_export.c execution/utils_env.c \
-	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
-	execution/builtins_split.c execution/ft_cd.c execution/cmds/check_cmd.c execution/cmds/redirection.c execution/cmds/execute.c execution/ft_exit.c \
-	execution/cmds/here_doc.c execution/cmds/heredoc_expand.c execution/cmds/single_cmd.c \
-	execution/cmds/utils_exec.c
+	$(SRC_CMDS) \
+	$(SRC_RED) \
+	$(SRC_UTILS_BUILTS)\
+	$(SRC_BUILTS)
 
 SRC_SMARSI =  parsing/parsing.c parsing/parsing_file_args.c parsing/quotes_remover.c parsing/signal.c parsing/helpers.c parsing/linked_list/pars_lst.c parsing/linked_list/heredoc_lst.c parsing/syntax/pipe_syntax.c parsing/syntax/syntax.c parsing/syntax/quotes_syntax.c parsing/syntax/files_syntax.c\
 	helpers/errors.c\

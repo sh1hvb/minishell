@@ -14,7 +14,7 @@ void	sigint_handler(int sig)
 
 void	sigint_int(int sig)
 {
-	(void) sig;
+	(void)sig;
 	printf("\n");
 }
 
