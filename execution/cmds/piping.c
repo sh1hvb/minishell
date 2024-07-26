@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   piping.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 19:59:32 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	create_pipes(t_data *data)
@@ -27,9 +39,10 @@ void	create_pipes(t_data *data)
 	dup2(fds[0], 0);
 	close(fds[0]);
 }
+
 void	ft_execute_multiple(t_data *data)
 {
-	int(pid), (status);
+	int (pid), (status);
 	while (data && data->next)
 	{
 		if (data && (data->cmd || data->heredoc))

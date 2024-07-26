@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:10:25 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 int	end_heredoc(char *line, char *delimiter)
@@ -8,8 +20,7 @@ int	end_heredoc(char *line, char *delimiter)
 		{
 			ft_putstr_fd("\n", 2);
 			ft_putstr_fd("minishell: warning: here-document delimited\
-					by end-of-file (wanted `",
-							2);
+			 by end-of-file (wanted `", 2);
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
 		}
@@ -20,24 +31,24 @@ int	end_heredoc(char *line, char *delimiter)
 	}
 	return (0);
 }
+
 void	heredoc_read_and_put_mult(t_data *data, int fdp)
 {
 	char	*line;
 	char	*delimiter;
-	char *tmp;
+	char	*tmp;
 
 	delimiter = data->heredoc->delimiter;
 	while (1)
 	{
-		// write(2, ">", 1);
 		line = readline(">");
-		if (line && data->heredoc && !data->heredoc->type)
-			line = heredoc_expand(line);
 		if (end_heredoc(line, delimiter))
 			break ;
+		if (line && data->heredoc && !data->heredoc->type)
+			line = heredoc_expand(line);
 		if (!data->heredoc->next)
 		{
-			tmp = ft_strjoin(line , "\n");
+			tmp = ft_strjoin(line, "\n");
 			if (data->next && !data->next->heredoc && !data->next->next
 				&& data->next->cmd)
 				ft_putstr_fd(tmp, fdp);
@@ -54,7 +65,7 @@ void	heredoc_mult(t_data *data)
 	t_data	*p;
 	char	*tmp_path;
 
-	int(status), (pid), (fds);
+	int (status), (pid), (fds);
 	p = data;
 	tmp_path = "/tmp/heredoc.txt";
 	pid = fork();

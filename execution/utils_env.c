@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:40:19 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:40:46 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_lstadd_back_env(t_envp **lst, t_envp *new)
@@ -14,6 +26,7 @@ void	ft_lstadd_back_env(t_envp **lst, t_envp *new)
 		head->next = new;
 	}
 }
+
 char	**list_to_pointer(void)
 {
 	int		i;
@@ -41,6 +54,7 @@ char	**list_to_pointer(void)
 	arr[i] = NULL;
 	return (arr);
 }
+
 void	inc_shell(void)
 {
 	int		tmp;
@@ -57,8 +71,7 @@ void	inc_shell(void)
 			{
 				tmpenv->value = (ft_itoa(1));
 				ft_putendl_fd("bash: warning: shell level (1001) too high,\
-						resetting to 1",
-								2);
+				 resetting to 1", 2);
 			}
 			else
 				tmpenv->value = (ft_itoa(tmp));

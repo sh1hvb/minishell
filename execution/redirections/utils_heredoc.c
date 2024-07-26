@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_heredoc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:07:12 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:07:13 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	call_here_put(t_data *p, int fds)
@@ -16,6 +28,7 @@ void	call_here_put(t_data *p, int fds)
 	ft_lstclear_env(env);
 	exit(0);
 }
+
 void	err(void)
 {
 	printf("error\n");
@@ -34,9 +47,10 @@ int	check_heredoc(t_data *data)
 	else
 		return (0);
 }
+
 int	check_heredoc_two(t_data *data)
 {
-	t_data *p;
+	t_data	*p;
 
 	p = data;
 	while (p)

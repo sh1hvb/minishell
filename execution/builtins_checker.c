@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_checker.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:13:15 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:14:11 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	check_builts(t_data *data)
@@ -20,9 +32,11 @@ int	check_builts(t_data *data)
 		return (7);
 	return (0);
 }
+
 void	handle_builts(t_data *data)
 {
-	t_envp *envtmp;
+	t_envp	*envtmp;
+
 	envtmp = env;
 	if (!check_builts(data))
 		ft_error(" command not found", 127);

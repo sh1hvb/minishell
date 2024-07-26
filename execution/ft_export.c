@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:20:00 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_env(void)
 {
 	print_env_list("en");
 }
+
 char	*my_get_env(t_envp *env_list, const char *key)
 {
 	t_envp	*current;
@@ -21,6 +34,7 @@ char	*my_get_env(t_envp *env_list, const char *key)
 	}
 	return (NULL);
 }
+
 void	handle_flag_set(t_data *data, t_envp *env, int i, char **arr)
 {
 	int		flag;
@@ -78,14 +92,14 @@ void	process_arguments(t_data *data, t_envp *env, int i)
 
 void	ft_export(t_data *data, t_envp *env)
 {
-	int i = 1;
+	int	i;
 
+	i = 1;
 	if (!ft_strcmp(data->args[0], "export") && (!data->args[1]))
 	{
 		handle_no_arguments(env);
 		return ;
 	}
-
 	while (data->args[i])
 	{
 		if (!ft_strcmp(data->args[i], "export"))
