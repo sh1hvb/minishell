@@ -119,8 +119,8 @@ void	ft_cd(t_data *data)
 	if (data->args[1])
 	{
 		if (data->args[2])
-			(ft_putendl_fd("minishell: cd: too many arguments", 2), env->exit_status = 1);
-		
+			(ft_putendl_fd("minishell: cd: too many arguments", 2),
+					env->exit_status = 1);
 		return ;
 	}
 	else if (data->args[1] && !data->args[1][0])

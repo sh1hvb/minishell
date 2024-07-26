@@ -70,43 +70,30 @@ int	ft_append_file(t_files *file)
 	}
 	return (0);
 }
-
-void	handle_input_redirection(t_data *data)
+void	handle_child_redirections(t_data *data, int fds[])
 {
-	t_files	*file;
-
-	if (ft_input(data->redir_in))
-		exit(1);
-	file = ft_lstlast_file(data->redir_in);
-	dup2(file->index, 0);
-	close(file->index);
-}
-
-void	handle_output_redirection(t_data *data)
-{
-	t_files	*file;
-
-	if (ft_output(data->redir_out))
-		exit(1);
-	file = ft_lstlast_file(data->redir_out);
-	dup2(file->index, 1);
-	close(file->index);
-}
-
-void	handle_append_redirection(t_data *data)
-{
-	t_files	*file;
-
-	if (ft_append_file(data->append))
-		exit(1);
-	file = ft_lstlast_file(data->append);
-	dup2(file->index, 1);
-	close(file->index);
+	if (data)
+	{
+		if (data->redir_in)
+			handle_input_redirection(data);
+		if (data->redir_out)
+			handle_output_redirection(data);
+		if (data->append)
+			handle_append_redirection(data);
+		handle_heredoc(data);
+		if (!data->cmd || !data->cmd[0])
+		{
+			ft_lstclear_env(env);
+			ft_malloc(0, 1);
+			exit(127);
+		}
+	}
+	close(fds[1]);
 }
 
 void	handle_heredoc(t_data *data)
 {
-	int	fd;
+	int fd;
 
 	if (check_heredoc(data))
 	{
@@ -122,45 +109,3 @@ void	handle_heredoc(t_data *data)
 		close(fd);
 	}
 }
-// int	ft_heredoc(t_files *file)
-// {
-// 	int	fd;
-// 	char *path ="/tmp";
-// 	int i = 0;
-// 	char *joined;
-// 	char *s;
-// 	while (file && i <=16)
-// 	{
-// 		i++;
-// 		s = ft_itoa(i);
-// 		joined = ft_strjoin(path,s);
-// 		fd = open(joined, O_CREAT | O_RDWR | O_APPEND, 0644);
-// 		if (fd == -1)
-// 		{
-// 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
-// 			perror(" ");
-// 			ft_putstr_fd("", 2);
-// 			return (1);
-// 		}
-// 		free(joined);
-// 		free(s);
-// 		if (file->next)
-// 			close(fd);
-// 		else
-// 			file->index = fd;
-// 		file = file->next;
-// 	}
-// 	return (0);
-// }
-// void	ft_append(t_files *file)
-// {
-// 	int	fd;
-
-// 	while (file && file->next)
-// 	{
-// 		open(file->delimiter, O_WRONLY, O_APPEND, 0644);
-// 		file = file->next;
-// 	}
-// 	fd = open(file->delimiter, O_WRONLY, O_APPEND, 0644);
-// 	file->index = fd;
-// }

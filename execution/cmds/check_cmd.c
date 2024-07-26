@@ -1,59 +1,5 @@
 #include "../../minishell.h"
 
-char	**list_to_pointer(void)
-{
-	int		i;
-	char	**arr;
-	char	*tmp;
-	int		size;
-	t_envp	*lst;
-
-	lst = env;
-	i = 0;
-	arr = NULL;
-	tmp = NULL;
-	size = ft_lstsize_env(ls);
-	arr = malloc((size + 1) * sizeof(char *));
-	if (!arr)
-		return (NULL);
-	while (ls)
-	{
-		tmp = ft_strjoin(ls->key, "=");
-		arr[i] = ft_strjoin(tmp, ls->value);
-		free(tmp);
-		i++;
-		ls = ls->next;
-	}
-	arr[i] = NULL;
-	return (arr);
-}
-
-void	inc_shell(void)
-{
-	int		tmp;
-	t_envp	*tmpenv;
-
-	tmpenv = env;
-	while (tmpenv)
-	{
-		if (!ft_strcmp(tmpenv->key, "SHLVL"))
-		{
-			tmp = ft_atoi(tmpenv->value) + 1;
-			free(tmpenv->value);
-			if (tmp > 1000)
-			{
-				tmpenv->value = (ft_itoa(1));
-				ft_putendl_fd("bash: warning: shell level (1001) too high,\
-						resetting to 1", 2);
-			}
-			else
-				tmpenv->value = (ft_itoa(tmp));
-			break ;
-		}
-		tmpenv = tmpenv->next;
-	}
-}
-
 void	check_redir(t_data *data, t_files *file)
 {
 	if (data && data->redir_in)
@@ -96,7 +42,7 @@ void	hide_inout(int a)
 	}
 }
 
-void	check_empty_cmd(t_data *data)
+void	check_empty_cmd_two(t_data *data)
 {
 	if (data && data->cmd && data->cmd[0] == '\0')
 	{
@@ -109,7 +55,7 @@ void	process_cmd(t_data *data)
 {
 	t_files	*file;
 
-	int (status), (flag);
+	int(status), (flag);
 	file = NULL;
 	flag = 0;
 	env->signal_heredoc = 0;
