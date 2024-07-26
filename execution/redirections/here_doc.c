@@ -12,9 +12,8 @@ int	end_heredoc(char *line, char *delimiter)
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
 		}
-		free(delimiter);
-		delimiter = NULL;
 		free(line);
+		delimiter = NULL;
 		line = NULL;
 		return (1);
 	}
@@ -24,23 +23,26 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 {
 	char	*line;
 	char	*delimiter;
+	char *tmp;
 
-	delimiter = ft_strjoin(data->heredoc->delimiter, "\n");
+	delimiter = data->heredoc->delimiter;
 	while (1)
 	{
-		write(2, ">", 1);
-		line = get_next_line(STDIN_FILENO);
+		// write(2, ">", 1);
+		line = readline(">");
 		if (line && data->heredoc && !data->heredoc->type)
 			line = heredoc_expand(line);
 		if (end_heredoc(line, delimiter))
 			break ;
 		if (!data->heredoc->next)
 		{
+			tmp = ft_strjoin(line , "\n");
 			if (data->next && !data->next->heredoc && !data->next->next
 				&& data->next->cmd)
-				ft_putstr_fd(line, fdp);
+				ft_putstr_fd(tmp, fdp);
 			else if (!data->next)
-				ft_putstr_fd(line, fdp);
+				ft_putstr_fd(tmp, fdp);
+			free(tmp);
 		}
 		free(line);
 	}

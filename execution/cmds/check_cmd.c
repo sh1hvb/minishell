@@ -61,7 +61,10 @@ void	process_cmd(t_data *data)
 	env->signal_heredoc = 0;
 	hide_inout(0);
 	if (data && check_heredoc_two(data))
+	{
 		heredoc_mult(data);
+		hide_inout(1);
+	}
 	if (data && !data->next && check_builts(data) && !env->signal_heredoc)
 	{
 		execute_single_cmd(data);
