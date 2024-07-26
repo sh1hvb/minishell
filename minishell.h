@@ -272,4 +272,6 @@ void				fill_args(t_lexer **lex, t_data **data, int export_flag);
 void				new_node(t_lexer **lex, t_data **data);
 void				split_quotes(char *target, char delimiter, int *index);
 void				heredoc_counter(t_lexer *lex);
+void				cd_old_pwd_continue(char *tmp);
+int					ft_cd_continue(t_data *data);
 #endif
