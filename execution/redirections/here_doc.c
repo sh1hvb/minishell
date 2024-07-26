@@ -30,10 +30,10 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 	{
 		// write(2, ">", 1);
 		line = readline(">");
-		if (line && data->heredoc && !data->heredoc->type)
-			line = heredoc_expand(line);
 		if (end_heredoc(line, delimiter))
 			break ;
+		if (line && data->heredoc && !data->heredoc->type)
+			line = heredoc_expand(line);
 		if (!data->heredoc->next)
 		{
 			tmp = ft_strjoin(line , "\n");
