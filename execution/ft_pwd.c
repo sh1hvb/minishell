@@ -4,7 +4,7 @@ void	ft_pwd(t_data *data)
 {
 	static char	*buf;
 
-	(void) data;
+	(void)data;
 	buf = getcwd(NULL, PATH_MAX);
 	if (!buf)
 	{

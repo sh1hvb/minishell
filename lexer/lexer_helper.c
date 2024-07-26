@@ -40,7 +40,7 @@ void	get_cmds(char *prompt, t_data **data, int *index)
 {
 	int	i;
 
-	(void) data;
+	(void)data;
 	i = *index;
 	if (prompt[i] && in_delimiters(prompt[i], " \t\n\v\v\f\r"))
 	{
@@ -60,7 +60,7 @@ void	get_quotes(char *prompt, t_data **data, int *index)
 	char	c;
 	int		i;
 
-	(void) data;
+	(void)data;
 	i = *index;
 	c = prompt[i];
 	printf("%c", c);

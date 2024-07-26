@@ -13,7 +13,7 @@ void	ft_freed(char **p)
 	i = 0;
 	while (p[i])
 	{
-		free (p[i]);
+		free(p[i]);
 		p[i++] = NULL;
 	}
 	free(p);

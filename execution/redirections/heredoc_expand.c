@@ -25,8 +25,7 @@ static char	*my_strjoin_c(char *s1, char s2)
 	return (str);
 }
 
-
-static char	*ft_strjoin_s(char  *s1, char  *s2)
+static char	*ft_strjoin_s(char *s1, char *s2)
 {
 	char	*p;
 	int		i;
@@ -56,8 +55,8 @@ static char	*ft_strjoin_s(char  *s1, char  *s2)
 
 char	*heredoc_expand(char *line)
 {
-	char	(*tmp), (*new);
-	int		(i) , (start);
+	char(*tmp), (*new);
+	int(i), (start);
 	tmp = NULL;
 	new = NULL;
 	i = 0;
@@ -76,7 +75,8 @@ char	*heredoc_expand(char *line)
 			}
 			else
 			{
-				while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i]) || line[i] == '_'))
+				while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i])
+						|| line[i] == '_'))
 					i++;
 				tmp = ft_malloc((i - start) + 1, 0);
 				if (!tmp)
