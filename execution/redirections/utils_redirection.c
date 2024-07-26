@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_redirection.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:07:35 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:07:53 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	handle_input_redirection(t_data *data)
@@ -32,6 +44,7 @@ void	handle_append_redirection(t_data *data)
 	dup2(file->index, 1);
 	close(file->index);
 }
+
 void	handle_process_redirections(t_data *data)
 {
 	if (data)

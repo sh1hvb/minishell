@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_exec.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:00:17 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:01:43 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	handle_directory_error(char *cmd)
@@ -9,6 +21,7 @@ void	handle_directory_error(char *cmd)
 	ft_malloc(0, 1);
 	exit(126);
 }
+
 char	*check_access_cmd(char **allpath, char *cmd, int i)
 {
 	char	*exec;
@@ -25,11 +38,12 @@ char	*check_access_cmd(char **allpath, char *cmd, int i)
 	free(exec);
 	return (NULL);
 }
+
 char	*get_path(char *cmd)
 {
-	int i;
-	char **allpath;
-	char *value;
+	int		i;
+	char	**allpath;
+	char	*value;
 
 	if (!cmd)
 		return (NULL);

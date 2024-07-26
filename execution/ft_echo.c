@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:17:46 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:18:54 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	echo_without_flag(t_data *parce)
@@ -28,9 +40,7 @@ void	echo_print(t_data *parce, int i)
 
 void	ft_echo(t_data *parce)
 {
-	int i;
-	int j;
-
+	int (i), (j);
 	i = 1;
 	j = 0;
 	if (parce->args[i] == NULL)

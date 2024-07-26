@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:06:24 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 int	ft_input(t_files *file)
@@ -47,6 +59,7 @@ int	ft_output(t_files *file)
 	}
 	return (0);
 }
+
 int	ft_append_file(t_files *file)
 {
 	int	fd;
@@ -70,6 +83,7 @@ int	ft_append_file(t_files *file)
 	}
 	return (0);
 }
+
 void	handle_child_redirections(t_data *data, int fds[])
 {
 	if (data)
@@ -93,7 +107,7 @@ void	handle_child_redirections(t_data *data, int fds[])
 
 void	handle_heredoc(t_data *data)
 {
-	int fd;
+	int	fd;
 
 	if (check_heredoc(data))
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:20:32 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:20:33 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	condition(t_envp *head)
@@ -15,6 +27,7 @@ void	condition(t_envp *head)
 			head->next->prev = head->prev;
 	}
 }
+
 void	remove_node(t_envp *head, t_data *data, int i)
 {
 	t_envp	*tmp;
@@ -37,6 +50,7 @@ void	remove_node(t_envp *head, t_data *data, int i)
 			head = head->next;
 	}
 }
+
 void	ft_unset(t_data *data)
 {
 	int		i;

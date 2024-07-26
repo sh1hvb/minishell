@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:56:47 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 19:58:21 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	handle_access_error(char *cmd)
@@ -12,7 +24,7 @@ void	handle_access_error(char *cmd)
 		exit(126);
 	}
 	else if (errno == ENOENT && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
-				|| (cmd[0] == '.' && cmd[1] == '/')))
+			|| (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_malloc(0, 1);
@@ -40,7 +52,7 @@ void	handle_execve_error(char *cmd)
 		exit(126);
 	}
 	else if (errno == ENOENT && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
-				|| (cmd[0] == '.' && cmd[1] == '/')))
+			|| (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_malloc(0, 1);

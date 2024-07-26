@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   linked_list_file.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:04:56 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:05:17 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 t_files	*ft_lstlast_file(t_files *lst)
@@ -12,7 +24,7 @@ t_files	*ft_lstlast_file(t_files *lst)
 
 int	ft_lstsize_file(t_files *lst)
 {
-	int count;
+	int	count;
 
 	if (!lst)
 		return (0);
