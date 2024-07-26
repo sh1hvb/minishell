@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:32:03 by smarsi            #+#    #+#             */
+/*   Updated: 2024/07/26 19:32:05 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 long long	ft_atoi2(char *str)
@@ -7,9 +19,6 @@ long long	ft_atoi2(char *str)
 
 	digit = 0;
 	signe = 1;
-	if (!ft_strcmp(str, "-9223372036854775808") ||
-		!ft_strcmp(str, "9223372036854775807"))
-		return (1);
 	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-')
@@ -71,8 +80,8 @@ void	ft_exit(t_data *data)
 			}
 			else if (data->args[2])
 			{
-				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-				env->exit_status = 1;
+				(ft_putstr_fd("minishell: \
+				exit: too many arguments\n", 2), env->exit_status = 1);
 				return ;
 			}
 			ext = ft_atoi(data->args[1]);

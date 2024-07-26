@@ -18,7 +18,7 @@ SRC_UTILS_BUILTS = execution/utils_builts/mini_utils_export.c  execution/utils_b
 
 SRC_BUILTS = execution/myenv.c execution/ft_export.c execution/utils_env.c execution/ft_exit.c \
 	execution/builtins_checker.c execution/ft_pwd.c execution/ft_unset.c execution/ft_echo.c \
-	execution/builtins_split.c execution/ft_cd.c execution/linked_list_env.c
+	execution/builtins_split.c execution/ft_cd.c execution/ft_cd_helper.c execution/linked_list_env.c
 
 SRC_MCHIHAB = main.c \
 	$(SRC_CMDS) \
