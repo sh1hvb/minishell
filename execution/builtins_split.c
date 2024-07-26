@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:17:11 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:46:48 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:45:23 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ char	**builtins_split(char *s, char *delimiters)
 	}
 	count = 0;
 	count = count_word(s, delimiters);
-	dst = my_calloc(count + 1, sizeof(char *));
+	dst = ft_calloc(count + 1 , sizeof(char *));
 	if (!dst)
 		return (NULL);
 	dst = fill_array_b(dst, s, delimiters, count);
+    dst[count] = NULL;
 	return (dst);
 }
