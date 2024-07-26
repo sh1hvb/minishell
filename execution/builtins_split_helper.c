@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:17:14 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:46:23 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:45:09 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char	*get_word(char *dst, char *src, char *delimiters, int *index)
 	else
 		get_word_norm(src, &i, delimiters);
 	len = (i - start) + 1;
-	dst = my_calloc(len, sizeof(char));
+	dst = ft_calloc(len , sizeof(char));
 	(ft_strlcpy(dst, src + start, len), *index = i);
 	return (dst);
 }
