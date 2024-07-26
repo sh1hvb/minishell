@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_expand.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:35:06 by smarsi            #+#    #+#             */
+/*   Updated: 2024/07/26 20:02:14 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 static char	*my_strjoin_c(char *s1, char s2)
@@ -53,10 +65,45 @@ static char	*ft_strjoin_s(char *s1, char *s2)
 	return (p);
 }
 
+void	handle_status(char *tmp, char *new, int *i)
+{
+	tmp = ft_itoa(env->exit_status);
+	new = my_strjoin2(new, tmp);
+	(free(tmp), (*i)++);
+}
+
+int	heredoc_expand_continue(char *line, char *tmp, char *new, int *index)
+{
+	int (i), (start);
+	i = *index;
+	start = i;
+	if (line[i] == '?')
+		handle_status(tmp, new, &i);
+	else
+	{
+		while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i])
+				|| line[i] == '_'))
+			i++;
+		tmp = ft_malloc((i - start) + 1, 0);
+		if (!tmp)
+		{
+			free(line);
+			return (1);
+		}
+		ft_strlcpy(tmp, line + start, (i - start) + 1);
+		tmp = my_get_env(env, tmp);
+		new = ft_strjoin_s(new, tmp);
+	}
+	*index = i;
+	return (0);
+}
+
 char	*heredoc_expand(char *line)
 {
-	char(*tmp), (*new);
-	int(i), (start);
+	char	*tmp;
+	char	*new;
+	int		i;
+
 	tmp = NULL;
 	new = NULL;
 	i = 0;
@@ -65,29 +112,8 @@ char	*heredoc_expand(char *line)
 		if (line[i] == '$' && line[i + 1] != '\n')
 		{
 			i++;
-			start = i;
-			if (line[i] == '?')
-			{
-				tmp = ft_itoa(env->exit_status);
-				new = my_strjoin2(new, tmp);
-				free(tmp);
-				i++;
-			}
-			else
-			{
-				while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i])
-						|| line[i] == '_'))
-					i++;
-				tmp = ft_malloc((i - start) + 1, 0);
-				if (!tmp)
-				{
-					free(line);
-					return (NULL);
-				}
-				ft_strlcpy(tmp, line + start, (i - start) + 1);
-				tmp = my_get_env(env, tmp);
-				new = ft_strjoin_s(new, tmp);
-			}
+			if (heredoc_expand_continue(line, tmp, new, &i))
+				return (NULL);
 			i--;
 		}
 		else
