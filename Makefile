@@ -30,7 +30,7 @@ SRC_SMARSI =  parsing/parsing.c parsing/parsing_file_args.c parsing/quotes_remov
 	helpers/errors.c\
 	lexer/lexer.c lexer/lexer_helper.c lexer/lexer_split.c lexer/lexer_split_helper.c lexer/lexer_strchr.c lexer/lexer_functions.c lexer/lexer_functions2.c\
 	memory_handling/memory_handling.c memory_handling/memory_helpers.c \
-	expand/expand.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
+	expand/expand.c expand/expand_helper.c libft_ftmalloc/free_libft.c libft_ftmalloc/ft_split.c ft_print.c
 
 
 OBJ_MCHIHAB = $(SRC_MCHIHAB:.c=.o)

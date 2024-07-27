@@ -75,8 +75,7 @@ void	process_cmd(t_data *data)
 	{
 		process_pipe(data);
 		hide_inout(1);
-		while (waitpid(-1, &status, 0) != -1)
-			;
+		while (waitpid(-1, &status, 0) != -1);
 	}
 	else if (data)
 		check_redir(data, file);

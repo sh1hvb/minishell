@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_functions.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/27 12:20:30 by smarsi            #+#    #+#             */
+/*   Updated: 2024/07/27 12:21:25 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag)
@@ -18,7 +30,6 @@ void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag)
 	new = ft_lstnew(value, 'W', flag);
 	ft_lstadd_back(lex, new);
 }
-
 
 void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
 {

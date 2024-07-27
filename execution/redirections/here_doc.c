@@ -7,8 +7,8 @@ int	end_heredoc(char *line, char *delimiter)
 		if (!line)
 		{
 			ft_putstr_fd("\n", 2);
-			ft_putstr_fd("minishell: warning: here-document delimited\
-			 by end-of-file (wanted `", 2);
+			ft_putstr_fd("minishell: warning: here-document delimited \
+			by end-of-file (wanted `", 2);
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
 		}

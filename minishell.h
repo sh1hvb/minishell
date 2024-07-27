@@ -270,4 +270,6 @@ void				split_quotes(char *target, char delimiter, int *index);
 void				heredoc_counter(t_lexer *lex);
 void				cd_old_pwd_continue(char *tmp);
 int					ft_cd_continue(t_data *data);
+char				*my_strjoin2(char *s1, char *s2);
+int					is_heredoc(t_lexer *lst);
 #endif
