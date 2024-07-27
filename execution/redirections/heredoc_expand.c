@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:35:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 12:48:42 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/27 17:03:23 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*heredoc_expand(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && line[i + 1] != '\n')
+		if (line[i] == '$' && line[i + 1] && line[i + 1] != '\n')
 		{
 			i++;
 			if (heredoc_expand_continue(line, tmp, &new, &i))

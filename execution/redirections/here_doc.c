@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:10:25 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/27 17:10:38 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	heredoc_mult(t_data *data)
 	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fds)
 		err();
-	signal(SIGQUIT, sig_quit_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
 		call_here_put(p, fds);
 	waitpid(pid, &status, 0);
