@@ -21,52 +21,61 @@ static int	nb_args(char **args)
 		size++;
 	return (size);
 }
+int	check_n_option(char **args, int *n_option)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	*n_option = 0;
+	while (args[i])
+	{
+		j = 0;
+		if (args[i][j] == '-' && args[i][j + 1] == 'n')
+		{
+			j++;
+			while (args[i][j] == 'n')
+				j++;
+			if (args[i][j] != '\0')
+				break ;
+			*n_option = 1;
+		}
+		else
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+void	print_args(char **args, int start_index)
+{
+	int	i;
+	int	j;
+
+	i = start_index;
+	while (args[i])
+	{
+		j = 0;
+		while (args[i][j])
+		{
+			write(1, &args[i][j], 1);
+			j++;
+		}
+		if (args[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+}
 
 void	ft_echo(t_data *data)
 {
 	int	i;
 	int	n_option;
-	int	j;
 
-	i = 1;
-	n_option = 0;
-	j = 0;
 	if (nb_args(data->args) > 1)
 	{
-		while (data->args[i])
-		{
-			j = 0;
-			if (data->args[i][j] == '-' && data->args[i][j + 1] == 'n')
-			{
-				j++;
-				while (data->args[i][j] == 'n')
-				{
-					n_option = 1;
-					j++;
-				}
-				if (data->args[i][j] && data->args[i][j] != 'n')
-				{
-					if (i == 1)
-						n_option = 0;
-					break ;
-				}
-			}
-			else
-				break ;
-			i++;
-		}
-		while (data->args[i])
-		{
-			j = 0;
-			while (data->args[i][j])
-			{
-				write(1, &data->args[i][j], 1);
-				j++;
-			}
-			if (data->args[i + 1])
-				write(1, " ", 1);
-			i++;
-		}
+		i = check_n_option(data->args, &n_option);
+		print_args(data->args, i);
 	}
 	if (n_option == 0)
 		write(1, "\n", 1);
