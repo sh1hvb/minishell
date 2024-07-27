@@ -42,19 +42,17 @@ void	create_pipes(t_data *data)
 
 void	ft_execute_multiple(t_data *data)
 {
-	int (pid), (status);
+	int(pid), (status);
 	while (data && data->next)
 	{
-		if (data && (data->cmd || data->heredoc))
-			create_pipes(data);
+		create_pipes(data);
 		data = data->next;
 	}
 	pid = fork();
 	if (!pid)
 	{
 		handle_process_redirections(data);
-		if (data && (data->cmd || data->heredoc))
-			handle_process_execution(data);
+		handle_process_execution(data);
 	}
 	waitpid(pid, &status, 0);
 	env->exit_status = WEXITSTATUS(status);
