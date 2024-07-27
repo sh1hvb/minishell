@@ -1,13 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_split.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:17:11 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 21:45:23 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-static void	ft_free(char **s)
+static void	handle_quotes(char *s, int *index, int *count, int flag)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
-		free(s[i++]);
-	free(s);
+	i = *index;
+	if (s[i] == '\"')
+	{
+		split_quotes(s, '\"', &i);
+		while (s[i] && !in_delimiters(s[i], " \t\n"))
+			i++;
+		if (flag)
+			(*count)++;
+	}
+	else if (s[i] == '\'')
+	{
+		split_quotes(s, '\'', &i);
+		while (s[i] && !in_delimiters(s[i], " \t\n"))
+			i++;
+		if (flag)
+			(*count)++;
+	}
+	*index = i;
 }
 
 static int	count_word(char *s, char *delimiters)
@@ -21,112 +47,37 @@ static int	count_word(char *s, char *delimiters)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"')
-		{
-			skip_quotes(s, '\"', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
-				i++;
-			if (flag)
-				count++;
-		}
-		else if (s[i] == '\'')
-		{
-			skip_quotes(s, '\'', &i);
-			while (s[i] && !in_delimiters(s[i], " \t\n\"\'"))
-				i++;
-			if (flag)
-				count++;
-		}
-		if (!in_delimiters(s[i], delimiters) && flag && s[i])
+		if (s[i] == '\"' || s[i] == '\'')
+			handle_quotes(s, &i, &count, flag);
+		if (s[i] && !in_delimiters(s[i], delimiters) && flag)
 		{
 			count++;
 			flag = 0;
 		}
-		if (in_delimiters(s[i], delimiters))
+		if (s[i] && in_delimiters(s[i], delimiters))
 			flag = 1;
+		if (!s[i])
+			break ;
 		i++;
 	}
 	return (count);
 }
 
-static char	*get_word(char *dst, char *src, char *delimiters, int *index)
-{
-	int	i;
-	int	start;
-	int	len;
-
-	i = *index;
-	while (src[i] && in_delimiters(src[i], delimiters))
-		i++;
-	start = i;
-	if (src[i] == '\"')
-	{
-		skip_quotes(src, '\"', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-	}
-	else if (src[i] == '\'')
-	{
-		skip_quotes(src, '\'', &i);
-		while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-			i++;
-	}
-	else
-		while (src[i] && !in_delimiters(src[i], delimiters))
-		{
-			i++;
-			if (src[i] == '\"')
-			{
-				skip_quotes(src, '\"', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-					i++;
-			}
-			else if (src[i] == '\'')
-			{
-				skip_quotes(src, '\'', &i);
-				while (src[i] && !in_delimiters(src[i], " \t\n\"\'"))
-					i++;
-			}
-		}
-	len = (i - start) + 1;
-	dst = malloc(len * sizeof(char));
-	ft_strlcpy(dst, src + start, len);
-	*index = i;
-	return (dst);
-}
-
-static char	**fill_array(char **dst, char *src, char *delimiters,
-		int number_word)
-{
-	int	i;
-	int	index_word;
-
-	index_word = 0;
-	i = 0;
-	while (i < number_word)
-	{
-		dst[i] = get_word(dst[i], src, delimiters, &index_word);
-		if (!dst[i])
-			ft_free(dst);
-		i++;
-	}
-	return (dst);
-}
-
 char	**builtins_split(char *s, char *delimiters)
 {
-	char **dst;
-	int count;
+	char	**dst;
+	int		count;
 
 	if (!s || !delimiters)
 	{
 		return (NULL);
 	}
+	count = 0;
 	count = count_word(s, delimiters);
-	dst = malloc((count + 1) * sizeof(char *));
+	dst = ft_calloc(count + 1 , sizeof(char *));
 	if (!dst)
 		return (NULL);
-	dst = fill_array(dst, s, delimiters, count);
-	dst[count] = 0;
+	dst = fill_array_b(dst, s, delimiters, count);
+    dst[count] = NULL;
 	return (dst);
 }

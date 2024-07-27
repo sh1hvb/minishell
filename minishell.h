@@ -168,6 +168,8 @@ void				ft_append(t_data *data, t_envp *env, int i);
 int					check_builts(t_data *data);
 void				handle_builts(t_data *data);
 //builtins split
+char                **fill_array_b(char **dst, char *src, char *delimiters, int num_word);
+
 char				**builtins_split(char *s, char *delimiters);
 // cd
 void				ft_cd(t_data *data);
@@ -214,6 +216,8 @@ void				inc_shell(void);
 char				**list_to_pointer(void);
 void				ft_lstadd_back_env(t_envp **lst, t_envp *new);
 
+// init env
+t_envp				*build_env_list(char **env, int c);
 /*===============================* END EXCUTION *===================================================*/
 
 // made by smarsi

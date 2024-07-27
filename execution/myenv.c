@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   myenv.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:32:07 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:32:21 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -29,6 +40,7 @@ void	print_env_list(char *x)
 		current = current->next;
 	}
 }
+
 void	new_env(void)
 {
 	char	*pwd;
@@ -54,6 +66,7 @@ void	new_env(void)
 	env = get_env(new_env, 1);
 	ft_freed(new_env);
 }
+
 void	handle_env(char *envp[])
 {
 	if (!envp || !envp[0])
@@ -84,39 +97,5 @@ void	ft_lstclear_env(t_envp *lst)
 
 t_envp	*get_env(char **env, int c)
 {
-	char **splited;
-	t_envp *env_list;
-	t_envp *current;
-	t_envp *new_node;
-	int i;
-
-	env_list = NULL;
-	current = NULL;
-	splited = NULL;
-	i = 0;
-	while (env[i])
-	{
-		splited = builtins_split(env[i], "+=");
-		new_node = malloc(sizeof(t_envp));
-		if (!new_node)
-			return (0);
-		new_node->key = ft_strdup(splited[0]);
-		if (c)
-			new_node->value = ft_strdup((splited[1]));
-		else
-			new_node->value = ft_strdup(getenv(splited[0]));
-		new_node->next = NULL;
-		new_node->flag = 0;
-		new_node->signal_heredoc = 0;
-		new_node->exit_status = 0;
-		new_node->prev = current;
-		if (current)
-			current->next = new_node;
-		else
-			env_list = new_node;
-		current = new_node;
-		ft_freed(splited);
-		i++;
-	}
-	return (env_list);
+	return (build_env_list(env, c));
 }

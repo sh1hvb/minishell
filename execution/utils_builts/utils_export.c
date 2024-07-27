@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 20:12:24 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/26 20:12:25 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 static void	swap_nodes(t_envp *a, t_envp *b)
@@ -16,6 +28,7 @@ static void	swap_nodes(t_envp *a, t_envp *b)
 	b->key = temp_key;
 	b->value = temp_value;
 }
+
 static void	set_previous_pointers(t_envp *lst)
 {
 	t_envp	*tmp;
@@ -30,6 +43,7 @@ static void	set_previous_pointers(t_envp *lst)
 		tmp = tmp->next;
 	}
 }
+
 t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int))
 {
 	int		swapped;
@@ -54,7 +68,7 @@ t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int))
 			ptr1 = ptr1->next;
 		}
 		lptr = ptr1;
-	};
+	}
 	set_previous_pointers(lst);
 	return (lst);
 }
@@ -81,11 +95,11 @@ t_envp	*my_append_env(t_envp *env_list, const char *key, char *value)
 
 void	ft_append(t_data *data, t_envp *env, int i)
 {
-	char *append;
-	char **splited;
-	char *join;
-	int flag;
-	char **temp_splited;
+	char	*append;
+	char	**splited;
+	char	*join;
+	int		flag;
+	char	**temp_splited;
 
 	flag = 0;
 	splited = builtins_split(data->args[i], "+=");

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/27 13:31:02 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	check_redir(t_data *data, t_files *file)
@@ -55,7 +67,7 @@ void	process_cmd(t_data *data)
 {
 	t_files	*file;
 
-	int(status), (flag);
+	int (status), (flag);
 	file = NULL;
 	flag = 0;
 	env->signal_heredoc = 0;
@@ -67,15 +79,14 @@ void	process_cmd(t_data *data)
 	}
 	if (data && !data->next && check_builts(data) && !env->signal_heredoc)
 	{
-		execute_single_cmd(data);
-		hide_inout(1);
+		(execute_single_cmd(data), hide_inout(1));
 		flag = 1;
 	}
 	else if (data && !flag && !env->signal_heredoc)
 	{
-		process_pipe(data);
-		hide_inout(1);
-		while (waitpid(-1, &status, 0) != -1);
+		(process_pipe(data), hide_inout(1));
+		while (waitpid(-1, &status, 0) != -1)
+			;
 	}
 	else if (data)
 		check_redir(data, file);
