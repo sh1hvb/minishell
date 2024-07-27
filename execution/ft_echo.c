@@ -12,54 +12,72 @@
 
 #include "../minishell.h"
 
-void	echo_without_flag(t_data *parce)
+static int	nb_args(char **args)
+{
+	int	size;
+
+	size = 0;
+	while (args[size])
+		size++;
+	return (size);
+}
+int	check_n_option(char **args, int *n_option)
 {
 	int	i;
+	int	j;
 
 	i = 1;
-	while (parce->args[i] != NULL)
+	*n_option = 0;
+	while (args[i])
 	{
-		ft_putstr_fd(parce->args[i], 1);
-		if (parce->args[i + 1] != NULL)
-			ft_putstr_fd(" ", 1);
-		i++;
-	}
-	ft_putstr_fd("\n", 1);
-}
-
-void	echo_print(t_data *parce, int i)
-{
-	while (parce->args[i] != NULL)
-	{
-		ft_putstr_fd(parce->args[i], 1);
-		if (parce->args[i + 1] != NULL)
-			ft_putstr_fd(" ", 1);
-		i++;
-	}
-}
-
-void	ft_echo(t_data *parce)
-{
-	int (i), (j);
-	i = 1;
-	j = 0;
-	if (parce->args[i] == NULL)
-		ft_putstr_fd("\n", 1);
-	else if (parce->args[1][j] == '-')
-	{
-		j++;
-		if (parce->args[i][j] == '\0')
-			echo_without_flag(parce);
-		while (parce->args[1][j] != '\0' && (parce->args[1][j] == 'n'))
-			j++;
-		if (parce->args[i][j] == '\0')
-			echo_print(parce, 2);
-		else
+		j = 0;
+		if (args[i][j] == '-' && args[i][j + 1] == 'n')
 		{
-			echo_print(parce, 1);
-			ft_putstr_fd("\n", 1);
+			j++;
+			while (args[i][j] == 'n')
+				j++;
+			if (args[i][j] != '\0')
+				break ;
+			*n_option = 1;
 		}
+		else
+			break ;
+		i++;
 	}
-	else
-		echo_without_flag(parce);
+	return (i);
+}
+
+void	print_args(char **args, int start_index)
+{
+	int	i;
+	int	j;
+
+	i = start_index;
+	while (args[i])
+	{
+		j = 0;
+		while (args[i][j])
+		{
+			write(1, &args[i][j], 1);
+			j++;
+		}
+		if (args[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+}
+
+void	ft_echo(t_data *data)
+{
+	int	i;
+	int	n_option;
+
+	if (nb_args(data->args) > 1)
+	{
+		i = check_n_option(data->args, &n_option);
+		print_args(data->args, i);
+	}
+	if (n_option == 0)
+		write(1, "\n", 1);
+	env->exit_status = 0;
 }
