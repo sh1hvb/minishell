@@ -25,9 +25,11 @@ void	handle_child_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
-		exec(data);
+		if (data && data->cmd)
+			exec(data);
 		ft_lstclear_env(env);
 		ft_malloc(0, 1);
+		exit(0);
 	}
 	else if (check_builts(data))
 	{
@@ -61,7 +63,11 @@ void	handle_process_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
-		exec(data);
+		if (data && data->cmd)
+			exec(data);
+		ft_lstclear_env(env);
+		ft_malloc(0, 1);
+		exit(0);
 	}
 	else
 	{

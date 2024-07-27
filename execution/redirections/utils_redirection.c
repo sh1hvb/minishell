@@ -56,11 +56,5 @@ void	handle_process_redirections(t_data *data)
 		if (data->append)
 			handle_append_redirection(data);
 		handle_heredoc(data);
-		if (!data->cmd || !data->cmd[0])
-		{
-			ft_lstclear_env(env);
-			ft_malloc(0, 1);
-			exit(127);
-		}
 	}
 }
