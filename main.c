@@ -1,24 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 18:22:40 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/28 18:22:41 by mchihab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_envp *g_env = NULL;
-int a = 0;
-int	pars_lstsize(t_data *lst);
+t_envp	*g_env = NULL;
+
+int		pars_lstsize(t_data *lst);
 
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstclear(t_data **lst);
 void	heredoc_lstadd_back(t_files **lst, t_files *new);
 t_files	*heredoc_lstnew(char *value);
-void    print_expand(t_lexer *lex_tmp);
-void    print_parsing(t_data *data);
-void    print_lexer(t_lexer *lex_tmp);
+void	print_expand(t_lexer *lex_tmp);
+void	print_parsing(t_data *data);
+void	print_lexer(t_lexer *lex_tmp);
 
-void	minishell()
+void	minishell(void)
 {
 	char	*prompt;
-	t_lexer  *lex;
-	t_data *data;
-	int status = 0;
+	t_lexer	*lex;
+	t_data	*data;
+	int		status;
+	int		ex;
 
+	status = 0;
 	while (1)
 	{
 		(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
@@ -31,9 +45,9 @@ void	minishell()
 		{
 			printf("exit\n");
 			ft_malloc(0, 1);
-			int ex = env->exit_status;
-			ft_lstclear_env(env);
-			exit (ex);
+			ex = g_env->exit_status;
+			ft_lstclear_env(g_env);
+			exit(ex);
 		}
 		else if (!prompt[0])
 		{
@@ -46,7 +60,7 @@ void	minishell()
 		if (status)
 		{
 			free(prompt);
-			continue;
+			continue ;
 		}
 		lexer(prompt, &lex);
 		status = check_syntax(lex);
@@ -57,7 +71,7 @@ void	minishell()
 			if (parsing(&lex, &data))
 			{
 				free(prompt);
-				continue;
+				continue ;
 			}
 			process_cmd(data);
 		}
@@ -77,7 +91,7 @@ int	main(int ac, char *av[], char *envp[])
 	handle_env(envp);
 	inc_shell();
 	minishell();
-	ft_lstclear_env(env);
+	ft_lstclear_env(g_env);
 	ft_malloc(0, 1);
 	return (exit_status);
 }

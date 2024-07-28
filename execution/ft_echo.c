@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:17:46 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 14:27:20 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ void	ft_echo(t_data *data)
 	}
 	if (n_option == 0)
 		write(1, "\n", 1);
-	env->exit_status = 0;
+	g_env->exit_status = 0;
 }

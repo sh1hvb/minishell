@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:00:17 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:01:43 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_directory_error(char *cmd)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": Is a directory\n", 2);
-	ft_lstclear_env(env);
+	ft_lstclear_env(g_env);
 	ft_malloc(0, 1);
 	exit(126);
 }
@@ -49,7 +49,7 @@ char	*get_path(char *cmd)
 		return (NULL);
 	if (!access(cmd, X_OK) || cmd[0] == '/')
 		return ((ft_strdup(cmd)));
-	value = my_get_env(env, "PATH");
+	value = my_get_env(g_env, "PATH");
 	allpath = ft_split(value, ':');
 	free(value);
 	if (!allpath)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/27 17:10:38 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	heredoc_mult(t_data *data)
 	if (pid == 0)
 		call_here_put(p, fds);
 	waitpid(pid, &status, 0);
-	env->exit_status = WEXITSTATUS(status);
+	g_env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		env->exit_status = WTERMSIG(status) + 128;
-	if (env->exit_status == 130)
-		env->signal_heredoc = 1;
+		g_env->exit_status = WTERMSIG(status) + 128;
+	if (g_env->exit_status == 130)
+		g_env->signal_heredoc = 1;
 	close(fds);
 }

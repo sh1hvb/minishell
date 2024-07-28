@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 14:34:44 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_input(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			env->exit_status = 1;
+			g_env->exit_status = 1;
 			return (1);
 		}
 		if (file->next)
@@ -48,7 +48,7 @@ int	ft_output(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			env->exit_status = 1;
+			g_env->exit_status = 1;
 			return (1);
 		}
 		if (file->next)
@@ -72,7 +72,7 @@ int	ft_append_file(t_files *file)
 			ft_putstr_fd(my_strjoin("minishell: ", file->delimiter), 2);
 			perror(" ");
 			ft_putstr_fd("", 2);
-			env->exit_status = 1;
+			g_env->exit_status = 1;
 			return (1);
 		}
 		if (file->next)
@@ -110,7 +110,7 @@ void	handle_heredoc(t_data *data)
 		{
 			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
 			perror(" ");
-			env->exit_status = 1;
+			g_env->exit_status = 1;
 			exit(1);
 		}
 		if (data->last_file == 2)
