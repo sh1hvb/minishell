@@ -12,54 +12,64 @@ void    print_expand(t_lexer *lex_tmp);
 void    print_parsing(t_data *data);
 void    print_lexer(t_lexer *lex_tmp);
 
+int	readline_signals(t_lexer **lex, char **prompt)
+{
+	*prompt = NULL;
+	*lex = NULL;
+	(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
+	*prompt = readline("minishell$ ");
+	(signal(SIGINT, sigint_int), signal(SIGQUIT, signal_quit));
+	if (!*prompt)
+	{
+		printf("exit\n");
+		ft_malloc(0, 1);
+		int ex = env->exit_status;
+		ft_lstclear_env(env);
+		exit (ex);
+	}
+	if (!*prompt[0])
+	{
+		free(*prompt);
+		return (1);
+	}
+	if (*prompt && ft_strcmp(*prompt, ""))
+			add_history(*prompt);
+	return (0);
+}
+
+int	minishell_helper(char **prompt, t_lexer **lex, t_data **data)
+{
+	expand(*prompt, lex);
+	heredoc_counter(*lex);
+	if (parsing(lex, data))
+	{
+		free(*prompt);
+		return (1);
+	}
+	process_cmd(*data);
+	return (0);
+}
 void	minishell()
 {
 	char	*prompt;
 	t_lexer  *lex;
 	t_data *data;
-	int status = 0;
-
+	
 	while (1)
 	{
-		(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
-		prompt = NULL;
-		lex = NULL;
 		data = pars_lstnew(NULL, 0);
-		prompt = readline("minishell$ ");
-		(signal(SIGINT, sigint_int), signal(SIGQUIT, signal_quit));
-		if (!prompt)
-		{
-			printf("exit\n");
-			ft_malloc(0, 1);
-			int ex = env->exit_status;
-			ft_lstclear_env(env);
-			exit (ex);
-		}
-		else if (!prompt[0])
-		{
-			free(prompt);
+		if (readline_signals(&lex, &prompt))
 			continue ;
-		}
-		if (prompt && ft_strcmp(prompt, ""))
-			add_history(prompt);
-		status = valid_quotes(prompt);
-		if (status)
+		if (valid_quotes(prompt))
 		{
 			free(prompt);
 			continue;
 		}
 		lexer(prompt, &lex);
-		status = check_syntax(lex);
-		if (!status)
+		if (!check_syntax(lex))
 		{
-			expand(prompt, &lex);
-			heredoc_counter(lex);
-			if (parsing(&lex, &data))
-			{
-				free(prompt);
-				continue;
-			}
-			process_cmd(data);
+			if (minishell_helper(&prompt, &lex, &data))
+				continue ;
 		}
 		ft_malloc(0, 1);
 		free(prompt);
