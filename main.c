@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 18:22:40 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:45:47 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:50:58 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	print_lexer(t_lexer *lex_tmp);
 
 int	readline_signals(t_lexer **lex, char **prompt)
 {
+	int	ex;
+
 	*prompt = NULL;
 	*lex = NULL;
 	(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
@@ -35,8 +37,8 @@ int	readline_signals(t_lexer **lex, char **prompt)
 	{
 		printf("exit\n");
 		ft_malloc(0, 1);
-		int ex = env->exit_status;
-		ft_lstclear_env(env);
+		ex = g_env->exit_status;
+		ft_lstclear_env(g_env);
 		exit (ex);
 	}
 	if (!*prompt[0])
@@ -45,7 +47,7 @@ int	readline_signals(t_lexer **lex, char **prompt)
 		return (1);
 	}
 	if (*prompt && ft_strcmp(*prompt, ""))
-			add_history(*prompt);
+		add_history(*prompt);
 	return (0);
 }
 
@@ -61,12 +63,13 @@ int	minishell_helper(char **prompt, t_lexer **lex, t_data **data)
 	process_cmd(*data);
 	return (0);
 }
-void	minishell()
+
+void	minishell(void)
 {
 	char	*prompt;
-	t_lexer  *lex;
-	t_data *data;
-	
+	t_lexer	*lex;
+	t_data	*data;
+
 	while (1)
 	{
 		data = pars_lstnew(NULL, 0);
