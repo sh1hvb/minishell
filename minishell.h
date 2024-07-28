@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:11:18 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:39:53 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ t_envp				*get_env(char **g_env, int c);
 void				ft_lstclear_env(t_envp *lst);
 void				handle_env(char *envp[]);
 void				new_env(void);
-void				print_env_list(char *x);
+void				print_env_list(t_envp *en, char *x);
 // utils g_env
 int					check_string(char *s);
 void				inc_shell(void);
@@ -231,6 +231,7 @@ void				ft_lstadd_back_env(t_envp **lst, t_envp *new);
 
 // init g_env
 t_envp				*build_env_list(char **env, int c);
+void				move_key_to_end(char *key);
 /*=========================* END EXCUTION *============================*/
 
 // made by smarsi

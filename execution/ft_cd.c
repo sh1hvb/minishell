@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:11:52 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:46:06 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	cd_home(t_data *data, char *msg)
 {
 	char	*tmp;
 
-	(void) data;
+	(void)data;
 	tmp = my_get_env(g_env, "HOME");
 	if (!tmp)
 	{
@@ -100,7 +100,7 @@ void	cd_old_pwd(t_data *data, char *msg)
 	else
 	{
 		(ft_putstr_fd("bash: cd: --: invalid option\ncd: usage: \
-		cd [-L|-P] [dir]\n", 2), g_env->exit_status = 1);
+		 cd [-L|-P] [dir]\n", 2), g_env->exit_status = 1);
 		return ;
 	}
 	cd_old_pwd_continue(tmp);

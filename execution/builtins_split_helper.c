@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static	void	ft_free(char **s)
+static void	ft_free(char **s)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ static	void	ft_free(char **s)
 	free(s);
 }
 
-static	void	get_word_norm(char *src, int *index, char *delimiters)
+static void	get_word_norm(char *src, int *index, char *delimiters)
 {
 	int	i;
 
