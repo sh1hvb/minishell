@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:17:46 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 13:28:21 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 14:27:20 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	nb_args(char **args)
 		size++;
 	return (size);
 }
+
 int	check_n_option(char **args, int *n_option)
 {
 	int	i;
@@ -71,7 +72,7 @@ void	ft_echo(t_data *data)
 {
 	int	i;
 	int	n_option;
-	
+
 	n_option = 0;
 	if (nb_args(data->args) > 1)
 	{
