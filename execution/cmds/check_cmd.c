@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 14:34:12 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 17:08:42 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	process_cmd(t_data *data)
 		heredoc_mult(data);
 		hide_inout(1);
 	}
-	check_redir(data, file);
 	if (data && !data->next && check_builts(data) && !env->signal_heredoc)
 	{
 		(execute_single_cmd(data), hide_inout(1));
@@ -87,6 +86,9 @@ void	process_cmd(t_data *data)
 	else if (data && !flag && !env->signal_heredoc)
 	{
 		(process_pipe(data), hide_inout(1));
-		while (waitpid(-1, &status, 0) != -1);
+		while (waitpid(-1, &status, 0) != -1)
+			;
 	}
+	else
+		check_redir(data, file);
 }

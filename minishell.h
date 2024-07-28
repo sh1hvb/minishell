@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
+/*   Updated: 2024/07/28 17:04:54 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -16,7 +27,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-
+#define g_env env
 typedef struct s_envp
 {
 	char			*key;
@@ -28,9 +39,9 @@ typedef struct s_envp
 	struct s_envp	*prev;
 }					t_envp;
 
-extern t_envp		*env;
+extern t_envp		*g_env;
 
-enum				token
+enum				e_token
 {
 	STRING = 'S',
 	IN_FILE = 'I',
@@ -48,7 +59,7 @@ enum				token
 typedef struct s_lexer
 {
 	char			*value;
-	enum token		type;
+	enum e_token	type;
 	int				in_quotes;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
@@ -89,7 +100,7 @@ typedef struct s_leaks
 }					t_leaks;
 
 // made by mchihab
-/*===============================* EXCUTION *===================================================*/
+/*=============================* EXCUTION *=================================*/
 /* CMDS */
 // check_cmd
 void				check_redir(t_data *data, t_files *file);
@@ -169,7 +180,8 @@ void				ft_append(t_data *data, t_envp *env, int i);
 int					check_builts(t_data *data);
 void				handle_builts(t_data *data);
 //builtins split
-char                **fill_array_b(char **dst, char *src, char *delimiters, int num_word);
+char				**fill_array_b(char **dst, char *src, char *delimiters, \
+					int num_word);
 
 char				**builtins_split(char *s, char *delimiters);
 // cd
@@ -219,7 +231,7 @@ void				ft_lstadd_back_env(t_envp **lst, t_envp *new);
 
 // init env
 t_envp				*build_env_list(char **env, int c);
-/*===============================* END EXCUTION *===================================================*/
+/*=========================* END EXCUTION *============================*/
 
 // made by smarsi
 void				*ft_malloc(int size, int flag);

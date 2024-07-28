@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 13:44:52 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:31:24 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_execute_multiple(t_data *data)
 		create_pipes(data);
 		data = data->next;
 	}
+	(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN));
 	pid = fork();
 	if (!pid)
 	{

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_envp *env = NULL;
+t_envp *g_env = NULL;
 int a = 0;
 int	pars_lstsize(t_data *lst);
 
@@ -21,8 +21,6 @@ void	minishell()
 
 	while (1)
 	{
-		// ft_lstclear(&lex);
-		// pars_lstclear(&data);
 		(signal(SIGINT, sigint_handler), signal(SIGQUIT, SIG_IGN));
 		prompt = NULL;
 		lex = NULL;
@@ -51,32 +49,20 @@ void	minishell()
 			continue;
 		}
 		lexer(prompt, &lex);
-		// t_lexer *lex_tmp = lex;
-		// print_lexer(lex_tmp);
-		// printf("========= end lexer\n");
 		status = check_syntax(lex);
 		if (!status)
 		{
 			expand(prompt, &lex);
-			// print_expand(lex_tmp);
-			// printf("========= end expand\n");
 			heredoc_counter(lex);
 			if (parsing(&lex, &data))
 			{
 				free(prompt);
 				continue;
 			}
-			// print_parsing(data);
-			// printf("\n\n");
-			// printf("========= end pars\n");
 			process_cmd(data);
-			// handle_builts(data);
-			// printf("========= end parsing\n");
 		}
-		// handle_builts(data);
-		// printf("========= end parsing\n");
-		free(prompt);
 		ft_malloc(0, 1);
+		free(prompt);
 	}
 }
 
@@ -92,10 +78,6 @@ int	main(int ac, char *av[], char *envp[])
 	inc_shell();
 	minishell();
 	ft_lstclear_env(env);
-    // env = sort_list(env , ascending);
-	// print_env_list(env,"en");
 	ft_malloc(0, 1);
-	// exit(0); 
-	// ft_freed(arr);
 	return (exit_status);
 }
