@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:12:24 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:12:25 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_envp	*my_append_env(t_envp *env_list, const char *key, char *value)
 	return (env_list);
 }
 
-void	ft_append(t_data *data, t_envp *env, int i)
+void	ft_append(t_data *data, t_envp *g_env, int i)
 {
 	char	*append;
 	char	**splited;
@@ -103,17 +103,17 @@ void	ft_append(t_data *data, t_envp *env, int i)
 
 	flag = 0;
 	splited = builtins_split(data->args[i], "+=");
-	append = my_get_env(env, splited[0]);
+	append = my_get_env(g_env, splited[0]);
 	if (!append)
 	{
 		flag = if_flag(data->args[i]);
-		ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
+		ft_lstadd_back_env(&g_env, ft_lstnew_env(data->args[i], g_env, flag));
 	}
 	else
 	{
 		temp_splited = builtins_split(data->args[i], "+=");
 		join = ft_strjoin(append, temp_splited[1]);
-		env = my_append_env(env, temp_splited[0], join);
+		g_env = my_append_env(g_env, temp_splited[0], join);
 		ft_freed(temp_splited);
 	}
 	free(append);

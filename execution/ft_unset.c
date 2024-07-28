@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:20:32 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:20:33 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	condition(t_envp *head)
 {
 	if (!head->prev)
 	{
-		env = head->next;
-		if (env)
-			env->prev = NULL;
+		g_env = head->next;
+		if (g_env)
+			g_env->prev = NULL;
 	}
 	else
 	{
@@ -59,7 +59,7 @@ void	ft_unset(t_data *data)
 	i = 1;
 	while (data->args[i])
 	{
-		head = env;
+		head = g_env;
 		remove_node(head, data, i);
 		i++;
 	}

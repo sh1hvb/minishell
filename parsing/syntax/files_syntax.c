@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:41 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 17:58:42 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	files_syntax(t_lexer *lex)
 	if (!lex || lex->type == 'I' || lex->type == 'O'
 		|| lex->type == 'H' || lex->type == 'A')
 	{
-		env->exit_status = 2;
+		g_env->exit_status = 2;
 		return (2);
 	}
 	return (0);

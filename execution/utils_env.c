@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:40:19 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:40:46 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**list_to_pointer(void)
 	int		size;
 	t_envp	*lst;
 
-	lst = env;
+	lst = g_env;
 	i = 0;
 	arr = NULL;
 	tmp = NULL;
@@ -60,7 +60,7 @@ void	inc_shell(void)
 	int		tmp;
 	t_envp	*tmpenv;
 
-	tmpenv = env;
+	tmpenv = g_env;
 	while (tmpenv)
 	{
 		if (!ft_strcmp(tmpenv->key, "SHLVL"))
