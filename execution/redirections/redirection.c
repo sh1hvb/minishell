@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:06:24 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:34:44 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	handle_heredoc(t_data *data)
 			env->exit_status = 1;
 			exit(1);
 		}
-		dup2(fd, 0);
+		if (data->last_file == 2)
+			dup2(fd, 0);
 		close(fd);
 	}
 }

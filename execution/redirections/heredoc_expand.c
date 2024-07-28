@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:35:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/26 20:02:14 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/27 17:03:23 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	handle_status(char *tmp, char *new, int *i)
 	(free(tmp), (*i)++);
 }
 
-int	heredoc_expand_continue(char *line, char *tmp, char *new, int *index)
+int	heredoc_expand_continue(char *line, char *tmp, char **new, int *index)
 {
 	int (i), (start);
 	i = *index;
 	start = i;
 	if (line[i] == '?')
-		handle_status(tmp, new, &i);
+		handle_status(tmp, *new, &i);
 	else
 	{
 		while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i])
@@ -92,7 +92,7 @@ int	heredoc_expand_continue(char *line, char *tmp, char *new, int *index)
 		}
 		ft_strlcpy(tmp, line + start, (i - start) + 1);
 		tmp = my_get_env(env, tmp);
-		new = ft_strjoin_s(new, tmp);
+		*new = ft_strjoin_s(*new, tmp);
 	}
 	*index = i;
 	return (0);
@@ -109,10 +109,10 @@ char	*heredoc_expand(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && line[i + 1] != '\n')
+		if (line[i] == '$' && line[i + 1] && line[i + 1] != '\n')
 		{
 			i++;
-			if (heredoc_expand_continue(line, tmp, new, &i))
+			if (heredoc_expand_continue(line, tmp, &new, &i))
 				return (NULL);
 			i--;
 		}

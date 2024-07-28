@@ -88,7 +88,6 @@ int	main(int ac, char *av[], char *envp[])
 	if (ac > 1)
 		ft_error("invalid number of params.\n", 126);
 	(void)av;
-
 	handle_env(envp);
 	inc_shell();
 	minishell();

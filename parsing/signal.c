@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/27 17:58:34 by smarsi            #+#    #+#             */
+/*   Updated: 2024/07/27 17:58:35 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	sigint_handler(int sig)
@@ -36,7 +48,7 @@ void	signal_quit(int sig)
 
 void	sig_quit_heredoc(int sig)
 {
-	write(0, "", 0);
+	rl_replace_line("", 0);
 	env->exit_status = 131;
 	return ;
 	(void)sig;
