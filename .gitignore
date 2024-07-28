@@ -57,3 +57,4 @@ minishell
 minishell_tester
 no_per
 readline.supp
+ft_print.c

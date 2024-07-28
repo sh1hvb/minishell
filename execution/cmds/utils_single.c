@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_single.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:02:20 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:02:21 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:18:51 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	setup_redirections(t_data *data)
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
-		dup2(index, 0);
+		if (data->last_file == 1)
+			dup2(index, 0);
 		close(index);
 	}
 }

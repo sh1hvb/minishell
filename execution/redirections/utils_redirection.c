@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:35 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:07:53 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:18:14 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	handle_input_redirection(t_data *data)
 	if (ft_input(data->redir_in))
 		exit(1);
 	file = ft_lstlast_file(data->redir_in);
-	dup2(file->index, 0);
+	if (data->last_file == 1)
+		dup2(file->index, 0);
 	close(file->index);
 }
 
