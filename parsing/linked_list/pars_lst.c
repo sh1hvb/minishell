@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:59:58 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 17:59:59 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 13:58:30 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_data	*pars_lstnew(char *value, int quotes)
 	head->redir_in = NULL;
 	head->redir_out = NULL;
 	head->has_heredoc = 0;
+	head->last_file = 0;
 	head->heredoc = NULL;
 	head->append = NULL;
 	head->next = NULL;

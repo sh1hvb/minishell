@@ -42,17 +42,17 @@ OBJ_SMARSI = $(SRC_SMARSI:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ_SMARSI) $(OBJ_MCHIHAB)
-	make -C $(LIBFT_PATH)
-	cc $(CFLAGS) -lreadline  $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -o  $(NAME)
+	@make -C $(LIBFT_PATH)
+	cc $(CFLAGS) $(OBJ_SMARSI) $(OBJ_MCHIHAB) $(NAME_LIBFT) -lreadline -o  $(NAME)
 
 clean :
-	make clean -C $(LIBFT_PATH)
+	@make clean -C $(LIBFT_PATH)
 	rm -f $(OBJ_SMARSI) $(OBJ_MCHIHAB)
 
 re : fclean all
 
 fclean : clean
-	make fclean -C $(LIBFT_PATH)
+	@make fclean -C $(LIBFT_PATH)
 	rm -f $(NAME)
 
 .SECONDARY : $(OBJ_SMARSI) $(OBJ_MCHIHAB)

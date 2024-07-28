@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:27 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 17:58:28 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 13:57:14 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,17 @@ static int	parsin_redirection(t_data **data_tmp, t_lexer **lex_tmp)
 	if ((*lex_tmp)->type)
 	{
 		if ((*lex_tmp)->type == 'I' && !(*lex_tmp)->in_quotes)
+		{
+			(*data_tmp)->last_file = 1;
 			flag = pars_files(data_tmp, lex_tmp, 1);
+		}
 		else if ((*lex_tmp)->type == 'O' && !(*lex_tmp)->in_quotes)
 			flag = pars_files(data_tmp, lex_tmp, 0);
 		else if ((*lex_tmp)->type == 'H' && !(*lex_tmp)->in_quotes)
+		{
+			(*data_tmp)->last_file = 2;
 			flag = pars_files(data_tmp, lex_tmp, 2);
+		}
 		else if ((*lex_tmp)->type == 'A' && !(*lex_tmp)->in_quotes)
 			flag = pars_files(data_tmp, lex_tmp, 3);
 		if (flag)

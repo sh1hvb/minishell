@@ -24,11 +24,12 @@ void    print_expand(t_lexer *lex_tmp)
 
 void    print_parsing(t_data *data)
 {
+    int i = 0;
     printf("\n#######################  parsing #######################\n");
     while (data)
 	{
-        int i = 0;
 		printf("\n\n#######################  NODE : %d  #################################\n", i);
+        printf("last_file : %d\n", data->last_file);
 		printf("cmd is :%s\n", data->cmd);
         while (data->args && data->args[i])
         {
@@ -67,6 +68,5 @@ void    print_parsing(t_data *data)
         }
 		data = data->next;
         i++;
-        
 	}
 }

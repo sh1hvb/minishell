@@ -77,6 +77,7 @@ typedef struct s_data
 	int				infile;
 	int				outfile;
 	int				appfile;
+	int				last_file;
 	struct s_data	*next;
 	struct s_data	*prev;
 
