@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 19:32:35 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	ft_execute_multiple(t_data *data)
 		create_pipes(data);
 		data = data->next;
 	}
-	(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN));
+	if (data->args && !ft_strcmp(data->args[0], "./minishell"))
+		(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN));
 	pid = fork();
 	if (!pid)
 	{

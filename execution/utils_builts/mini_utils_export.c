@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:08:30 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:51:12 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,17 @@ int	check_equal(char *s)
 	return (0);
 }
 
-void	handle_no_arguments(t_envp *g_env)
+void	handle_no_arguments(t_envp *env)
 {
-	g_env = sort_list(g_env, ascending);
-	print_env_list("ex");
+	t_envp	*a;
+	char	**g;
+
+	g = list_to_pointer();
+	a = sort_list(env, ascending);
+	print_env_list(a, "ex");
+	ft_lstclear_env(g_env);
+	g_env = get_env(g, 1);
+	ft_freed(g);
 }
 
 int	handle_no_first_element(char **arr)

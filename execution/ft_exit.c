@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:32:03 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:44:28 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,17 @@ void	ft_exit(t_data *data)
 			{
 				ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 				ft_putstr_fd(": numeric argument required\n", 2);
+				(ft_malloc(0, 1), ft_lstclear_env(g_env));
 				exit(2);
 			}
 			else if (data->args[2])
 			{
-				(ft_putstr_fd("minishell: \
-				exit: too many arguments\n", 2), g_env->exit_status = 1);
+				(ft_putstr_fd("minishell: exit: too many arguments\n", 2),
+					g_env->exit_status = 1);
 				return ;
 			}
 			ext = ft_atoi(data->args[1]);
 		}
-		ft_malloc(1, 0);
-		ft_lstclear_env(g_env);
-		exit((char)ext);
+		(ft_malloc(0, 1), ft_lstclear_env(g_env), exit((char)ext));
 	}
 }

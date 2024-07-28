@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:27:29 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:49:18 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_env(void)
 {
-	print_env_list("en");
+	move_key_to_end("_");
+	print_env_list(g_env, "en");
 }
 
 char	*my_get_env(t_envp *env_list, const char *key)
@@ -56,8 +57,8 @@ void	handle_flag_set(t_data *data, t_envp *g_env, int i, char **arr)
 			free(tmp);
 		}
 		else if (!tmp || check_equal(data->args[i]))
-			(ft_lstadd_back_env(&g_env, ft_lstnew_env(data->args[i], \
-			g_env, flag)), free(tmp));
+			(ft_lstadd_back_env(&g_env, ft_lstnew_env(data->args[i], g_env,
+						flag)), free(tmp));
 	}
 	g_env->exit_status = 0;
 }
@@ -69,7 +70,7 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 	if (!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
 	{
 		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(data->args[1], 2);
+		ft_putstr_fd(data->args[i], 2);
 		ft_putendl_fd("': not a valid identifier", 2);
 		g_env->exit_status = 1;
 	}
@@ -81,7 +82,7 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 	else
 	{
 		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(data->args[1], 2);
+		ft_putstr_fd(data->args[i], 2);
 		ft_putendl_fd("': not a valid identifier", 2);
 		g_env->exit_status = 1;
 	}
