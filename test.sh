@@ -159,7 +159,7 @@ run_and_check "exit exit; echo \$?" "exit"
 
 # Export Commands
 echo "Testing Export Commands..."
-run_and_check "env | grep \"_=\"" "_="
+run_and_check "g_env | grep \"_=\"" "_="
 run_and_check "export | grep \"SHLVL\"" "SHLVL"
 run_and_check "export | grep \"OLDPWD\"" "OLDPWD"
 run_and_check "export | grep \"PWD\"" "PWD"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:21:45 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 12:35:26 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	rmv_d_qts(char **str)
 void	expand_helper(t_lexer *lst, char *tmp)
 {
 	if (lst->value[0] == '?')
-		lst->value = my_strjoin2(ft_itoa(env->exit_status), lst->value + 1);
+		lst->value = my_strjoin2(ft_itoa(g_env->exit_status), lst->value + 1);
 	else
 	{
-		tmp = my_get_env(env, lst->value);
+		tmp = my_get_env(g_env, lst->value);
 		lst->value = my_strdup(tmp);
 		free(tmp);
 	}
@@ -83,7 +83,7 @@ void	expand(char *prompt, t_lexer **lex)
 		else if (lst->value[0] == '~' && !lst->in_quotes)
 		{
 			lst->value++;
-			tmp = my_get_env(env, "HOME");
+			tmp = my_get_env(g_env, "HOME");
 			lst->value = my_strjoin(tmp, lst->value);
 			free(tmp);
 		}

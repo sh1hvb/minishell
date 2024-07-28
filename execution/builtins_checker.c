@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:13:15 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:14:11 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_builts(t_data *data)
 {
 	t_envp	*envtmp;
 
-	envtmp = env;
+	envtmp = g_env;
 	if (!check_builts(data))
 		ft_error(" command not found", 127);
 	if (check_builts(data) == 1)

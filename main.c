@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/28 18:22:40 by mchihab           #+#    #+#             */
+/*   Updated: 2024/07/28 18:45:47 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_envp *g_env = NULL;
-int a = 0;
-int	pars_lstsize(t_data *lst);
+t_envp	*g_env = NULL;
+
+int		pars_lstsize(t_data *lst);
 
 t_data	*pars_lstnew(char *value, int quotes);
 void	pars_lstclear(t_data **lst);
 void	heredoc_lstadd_back(t_files **lst, t_files *new);
 t_files	*heredoc_lstnew(char *value);
-void    print_expand(t_lexer *lex_tmp);
-void    print_parsing(t_data *data);
-void    print_lexer(t_lexer *lex_tmp);
+void	print_expand(t_lexer *lex_tmp);
+void	print_parsing(t_data *data);
+void	print_lexer(t_lexer *lex_tmp);
 
 int	readline_signals(t_lexer **lex, char **prompt)
 {
@@ -63,7 +75,7 @@ void	minishell()
 		if (valid_quotes(prompt))
 		{
 			free(prompt);
-			continue;
+			continue ;
 		}
 		lexer(prompt, &lex);
 		if (!check_syntax(lex))
@@ -87,7 +99,7 @@ int	main(int ac, char *av[], char *envp[])
 	handle_env(envp);
 	inc_shell();
 	minishell();
-	ft_lstclear_env(env);
+	ft_lstclear_env(g_env);
 	ft_malloc(0, 1);
 	return (exit_status);
 }

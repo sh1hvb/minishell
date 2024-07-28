@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 17:31:24 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_execute_multiple(t_data *data)
 		handle_process_execution(data);
 	}
 	waitpid(pid, &status, 0);
-	env->exit_status = WEXITSTATUS(status);
+	g_env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		env->exit_status = WTERMSIG(status) + 128;
+		g_env->exit_status = WTERMSIG(status) + 128;
 }

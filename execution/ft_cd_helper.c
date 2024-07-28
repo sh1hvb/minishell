@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:09:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/26 19:10:14 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_cd_continue(t_data *data)
 				ft_putendl_fd("minishell : cd: No such file or directory", 2);
 			else
 				perror(msg);
-			env->exit_status = 1;
+			g_env->exit_status = 1;
 			free(msg);
 			return (1);
 		}
@@ -41,7 +41,7 @@ int	ft_cd_continue(t_data *data)
 
 void	cd_old_pwd_continue(char *tmp)
 {
-	tmp = my_get_env(env, "OLDPWD");
+	tmp = my_get_env(g_env, "OLDPWD");
 	ft_putstr_fd(tmp, 1);
 	ft_putstr_fd("\n", 1);
 	get_old_pwd();

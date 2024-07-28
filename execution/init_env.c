@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:45 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 13:52:32 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	fill_env_node(t_envp *node, char **splited, int c)
 		node->value = ft_strdup(getenv(splited[0]));
 }
 
-t_envp	*build_env_list(char **env, int c)
+t_envp	*build_env_list(char **g_env, int c)
 {
 	t_envp	*env_list;
 	t_envp	*current;
@@ -49,9 +49,9 @@ t_envp	*build_env_list(char **env, int c)
 	env_list = NULL;
 	current = NULL;
 	i = 0;
-	while (env[i])
+	while (g_env[i])
 	{
-		splited = builtins_split(env[i], "+=");
+		splited = builtins_split(g_env[i], "+=");
 		new_node = init_env_node();
 		if (!new_node)
 			return (NULL);

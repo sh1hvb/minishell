@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:20:15 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:20:16 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_pwd(t_data *data)
 	buf = getcwd(NULL, PATH_MAX);
 	if (!buf)
 	{
-		buf = my_get_env(env, "PWD");
+		buf = my_get_env(g_env, "PWD");
 		if (!buf)
 		{
 			printf("\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 17:04:54 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:11:18 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-#define g_env env
+
 typedef struct s_envp
 {
 	char			*key;
@@ -167,21 +167,21 @@ void				handle_input_redirection(t_data *data);
 int					ascending(int a, int b);
 int					if_flag(char *s);
 int					check_equal(char *s);
-void				handle_no_arguments(t_envp *env);
+void				handle_no_arguments(t_envp *g_env);
 int					handle_no_first_element(char **arr);
 //utils export
 t_envp				*sort_list(t_envp *lst, int (*cmp)(int, int));
 t_envp				*my_append_env(t_envp *env_list, const char *key,
 						char *value);
-void				ft_append(t_data *data, t_envp *env, int i);
+void				ft_append(t_data *data, t_envp *g_env, int i);
 /* END UTILS BUILTINS */
 
 //builtins checker
 int					check_builts(t_data *data);
 void				handle_builts(t_data *data);
 //builtins split
-char				**fill_array_b(char **dst, char *src, char *delimiters, \
-					int num_word);
+char				**fill_array_b(char **dst, char *src, char *delimiters,
+						int num_word);
 
 char				**builtins_split(char *s, char *delimiters);
 // cd
@@ -199,9 +199,9 @@ int					is_number(char *arg);
 long long			ft_atoi2(char *str);
 void				ft_exit(t_data *data);
 // export
-void				ft_export(t_data *data, t_envp *env);
-void				process_arguments(t_data *data, t_envp *env, int i);
-void				handle_flag_set(t_data *data, t_envp *env, int i,
+void				ft_export(t_data *data, t_envp *g_env);
+void				process_arguments(t_data *data, t_envp *g_env, int i);
+void				handle_flag_set(t_data *data, t_envp *g_env, int i,
 						char **arr);
 char				*my_get_env(t_envp *env_list, const char *key);
 void				ft_env(void);
@@ -211,25 +211,25 @@ void				ft_pwd(t_data *data);
 void				ft_unset(t_data *data);
 void				remove_node(t_envp *head, t_data *data, int i);
 void				condition(t_envp *head);
-// linked list env
+// linked list g_env
 int					ft_lstsize_env(t_envp *lst);
 void				ft_lstadd_front_env(t_envp **lst, t_envp *new);
 t_envp				*ft_lstlast_env(t_envp *lst);
 void				ft_lstdelone_env(t_envp *lst);
-t_envp				*ft_lstnew_env(char *value, t_envp *env, int flag);
-// env
-t_envp				*get_env(char **env, int c);
+t_envp				*ft_lstnew_env(char *value, t_envp *g_env, int flag);
+// g_env
+t_envp				*get_env(char **g_env, int c);
 void				ft_lstclear_env(t_envp *lst);
 void				handle_env(char *envp[]);
 void				new_env(void);
 void				print_env_list(char *x);
-// utils env
+// utils g_env
 int					check_string(char *s);
 void				inc_shell(void);
 char				**list_to_pointer(void);
 void				ft_lstadd_back_env(t_envp **lst, t_envp *new);
 
-// init env
+// init g_env
 t_envp				*build_env_list(char **env, int c);
 /*=========================* END EXCUTION *============================*/
 

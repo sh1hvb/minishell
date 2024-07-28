@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 17:08:42 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,19 @@ void	process_cmd(t_data *data)
 	int (status), (flag);
 	file = NULL;
 	flag = 0;
-	env->signal_heredoc = 0;
+	g_env->signal_heredoc = 0;
 	hide_inout(0);
 	if (data && check_heredoc_two(data))
 	{
 		heredoc_mult(data);
 		hide_inout(1);
 	}
-	if (data && !data->next && check_builts(data) && !env->signal_heredoc)
+	if (data && !data->next && check_builts(data) && !g_env->signal_heredoc)
 	{
 		(execute_single_cmd(data), hide_inout(1));
 		flag = 1;
 	}
-	else if (data && !flag && !env->signal_heredoc)
+	else if (data && !flag && !g_env->signal_heredoc)
 	{
 		(process_pipe(data), hide_inout(1));
 		while (waitpid(-1, &status, 0) != -1)

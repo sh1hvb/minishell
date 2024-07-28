@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:20:00 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:27:29 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*my_get_env(t_envp *env_list, const char *key)
 	return (NULL);
 }
 
-void	handle_flag_set(t_data *data, t_envp *env, int i, char **arr)
+void	handle_flag_set(t_data *data, t_envp *g_env, int i, char **arr)
 {
 	int		flag;
 	char	*tmp;
@@ -43,28 +43,26 @@ void	handle_flag_set(t_data *data, t_envp *env, int i, char **arr)
 	tmp = NULL;
 	flag = if_flag(data->args[i]);
 	if (check_string(data->args[i]) == 2)
-		ft_append(data, env, i);
+		ft_append(data, g_env, i);
 	else if (check_string(data->args[i]) == 1)
 	{
-		tmp = my_get_env(env, arr[0]);
+		tmp = my_get_env(g_env, arr[0]);
 		if (tmp)
 		{
 			if (arr[1])
-				my_append_env(env, arr[0], ft_strdup(arr[1]));
+				my_append_env(g_env, arr[0], ft_strdup(arr[1]));
 			else if (check_equal(data->args[i]))
-				my_append_env(env, arr[0], ft_strdup(""));
+				my_append_env(g_env, arr[0], ft_strdup(""));
 			free(tmp);
 		}
 		else if (!tmp || check_equal(data->args[i]))
-		{
-			ft_lstadd_back_env(&env, ft_lstnew_env(data->args[i], env, flag));
-			free(tmp);
-		}
+			(ft_lstadd_back_env(&g_env, ft_lstnew_env(data->args[i], \
+			g_env, flag)), free(tmp));
 	}
-	env->exit_status = 0;
+	g_env->exit_status = 0;
 }
 
-void	process_arguments(t_data *data, t_envp *env, int i)
+void	process_arguments(t_data *data, t_envp *g_env, int i)
 {
 	char	**arr;
 
@@ -73,38 +71,38 @@ void	process_arguments(t_data *data, t_envp *env, int i)
 		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(data->args[1], 2);
 		ft_putendl_fd("': not a valid identifier", 2);
-		env->exit_status = 1;
+		g_env->exit_status = 1;
 	}
 	arr = builtins_split(data->args[i], "+=");
 	if (handle_no_first_element(arr))
 		return ;
 	if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]))
-		handle_flag_set(data, env, i, arr);
+		handle_flag_set(data, g_env, i, arr);
 	else
 	{
 		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(data->args[1], 2);
 		ft_putendl_fd("': not a valid identifier", 2);
-		env->exit_status = 1;
+		g_env->exit_status = 1;
 	}
 	ft_freed(arr);
 }
 
-void	ft_export(t_data *data, t_envp *env)
+void	ft_export(t_data *data, t_envp *g_env)
 {
 	int	i;
 
 	i = 1;
 	if (!ft_strcmp(data->args[0], "export") && (!data->args[1]))
 	{
-		handle_no_arguments(env);
+		handle_no_arguments(g_env);
 		return ;
 	}
 	while (data->args[i])
 	{
 		if (!ft_strcmp(data->args[i], "export"))
 			i++;
-		process_arguments(data, env, i);
+		process_arguments(data, g_env, i);
 		i++;
 	}
 }

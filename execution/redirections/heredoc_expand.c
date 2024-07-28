@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:35:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:19:40 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:45:53 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*ft_strjoin_s(char *s1, char *s2)
 
 void	handle_status(char *tmp, char *new, int *i)
 {
-	tmp = ft_itoa(env->exit_status);
+	tmp = ft_itoa(g_env->exit_status);
 	new = my_strjoin2(new, tmp);
 	(free(tmp), (*i)++);
 }
@@ -91,7 +91,7 @@ int	heredoc_expand_continue(char *line, char *tmp, char **new, int *index)
 			return (1);
 		}
 		ft_strlcpy(tmp, line + start, (i - start) + 1);
-		tmp = my_get_env(env, tmp);
+		tmp = my_get_env(g_env, tmp);
 		*new = ft_strjoin_s(*new, tmp);
 	}
 	*index = i;

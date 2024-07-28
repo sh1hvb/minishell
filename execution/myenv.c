@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:07 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:32:21 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_env_list(char *x)
 {
 	t_envp	*current;
 
-	current = env;
+	current = g_env;
 	while (current)
 	{
 		if (!ft_strcmp(x, "ex"))
@@ -55,7 +55,7 @@ void	new_env(void)
 	free(pwd);
 	if (!tmp)
 		return ;
-	tmp2 = ft_strjoin(tmp, " _=/usr/bin/env SHLVL=2");
+	tmp2 = ft_strjoin(tmp, " _=/usr/bin/g_env SHLVL=2");
 	free(tmp);
 	if (!tmp2)
 		return ;
@@ -63,7 +63,7 @@ void	new_env(void)
 	free(tmp2);
 	if (!new_env)
 		return ;
-	env = get_env(new_env, 1);
+	g_env = get_env(new_env, 1);
 	ft_freed(new_env);
 }
 
@@ -72,7 +72,7 @@ void	handle_env(char *envp[])
 	if (!envp || !envp[0])
 		new_env();
 	else
-		env = get_env(envp, 0);
+		g_env = get_env(envp, 0);
 }
 
 void	ft_lstclear_env(t_envp *lst)
@@ -95,7 +95,7 @@ void	ft_lstclear_env(t_envp *lst)
 	}
 }
 
-t_envp	*get_env(char **env, int c)
+t_envp	*get_env(char **g_env, int c)
 {
-	return (build_env_list(env, c));
+	return (build_env_list(g_env, c));
 }

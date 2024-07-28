@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:22 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 17:59:45 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	heredoc_counter(t_lexer *lex)
 	if (i > 16)
 	{
 		ft_putendl_fd("bash: maximum here-document count exceeded", 2);
-		env->exit_status = 2;
-		ft_lstclear_env(env);
+		g_env->exit_status = 2;
+		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
 		exit (2);
 	}
@@ -84,7 +84,7 @@ int	is_ambiguous(t_lexer *lex)
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(tmp, 2);
 				ft_putendl_fd(": ambiguous redirect", 2);
-				env->exit_status = 1;
+				g_env->exit_status = 1;
 				return (1);
 			}
 			i++;

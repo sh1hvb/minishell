@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:12 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/26 20:07:13 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	call_here_put(t_data *p, int fds)
 		p = p->next;
 	}
 	ft_malloc(0, 1);
-	ft_lstclear_env(env);
+	ft_lstclear_env(g_env);
 	exit(0);
 }
 
@@ -33,7 +33,7 @@ void	err(void)
 {
 	printf("error\n");
 	ft_malloc(0, 1);
-	ft_lstclear_env(env);
+	ft_lstclear_env(g_env);
 	exit(0);
 }
 
