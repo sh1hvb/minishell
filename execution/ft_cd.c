@@ -6,11 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:11:52 by smarsi            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/29 13:05:09 by smarsi           ###   ########.fr       */
-=======
-/*   Updated: 2024/07/28 20:46:06 by mchihab          ###   ########.fr       */
->>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
+/*   Updated: 2024/07/29 17:03:27 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +100,7 @@ void	cd_old_pwd(t_data *data, char *msg)
 	else
 	{
 		(ft_putstr_fd("bash: cd: --: invalid option\ncd: usage: \
-<<<<<<< HEAD
 cd [-L|-P] [dir]\n", 2), g_env->exit_status = 1);
-=======
-		 cd [-L|-P] [dir]\n", 2), g_env->exit_status = 1);
->>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
 		return ;
 	}
 	cd_old_pwd_continue(tmp);

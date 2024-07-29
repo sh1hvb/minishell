@@ -6,11 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:32:03 by smarsi            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/29 13:05:38 by smarsi           ###   ########.fr       */
-=======
-/*   Updated: 2024/07/28 20:44:28 by mchihab          ###   ########.fr       */
->>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
+/*   Updated: 2024/07/29 17:03:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +81,8 @@ void	ft_exit(t_data *data)
 			}
 			else if (data->args[2])
 			{
-<<<<<<< HEAD
 				(ft_putstr_fd("minishell: \
 exit: too many arguments\n", 2), g_env->exit_status = 1);
-=======
-				(ft_putstr_fd("minishell: exit: too many arguments\n", 2),
-					g_env->exit_status = 1);
->>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
 				return ;
 			}
 			ext = ft_atoi(data->args[1]);
