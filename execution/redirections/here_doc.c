@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:20:09 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	end_heredoc(char *line, char *delimiter)
 		{
 			ft_putstr_fd("\n", 2);
 			ft_putstr_fd("minishell: warning: here-document delimited \
-			by end-of-file (wanted `", 2);
+by end-of-file (wanted `", 2);
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
 		}
@@ -71,7 +71,7 @@ void	heredoc_mult(t_data *data)
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
-	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 777);
 	if (!fds)
 		err();
 	signal(SIGQUIT, SIG_IGN);

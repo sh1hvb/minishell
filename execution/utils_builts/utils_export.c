@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:12:24 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:13:12 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_append(t_data *data, t_envp *env, int i)
 	char	**temp_splited;
 
 	flag = 0;
-	splited = builtins_split(data->args[i], "+=");
+	splited = split_with_first_delimiter(data->args[i], "+=");
 	append = my_get_env(env, splited[0]);
 	if (!append)
 	{
@@ -109,7 +109,7 @@ void	ft_append(t_data *data, t_envp *env, int i)
 	}
 	else
 	{
-		temp_splited = builtins_split(data->args[i], "+=");
+		temp_splited = split_with_first_delimiter(data->args[i], "+=");
 		join = ft_strjoin(append, temp_splited[1]);
 		env = my_append_env(env, temp_splited[0], join);
 		ft_freed(temp_splited);

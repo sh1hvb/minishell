@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:45 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_envp	*build_env_list(char **g_env, int c)
 	i = 0;
 	while (g_env[i])
 	{
-		splited = builtins_split(g_env[i], "+=");
+		splited = split_with_first_delimiter(g_env[i], "+=");
 		new_node = init_env_node();
 		if (!new_node)
 			return (NULL);

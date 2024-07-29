@@ -6,78 +6,69 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:17:11 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 13:44:31 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:11:02 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	handle_quotes(char *s, int *index, int *count, int flag)
-{
-	int	i;
-
-	i = *index;
-	if (s[i] == '\"')
+ int in_delimiterss(char c, char *delimiters) 
+ {
+    while (*delimiters)
 	{
-		split_quotes(s, '\"', &i);
-		while (s[i] && !in_delimiters(s[i], " \t\n"))
-			i++;
-		if (flag)
-			(*count)++;
-	}
-	else if (s[i] == '\'')
-	{
-		split_quotes(s, '\'', &i);
-		while (s[i] && !in_delimiters(s[i], " \t\n"))
-			i++;
-		if (flag)
-			(*count)++;
-	}
-	*index = i;
+        if (c == *delimiters)
+            return 1;
+        delimiters++;
+    }
+    return 0;
 }
-
-static int	count_word(char *s, char *delimiters)
+char *find_first_delimiter(const char *s, char *delimiters) 
 {
-	int	count;
-	int	flag;
-	int	i;
+    int i;
 
-	count = 0;
-	flag = 1;
 	i = 0;
-	while (s[i])
+    while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'')
-			handle_quotes(s, &i, &count, flag);
-		if (s[i] && !in_delimiters(s[i], delimiters) && flag)
-		{
-			count++;
-			flag = 0;
-		}
-		if (s[i] && in_delimiters(s[i], delimiters))
-			flag = 1;
-		if (!s[i])
-			break ;
-		i++;
-	}
-	return (count);
+        if (in_delimiterss(s[i], delimiters)) 
+            return (char *)&s[i];
+        i++;
+    }
+    return NULL;
 }
 
-char	**builtins_split(char *s, char *delimiters)
+char **create_result_array(char *first_part, char *second_part, int has_delimiter) 
 {
-	char	**dst;
-	int		count;
+    char **result;
 
-	if (!s || !delimiters)
+    result = malloc((has_delimiter ? 3 : 2) * sizeof(char *));
+    if (!result) 
 	{
-		return (NULL);
-	}
-	count = 0;
-	count = count_word(s, delimiters);
-	dst = ft_calloc(count + 1, sizeof(char *));
-	if (!dst)
-		return (NULL);
-	dst = fill_array_b(dst, s, delimiters, count);
-	dst[count] = NULL;
-	return (dst);
+        free(first_part);
+        free(second_part);
+        return NULL;
+    }
+    result[0] = first_part;
+    result[1] = second_part;
+    if (has_delimiter) 
+        result[2] = NULL;
+	else 
+        result[1] = NULL;
+
+    return result;
+}
+
+char **split_with_first_delimiter(char *s, char *delimiters) {
+    char **result;
+    char *first_part;
+    char *second_part;
+    char *delim_position;
+
+    if (!s || !delimiters)
+        return NULL;
+    delim_position = find_first_delimiter(s, delimiters);
+    if (!delim_position)
+        return create_result_array(ft_strdup(s), NULL, 0);
+    first_part = ft_strndup(s, delim_position - s);
+    second_part = ft_strdup(delim_position + 1);
+    result = create_result_array(first_part, second_part, 1);
+    return result;
 }

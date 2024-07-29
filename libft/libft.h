@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 12:56:44 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/25 12:22:59 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/29 20:00:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char		*ft_strjoin_ws(char const *s1, char const *s2);
 char		*ft_strjoin_get(char *s1, char *s2);
 char		*ft_sstrchr(char *str, int c);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strndup(const char *s1, size_t n);
 typedef struct s_lexer	t_lexer;
 typedef struct s_list
 {

@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 20:39:53 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void				handle_builts(t_data *data);
 char				**fill_array_b(char **dst, char *src, char *delimiters,
 						int num_word);
 
-char				**builtins_split(char *s, char *delimiters);
+char				**split_with_first_delimiter(char *s, char *delimiters);
 // cd
 void				ft_cd(t_data *data);
 void				cd_old_pwd(t_data *data, char *msg);
