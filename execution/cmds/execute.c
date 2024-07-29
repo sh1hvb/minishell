@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:38 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 19:43:37 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_child_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
-		if (data && data->cmd)
+		if (data && data->cmd && data->cmd[0])
 			exec(data);
 		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
@@ -55,7 +55,7 @@ void	exec(t_data *data)
 	}
 	path = NULL;
 	envp = NULL;
-	if (data && data->cmd)
+	if (data && data->cmd && data->cmd[0])
 		handle_execve(data, path, envp);
 }
 
@@ -63,7 +63,7 @@ void	handle_process_execution(t_data *data)
 {
 	if (!check_builts(data))
 	{
-		if (data && data->cmd)
+		if (data && data->cmd && data->cmd[0])
 			exec(data);
 		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
@@ -80,5 +80,6 @@ void	handle_process_execution(t_data *data)
 
 void	process_pipe(t_data *data)
 {
+	check_empty_cmd_two(data);
 	ft_execute_multiple(data);
 }

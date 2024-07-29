@@ -6,40 +6,11 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:07 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:11:33 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	print_env_list(char *x)
-{
-	t_envp	*current;
-
-	current = g_env;
-	while (current)
-	{
-		if (!ft_strcmp(x, "ex"))
-			printf("declare -x ");
-		if (!ft_strcmp(x, "en") && current->flag == 0 && !current->value)
-		{
-			current = current->next;
-			continue ;
-		}
-		else if (!current->value && current->flag == 0 && !ft_strcmp(x, "ex"))
-			printf("%s\n", current->key);
-		else if (!current->value && current->flag == 1 && !ft_strcmp(x, "ex"))
-			printf("%s=%s\n", current->key, current->value);
-		else
-		{
-			if (!ft_strcmp(x, "ex"))
-				printf("%s=\"%s\"\n", current->key, current->value);
-			else
-				printf("%s=%s\n", current->key, current->value);
-		}
-		current = current->next;
-	}
-}
 
 void	new_env(void)
 {

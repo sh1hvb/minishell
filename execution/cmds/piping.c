@@ -6,7 +6,11 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/29 13:02:14 by smarsi           ###   ########.fr       */
+=======
+/*   Updated: 2024/07/28 19:32:35 by mchihab          ###   ########.fr       */
+>>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,11 @@ void	ft_execute_multiple(t_data *data)
 		create_pipes(data);
 		data = data->next;
 	}
+<<<<<<< HEAD
+=======
+	if (data->args && !ft_strcmp(data->args[0], "./minishell"))
+		(signal(SIGINT, SIG_IGN), signal(SIGQUIT, SIG_IGN));
+>>>>>>> ed9445f13a78ccf518d2a50f974d11c48b817bc4
 	pid = fork();
 	if (!pid)
 	{

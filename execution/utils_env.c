@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:40:19 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:46:42 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,33 @@ int	check_string(char *s)
 		i++;
 	}
 	return (1);
+}
+
+void	move_key_to_end(char *key)
+{
+	t_envp	*current;
+	t_envp	*previous;
+	t_envp	*target;
+	t_envp	*target_prev;
+
+	current = g_env;
+	while (current)
+	{
+		if (strcmp(current->key, key) == 0)
+		{
+			target = current;
+			target_prev = previous;
+		}
+		previous = current;
+		current = current->next;
+	}
+	if (target && target->next)
+	{
+		if (target == g_env)
+			g_env = target->next;
+		else
+			target_prev->next = target->next;
+		previous->next = target;
+		target->next = NULL;
+	}
 }
