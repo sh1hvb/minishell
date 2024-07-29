@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 20:22:09 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:22:15 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	end_heredoc(char *line, char *delimiter)
 		if (!line)
 		{
 			ft_putstr_fd("minishell: warning: here-document delimited \
-by end-of-file (wanted `", 2);
 by end-of-file (wanted `", 2);
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
