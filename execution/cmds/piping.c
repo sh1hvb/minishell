@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 19:29:09 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/29 13:02:14 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,4 @@ void	ft_execute_multiple(t_data *data)
 	g_env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		g_env->exit_status = WTERMSIG(status) + 128;
-	
 }

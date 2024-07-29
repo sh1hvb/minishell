@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:04:21 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	end_heredoc(char *line, char *delimiter)
 		{
 			ft_putstr_fd("\n", 2);
 			ft_putstr_fd("minishell: warning: here-document delimited \
-			by end-of-file (wanted `", 2);
+by end-of-file (wanted `", 2);
 			write(2, delimiter, ft_strlen(delimiter) - 1);
 			ft_putendl_fd("')", 2);
 		}
