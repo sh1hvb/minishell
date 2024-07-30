@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:56:47 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:05:03 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_access_error(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
 	if (errno == EACCES && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
-			|| (cmd[0] == '.' && cmd[1] == '/')))
+			|| (cmd[0] == '.' && cmd[1] == '/')) && !access(cmd, F_OK))
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		ft_lstclear_env(g_env);
@@ -29,7 +29,7 @@ void	handle_access_error(char *cmd)
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_malloc(0, 1);
 		ft_lstclear_env(g_env);
-		exit(126);
+		exit(127);
 	}
 	else
 	{
@@ -44,7 +44,7 @@ void	handle_execve_error(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
 	if (errno == EACCES && (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/'
-			|| (cmd[0] == '.' && cmd[1] == '/')))
+			|| (cmd[0] == '.' && cmd[1] == '/')) && !access(cmd, F_OK))
 	{
 		ft_putendl_fd(": Permission denied", 2);
 		ft_lstclear_env(g_env);
@@ -57,11 +57,11 @@ void	handle_execve_error(char *cmd)
 		ft_putendl_fd(": No such file or directory", 2);
 		ft_malloc(0, 1);
 		ft_lstclear_env(g_env);
-		exit(126);
+		exit(127);
 	}
 	else
 	{
-		ft_putendl_fd(": Command not found", 2);
+		ft_putendl_fd(": command not found", 2);
 		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
 		exit(127);

@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 20:20:17 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:02:43 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	handle_heredoc(t_data *data)
 			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
 			perror(" ");
 			g_env->exit_status = 1;
-			ft_malloc(0,1);
+			ft_malloc(0, 1);
 			ft_lstclear_env(g_env);
 			exit(1);
 		}
