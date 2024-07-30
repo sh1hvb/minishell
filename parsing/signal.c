@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:34 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 16:58:30 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:50:18 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,15 @@ void	sigint_int(int sig)
 
 void	sigint_heredoc(int sig)
 {
+	int	a;
+
 	if (sig == SIGINT)
 	{
 		g_env->exit_status = 130;
-		exit(g_env->exit_status);
+		a = g_env->exit_status;
+		ft_lstclear_env(g_env);
+		ft_malloc(0, 1);
+		exit(a);
 	}
 }
 
