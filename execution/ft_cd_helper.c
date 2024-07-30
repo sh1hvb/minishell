@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:09:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 18:45:11 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,10 @@ void	cd_old_pwd_continue(char *tmp)
 	ft_putstr_fd("\n", 1);
 	get_old_pwd();
 	free(tmp);
+}
+
+int	check_error(t_data *data, char *cwd)
+{
+	return (((!data || !data->args || !cwd) && ft_strcmp(data->args[1], "..")) \
+	&& !(!data->args[1] || !ft_strcmp(data->args[1], "--")));
 }

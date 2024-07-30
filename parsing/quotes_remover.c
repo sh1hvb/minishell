@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/27 17:58:31 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:32:11 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	rmv_file_qts(t_files *data, char *tmp, char delimiter)
 		{
 			if (data->delimiter[i] == '\"' || data->delimiter[i] == '\'')
 			{
+				data->type = 1;
 				delimiter = data->delimiter[i++];
 				while (data->delimiter[i] && data->delimiter[i] != delimiter)
 					tmp = my_strjoin_c(tmp, data->delimiter[i++]);

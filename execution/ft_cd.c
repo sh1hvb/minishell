@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:11:52 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 17:03:27 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 18:44:42 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_cd(t_data *data)
 	char	*cwd;
 
 	cwd = getcwd(buff, PATH_MAX);
-	if ((!data || !data->args || !cwd) && ft_strcmp(data->args[1], ".."))
+	if (check_error(data, cwd))
 	{
 		if (!cwd)
 			perror("getcwd : ");

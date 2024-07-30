@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:21:45 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 19:26:51 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	expand(char *prompt, t_lexer **lex)
 	(void)prompt;
 	while (lst)
 	{
-		if (lst->value[0] == '$' && lst->in_quotes != 2 && !is_heredoc(lst)
+		if (lst->value[0] == '$' && lst->in_quotes != 2 && ((lst->value[0] == '$') || (!is_heredoc(lst)
 			&& (lst->value[1] || (lst->next && lst->in_quotes == 0
 					&& (lst->next->value[0] == '\"'
-						|| lst->next->value[0] == '\''))))
+						|| lst->next->value[0] == '\''))))))
 		{
 			lst->value++;
 			expand_helper(lst, tmp);
