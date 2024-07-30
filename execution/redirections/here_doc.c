@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 17:04:58 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/29 20:22:15 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	heredoc_mult(t_data *data)
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
-	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 777);
 	if (!fds)
 		err();
 	signal(SIGQUIT, SIG_IGN);

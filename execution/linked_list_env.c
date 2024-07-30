@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:20:49 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_envp	*ft_lstnew_env(char *value, t_envp *g_env, int flag)
 
 	splited = NULL;
 	last = ft_lstlast_env(g_env);
-	splited = builtins_split(value, "+=");
+	splited = split_with_first_delimiter(value, "+=");
 	head = malloc(sizeof(t_envp));
 	if (!head)
 		return (NULL);

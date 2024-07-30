@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:49:18 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/29 21:14:52 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 		ft_putstr_fd(data->args[i], 2);
 		ft_putendl_fd("': not a valid identifier", 2);
 		g_env->exit_status = 1;
+		return ;
 	}
-	arr = builtins_split(data->args[i], "+=");
+	arr = split_with_first_delimiter(data->args[i], "+=");
 	if (handle_no_first_element(arr))
 		return ;
 	if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]))
