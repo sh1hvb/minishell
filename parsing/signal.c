@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:34 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/30 15:46:04 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:56:01 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	sigint_int(int sig)
 
 void	sigint_heredoc(int sig)
 {
+	int	a;
+
 	if (sig == SIGINT)
 	{
 		printf("\n");

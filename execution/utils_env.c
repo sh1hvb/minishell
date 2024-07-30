@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:40:19 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:46:42 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:55:04 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,27 @@ char	**list_to_pointer(void)
 	int		i;
 	char	**arr;
 	char	*tmp;
-	int		size;
 	t_envp	*lst;
 
 	lst = g_env;
 	i = 0;
-	arr = NULL;
 	tmp = NULL;
-	size = ft_lstsize_env(lst);
-	arr = malloc((size + 1) * sizeof(char *));
+	arr = ft_calloc((ft_lstsize_env(lst) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
 	while (lst)
 	{
-		tmp = ft_strjoin(lst->key, "=");
-		arr[i] = ft_strjoin(tmp, lst->value);
-		free(tmp);
+		if (!lst->value)
+			arr[i] = ft_strjoin(lst->key, NULL);
+		else
+		{
+			tmp = ft_strjoin(lst->key, "=");
+			arr[i] = ft_strjoin(tmp, lst->value);
+			free(tmp);
+		}
 		i++;
 		lst = lst->next;
 	}
-	arr[i] = NULL;
 	return (arr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 21:14:52 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:10:49 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_env(void)
 {
-	move_key_to_end("_");
 	print_env_list(g_env, "en");
 }
 

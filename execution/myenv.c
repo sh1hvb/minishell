@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:07 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:11:33 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:20:42 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ void	new_env(void)
 void	handle_env(char *envp[])
 {
 	if (!envp || !envp[0])
+	{
 		new_env();
+		move_key_to_end("_");
+	}
 	else
+	{
 		g_env = get_env(envp, 0);
+		move_key_to_end("_");
+	}
 }
 
 void	ft_lstclear_env(t_envp *lst)
