@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:34 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 16:58:30 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:46:04 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	sigint_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_env->exit_status = 130;
-		exit(g_env->exit_status);
+		printf("\n");
+		ft_lstclear_env(g_env);
+		ft_malloc(0, 1);
+		exit(130);
 	}
 }
 
