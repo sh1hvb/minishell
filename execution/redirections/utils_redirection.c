@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:35 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:49:40 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:08:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	handle_process_redirections(t_data *data)
 			handle_output_redirection(data);
 		if (data->append)
 			handle_append_redirection(data);
-		handle_heredoc(data);
+		if(check_heredoc_two(data))
+			handle_heredoc(data);
 	}
 }

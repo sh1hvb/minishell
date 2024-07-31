@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:04:16 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,7 @@ void				handle_no_arguments(t_envp *g_env);
 int					handle_no_first_element(char **arr);
 //utils export
 t_envp				*sort_list(t_envp *lst, int (*cmp)(int, int));
-t_envp				*my_append_env(t_envp *env_list, const char *key,
-						char *value);
+t_envp				*my_append_env(t_envp *env_list, const char *key, char *value , int flag);
 void				ft_append(t_data *data, t_envp *g_env, int i);
 /* END UTILS BUILTINS */
 

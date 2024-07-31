@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 14:02:43 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:08:15 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	ft_input(t_files *file)
 			return (1);
 		}
 		if (file->next)
+		{
+			dup2(fd, 0);
 			close(fd);
+		}
 		else
 			file->index = fd;
 		file = file->next;
@@ -52,7 +55,10 @@ int	ft_output(t_files *file)
 			return (1);
 		}
 		if (file->next)
+		{
+			dup2(fd, 1);
 			close(fd);
+		}
 		else
 			file->index = fd;
 		file = file->next;
@@ -76,7 +82,10 @@ int	ft_append_file(t_files *file)
 			return (1);
 		}
 		if (file->next)
+		{
+			dup2(fd, 1);
 			close(fd);
+		}
 		else
 			file->index = fd;
 		file = file->next;
@@ -86,6 +95,7 @@ int	ft_append_file(t_files *file)
 
 void	handle_child_redirections(t_data *data, int fds[])
 {
+	(void)fds;
 	if (data)
 	{
 		if (data->redir_in)
@@ -94,7 +104,8 @@ void	handle_child_redirections(t_data *data, int fds[])
 			handle_output_redirection(data);
 		if (data->append)
 			handle_append_redirection(data);
-		handle_heredoc(data);
+		if(check_heredoc_two(data))
+			handle_heredoc(data);
 	}
 	close(fds[1]);
 }

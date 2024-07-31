@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:08:30 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 20:51:12 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 19:30:01 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	handle_no_first_element(char **arr)
 {
 	if (!arr[0])
 	{
-		ft_freed(arr);
+		// ft_freed(arr);
 		return (1);
 	}
 	return (0);

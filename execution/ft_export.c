@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 14:10:49 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 19:36:42 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@ void	handle_flag_set(t_data *data, t_envp *g_env, int i, char **arr)
 		if (tmp)
 		{
 			if (arr[1])
-				my_append_env(g_env, arr[0], ft_strdup(arr[1]));
+			{
+				my_append_env(g_env, arr[0], ft_strdup(arr[1]),0);
+			}
 			else if (check_equal(data->args[i]))
-				my_append_env(g_env, arr[0], ft_strdup(""));
+			{
+				my_append_env(g_env, arr[0], ft_strdup("\"\""),1);
+			}
 			free(tmp);
 		}
 		else if (!tmp || check_equal(data->args[i]))
@@ -74,7 +78,7 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 		g_env->exit_status = 1;
 		return ;
 	}
-	arr = split_with_first_delimiter(data->args[i], "+=");
+	arr = lexer_split(data->args[i], "+=");
 	if (handle_no_first_element(arr))
 		return ;
 	if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]))
@@ -86,7 +90,6 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 		ft_putendl_fd("': not a valid identifier", 2);
 		g_env->exit_status = 1;
 	}
-	ft_freed(arr);
 }
 
 void	ft_export(t_data *data, t_envp *g_env)

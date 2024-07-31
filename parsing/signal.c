@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:58:34 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/30 15:50:18 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 16:11:31 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,12 @@ void	sigint_int(int sig)
 
 void	sigint_heredoc(int sig)
 {
-	int	a;
-
 	if (sig == SIGINT)
 	{
-		g_env->exit_status = 130;
-		a = g_env->exit_status;
+		printf("\n");
 		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
-		exit(a);
+		exit(130);
 	}
 }
 

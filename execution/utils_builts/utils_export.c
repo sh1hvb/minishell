@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:12:24 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 21:11:13 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 19:47:03 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int))
 	return (lst);
 }
 
-t_envp	*my_append_env(t_envp *env_list, const char *key, char *value)
+t_envp	*my_append_env(t_envp *env_list, const char *key, char *value , int flag)
 {
 	t_envp	*tmp;
 
@@ -81,8 +81,12 @@ t_envp	*my_append_env(t_envp *env_list, const char *key, char *value)
 		if (ft_strcmp(tmp->key, key) == 0)
 		{
 			if (tmp->value)
+			{
 				free(tmp->value);
-			tmp->value = ft_strdup(value);
+				tmp->value = ft_strdup(value);
+			}
+			else if(flag && !tmp->value)
+				tmp->value =ft_strdup("\"\"");
 		}
 		tmp = tmp->next;
 	}
@@ -110,8 +114,11 @@ void	ft_append(t_data *data, t_envp *env, int i)
 	else
 	{
 		temp_splited = lexer_split(data->args[i], "+=");
-		join = ft_strjoin(append, temp_splited[1]);
-		env = my_append_env(env, temp_splited[0], join);
+		if(!ft_strcmp(append,"\"\""))
+			join = ft_strdup(temp_splited[1]);
+		else
+			join = ft_strjoin(append, temp_splited[1]);
+		env = my_append_env(env, temp_splited[0], join,0);
 	}
 	free(append);
 }
