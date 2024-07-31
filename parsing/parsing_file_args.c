@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:38:23 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/30 19:30:34 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/30 20:10:43 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	pars_files(t_data **data, t_lexer **lex, int flag)
 	helpers_lines(data, &head, flag, file_name);
 	tmp = heredoc_lstnew(file_name);
 	tmp->type = 0;
-	if ((*lex) && (*lex)->in_quotes)
-		tmp->type = 1;
-	if (file_name[0] == '\'' || file_name[0] == '\"')
+	if ((file_name[0] == '\'' || file_name[0] == '\"'))
 		tmp->type = 1;
 	heredoc_lstadd_back(head, tmp);
 	return (0);
