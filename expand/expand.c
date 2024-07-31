@@ -72,10 +72,9 @@ void	expand(char *prompt, t_lexer **lex)
 	(void)prompt;
 	while (lst)
 	{
-		if (lst->value[0] == '$' && lst->in_quotes != 2 && !is_heredoc(lst) \
-		&& ((lst->value[1] && !in_delimiters(lst->value[1], "\"\' \t\n")) \
-		|| (lst->next && lst->in_quotes == 0 \
-		&& in_delimiters(lst->next->value[0], "\"\'"))))
+		if (lst->value[0] == '$' && lst->in_quotes != 2 && !is_heredoc(lst)
+			&& ((lst->value[1] && !in_delimiters(lst->value[1], "\"\' \t\n")) || (lst->next && lst->in_quotes == 0
+				&& in_delimiters(lst->next->value[0], "\"\'"))))
 		{
 			lst->value++;
 			expand_helper(lst, tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/31 10:38:46 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,4 +290,5 @@ void				cd_old_pwd_continue(char *tmp);
 int					ft_cd_continue(t_data *data);
 char				*my_strjoin2(char *s1, char *s2);
 int					is_heredoc(t_lexer *lst);
+int					check_error(t_data *data, char *cwd);
 #endif

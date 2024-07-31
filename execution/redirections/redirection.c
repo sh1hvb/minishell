@@ -105,7 +105,7 @@ void	handle_heredoc(t_data *data)
 
 	if (check_heredoc(data))
 	{
-		fd = open("/tmp/heredoc.txt", O_RDONLY, 777);
+		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
 		if (fd == -1)
 		{
 			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);
