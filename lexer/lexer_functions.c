@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:20:30 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/31 10:56:45 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/07/31 12:56:59 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	is_dollar(char *prompt, t_lexer **lex, int *index, int flag)
 		return ;
 	i = *index;
 	(*index)++;
-	if (!(ft_isalpha(prompt[*index]) || ft_isdigit(prompt[*index]) \
-		|| prompt[*index] == '_'))
+	if (prompt[*index] == '$')
 		(*index)++;
 	else
 		lexer_strchr_d(prompt, " \t\n", index, 0);
