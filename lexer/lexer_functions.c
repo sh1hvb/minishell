@@ -22,7 +22,11 @@ void	is_withspace(char *prompt, t_lexer **lex, int *index, int flag)
 	if (!prompt || !lex || !index)
 		return ;
 	i = *index;
-	lexer_strchr(prompt, " \t\n", index, 1);
+	if (!(ft_isalpha(prompt[*index]) || ft_isdigit(prompt[*index]) \
+		|| prompt[*index] == '_'))
+		(*index)++;
+	else
+		lexer_strchr_d(prompt, " \t\n", index, 0);
 	value = ft_malloc(*index - i + 1, 0);
 	if (!value)
 		return ;
