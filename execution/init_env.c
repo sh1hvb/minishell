@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:45 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 20:12:07 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:23:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	fill_env_node(t_envp *node, char **splited, int c)
 	if (c)
 		node->value = ft_strdup(splited[1]);
 	else
-		node->value = ft_strdup(getenv(splited[0]));
+		node->value = ft_strdup((splited[1]));
 }
 
 t_envp	*build_env_list(char **g_env, int c)
