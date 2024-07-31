@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/31 18:04:16 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:22:45 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,4 +289,5 @@ void				cd_old_pwd_continue(char *tmp);
 int					ft_cd_continue(t_data *data);
 char				*my_strjoin2(char *s1, char *s2);
 int					is_heredoc(t_lexer *lst);
+int					check_error(t_data *data, char *cwd);
 #endif
