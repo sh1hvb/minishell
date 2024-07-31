@@ -32,8 +32,6 @@ void	sigint_int(int sig)
 
 void	sigint_heredoc(int sig)
 {
-	int	a;
-
 	if (sig == SIGINT)
 	{
 		printf("\n");
