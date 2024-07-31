@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
 /*   Updated: 2024/07/30 15:50:42 by mchihab          ###   ########.fr       */
@@ -70,12 +70,14 @@ void	heredoc_mult(t_data *data)
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
-	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 777);
+	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (!fds)
 		err();
-	signal(SIGQUIT, SIG_IGN);
+	(signal(SIGQUIT, SIG_IGN), signal(SIGINT, SIG_IGN));
 	if (pid == 0)
+	{
 		call_here_put(p, fds);
+	}
 	waitpid(pid, &status, 0);
 	g_env->exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))

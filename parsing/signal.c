@@ -36,11 +36,10 @@ void	sigint_heredoc(int sig)
 
 	if (sig == SIGINT)
 	{
-		g_env->exit_status = 130;
-		a = g_env->exit_status;
+		printf("\n");
 		ft_lstclear_env(g_env);
 		ft_malloc(0, 1);
-		exit(a);
+		exit(130);
 	}
 }
 
