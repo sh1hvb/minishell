@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 15:57:59 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/01 12:55:42 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 		if (!data->heredoc->next)
 		{
 			tmp = ft_strjoin(line, "\n");
-			if (data->next && !data->next->heredoc && !data->next->next
-				&& data->next->cmd)
-				ft_putstr_fd(tmp, fdp);
-			else if (!data->next)
-				ft_putstr_fd(tmp, fdp);
+			ft_putstr_fd(tmp, fdp);
 			free(tmp);
 		}
 		free(line);
@@ -62,21 +58,16 @@ void	heredoc_read_and_put_mult(t_data *data, int fdp)
 void	heredoc_mult(t_data *data)
 {
 	t_data	*p;
-	char	*tmp_path;
 
-	int (status), (pid), (fds);
+	int (status), (pid);
 	p = data;
-	tmp_path = "/tmp/heredoc.txt";
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
-	fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (!fds)
-		err();
 	(signal(SIGQUIT, SIG_IGN), signal(SIGINT, SIG_IGN));
 	if (pid == 0)
 	{
-		call_here_put(p, fds);
+		call_here_put(p);
 	}
 	waitpid(pid, &status, 0);
 	g_env->exit_status = WEXITSTATUS(status);
@@ -84,5 +75,4 @@ void	heredoc_mult(t_data *data)
 		g_env->exit_status = WTERMSIG(status) + 128;
 	if (g_env->exit_status == 130)
 		g_env->signal_heredoc = 1;
-	close(fds);
 }
