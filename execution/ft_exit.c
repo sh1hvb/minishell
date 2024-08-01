@@ -82,8 +82,7 @@ void	ft_exit(t_data *data)
 			else if (data->args[2])
 			{
 				(ft_putstr_fd("minishell: \
-exit: too many arguments\n",
-								2),
+exit: too many arguments\n", 2),
 					g_env->exit_status = 1);
 				return ;
 			}
