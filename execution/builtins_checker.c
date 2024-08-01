@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:13:15 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:00:59 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,26 @@ void	handle_builts(t_data *data)
 		ft_env();
 	if (check_builts(data) == 7)
 		ft_exit(data);
+}
+
+int	check_key(char *s)
+{
+	t_envp	*d;
+
+	d = g_env;
+	while (d)
+	{
+		if (!ft_strcmp(d->key, s))
+			return (1);
+		d = d->next;
+	}
+	return (0);
+}
+
+void	ft_err_export(char *s)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(s, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	g_env->exit_status = 1;
 }

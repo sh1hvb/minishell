@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:19:08 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 19:36:42 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 18:59:37 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,9 @@ void	handle_flag_set(t_data *data, t_envp *g_env, int i, char **arr)
 		if (tmp)
 		{
 			if (arr[1])
-			{
-				my_append_env(g_env, arr[0], ft_strdup(arr[1]),0);
-			}
+				my_append_env(g_env, arr[0], ft_strdup(arr[1]), 0);
 			else if (check_equal(data->args[i]))
-			{
-				my_append_env(g_env, arr[0], ft_strdup("\"\""),1);
-			}
+				my_append_env(g_env, arr[0], ft_strdup(""), 1);
 			free(tmp);
 		}
 		else if (!tmp || check_equal(data->args[i]))
@@ -72,24 +68,22 @@ void	process_arguments(t_data *data, t_envp *g_env, int i)
 
 	if (!ft_strcmp(data->args[1], "=") || !ft_strcmp(data->args[1], "+="))
 	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(data->args[i], 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		g_env->exit_status = 1;
+		ft_err_export(data->args[i]);
 		return ;
 	}
-	arr = lexer_split(data->args[i], "+=");
+	arr = split_with_first_delimiter(data->args[i], "=");
+	if (check_key(arr[0]) && !check_equal(data->args[i]))
+	{
+		ft_freed(arr);
+		return ;
+	}
 	if (handle_no_first_element(arr))
 		return ;
 	if ((!ft_isdigit(data->args[i][0])) && check_string(data->args[i]))
 		handle_flag_set(data, g_env, i, arr);
 	else
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(data->args[i], 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		g_env->exit_status = 1;
-	}
+		ft_err_export(data->args[i]);
+	ft_freed(arr);
 }
 
 void	ft_export(t_data *data, t_envp *g_env)
@@ -109,4 +103,5 @@ void	ft_export(t_data *data, t_envp *g_env)
 		process_arguments(data, g_env, i);
 		i++;
 	}
+	move_key_to_end("_");
 }

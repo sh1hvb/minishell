@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:12:24 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 19:47:03 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 18:51:37 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,19 @@ t_envp	*sort_list(t_envp *lst, int (*cmp)(int, int))
 	return (lst);
 }
 
-t_envp	*my_append_env(t_envp *env_list, const char *key, char *value , int flag)
+t_envp	*my_append_env(t_envp *env_list, const char *key, char *value, int flag)
 {
 	t_envp	*tmp;
 
+	(void)flag;
 	tmp = env_list;
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(tmp->key, key) == 0)
 		{
 			if (tmp->value)
-			{
 				free(tmp->value);
-				tmp->value = ft_strdup(value);
-			}
-			else if(flag && !tmp->value)
-				tmp->value =ft_strdup("\"\"");
+			tmp->value = ft_strdup(value);
 		}
 		tmp = tmp->next;
 	}
@@ -98,14 +95,13 @@ t_envp	*my_append_env(t_envp *env_list, const char *key, char *value , int flag)
 void	ft_append(t_data *data, t_envp *env, int i)
 {
 	char	*append;
-	char	**splited;
 	char	*join;
 	int		flag;
 	char	**temp_splited;
+	char	*sp;
 
 	flag = 0;
-	splited = lexer_split(data->args[i], "+=");
-	append = my_get_env(env, splited[0]);
+	append = my_get_env(env, lexer_split(data->args[i], "+=")[0]);
 	if (!append)
 	{
 		flag = if_flag(data->args[i]);
@@ -113,12 +109,14 @@ void	ft_append(t_data *data, t_envp *env, int i)
 	}
 	else
 	{
-		temp_splited = lexer_split(data->args[i], "+=");
-		if(!ft_strcmp(append,"\"\""))
-			join = ft_strdup(temp_splited[1]);
+		temp_splited = split_with_first_delimiter(data->args[i], "=");
+		join = ft_strjoin(append, temp_splited[1]);
+		if (clean_plus_from_key(temp_splited[0]))
+			sp = lexer_split(temp_splited[0], "+")[0];
 		else
-			join = ft_strjoin(append, temp_splited[1]);
-		env = my_append_env(env, temp_splited[0], join,0);
+			sp = temp_splited[0];
+		env = my_append_env(env, sp, join, 0);
+		ft_freed(temp_splited);
 	}
 	free(append);
 }

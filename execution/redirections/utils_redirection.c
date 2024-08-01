@@ -68,7 +68,7 @@ void	handle_process_redirections(t_data *data)
 			handle_output_redirection(data);
 		if (data->append)
 			handle_append_redirection(data);
-		if(check_heredoc_two(data))
+		if (check_heredoc_two(data))
 			handle_heredoc(data);
 	}
 }

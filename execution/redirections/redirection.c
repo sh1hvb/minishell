@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:05:37 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/31 18:22:52 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 14:59:08 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	handle_child_redirections(t_data *data, int fds[])
 			handle_output_redirection(data);
 		if (data->append)
 			handle_append_redirection(data);
-		if(check_heredoc_two(data))
+		if (check_heredoc_two(data))
 			handle_heredoc(data);
 	}
 	close(fds[1]);
@@ -116,7 +116,7 @@ void	handle_heredoc(t_data *data)
 
 	if (check_heredoc(data))
 	{
-		fd = open("/tmp/heredoc.txt", O_RDONLY, 0644);
+		fd = open("/tmp/heredo.txt", O_RDONLY, 0644);
 		if (fd == -1)
 		{
 			ft_putstr_fd(my_strjoin("minishell: ", "/tmp/heredoc.txt"), 2);

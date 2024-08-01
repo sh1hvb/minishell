@@ -50,6 +50,6 @@ void	cd_old_pwd_continue(char *tmp)
 
 int	check_error(t_data *data, char *cwd)
 {
-	return (((!data || !data->args || !cwd) && ft_strcmp(data->args[1], "..")) \
-	&& !(!data->args[1] || !ft_strcmp(data->args[1], "--")));
+	return (((!data || !data->args || !cwd) && ft_strcmp(data->args[1], ".."))
+		&& !(!data->args[1] || !ft_strcmp(data->args[1], "--")));
 }

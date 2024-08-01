@@ -6,21 +6,29 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:12 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 14:58:53 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	call_here_put(t_data *p, int fds)
+void	call_here_put(t_data *p)
 {
+	char	*tmp_path;
+	int		fds;
+
+	tmp_path = "/tmp/heredo.txt";
 	signal(SIGINT, sigint_heredoc);
 	while (p)
 	{
 		while (p->heredoc)
 		{
+			fds = open(tmp_path, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+			if (!fds)
+				err();
 			heredoc_read_and_put_mult(p, fds);
 			p->heredoc = p->heredoc->next;
+			close(fds);
 		}
 		p = p->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/31 17:47:21 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:03:12 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_empty_cmd_two(t_data *data)
 		ft_putendl_fd("command '' not found", 2);
 		ft_malloc(0, 1);
 		ft_lstclear_env(g_env);
-		exit(127) ;
+		exit(127);
 	}
 }
 

@@ -6,11 +6,27 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:32:07 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 14:20:42 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:16:57 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	clean_plus_from_key(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == '+')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	new_env(void)
 {
