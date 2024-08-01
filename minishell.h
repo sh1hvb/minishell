@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/31 10:38:46 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/01 12:56:07 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void				handle_heredoc(t_data *data);
 int					check_heredoc_two(t_data *data);
 int					check_heredoc(t_data *data);
 void				err(void);
-void				call_here_put(t_data *p, int fds);
+void				call_here_put(t_data *p);
 //utils redirection
 void				handle_process_redirections(t_data *data);
 void				handle_append_redirection(t_data *data);
