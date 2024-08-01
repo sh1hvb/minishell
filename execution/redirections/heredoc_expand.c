@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:35:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/28 18:45:53 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:41:37 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	*my_strjoin_c(char *s1, char s2)
 	str[len - 2] = s2;
 	str[len - 1] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (str);
 }
 
@@ -62,13 +63,14 @@ static char	*ft_strjoin_s(char *s1, char *s2)
 		p[i++] = s2[j];
 	p[i] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (p);
 }
 
-void	handle_status(char *tmp, char *new, int *i)
+void	handle_status(char *tmp, char **new, int *i)
 {
 	tmp = ft_itoa(g_env->exit_status);
-	new = my_strjoin2(new, tmp);
+	*new = ft_strjoin_s(*new, tmp);
 	(free(tmp), (*i)++);
 }
 
@@ -78,7 +80,7 @@ int	heredoc_expand_continue(char *line, char *tmp, char **new, int *index)
 	i = *index;
 	start = i;
 	if (line[i] == '?')
-		handle_status(tmp, *new, &i);
+		handle_status(tmp, new, &i);
 	else
 	{
 		while (line[i] && (ft_isalpha(line[i]) || ft_isdigit(line[i])

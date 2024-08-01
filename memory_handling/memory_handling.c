@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 18:23:38 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:23:39 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 14:18:20 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	free_lstclear(t_leaks **lst)
 		{
 			if ((*lst)->add)
 				free((*lst)->add);
-			free(*lst);
+			if (*lst)
+				free(*lst);
 		}
 		*lst = next;
 	}
