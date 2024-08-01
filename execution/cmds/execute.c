@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:38 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 14:04:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/07/30 22:14:17 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool	is_directory(char *path)
 
 void	handle_child_execution(t_data *data)
 {
+	check_empty_cmd_two(data);
 	if (!check_builts(data))
 	{
 		if (data && data->cmd && data->cmd[0])
@@ -61,6 +62,7 @@ void	exec(t_data *data)
 
 void	handle_process_execution(t_data *data)
 {
+	check_empty_cmd_two(data);
 	if (!check_builts(data))
 	{
 		if (data && data->cmd && data->cmd[0])
@@ -80,6 +82,5 @@ void	handle_process_execution(t_data *data)
 
 void	process_pipe(t_data *data)
 {
-	check_empty_cmd_two(data);
 	ft_execute_multiple(data);
 }

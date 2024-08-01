@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:12 by mchihab           #+#    #+#             */
-/*   Updated: 2024/08/01 12:55:52 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:58:53 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	call_here_put(t_data *p)
 	char	*tmp_path;
 	int		fds;
 
-	tmp_path = "/tmp/heredoc.txt";
+	tmp_path = "/tmp/heredo.txt";
 	signal(SIGINT, sigint_heredoc);
 	while (p)
 	{

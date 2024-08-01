@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 19:41:22 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:03:12 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	check_empty_cmd_two(t_data *data)
 	if (data && data->cmd && data->cmd[0] == '\0')
 	{
 		ft_putendl_fd("command '' not found", 2);
-		return ;
+		ft_malloc(0, 1);
+		ft_lstclear_env(g_env);
+		exit(127);
 	}
 }
 
@@ -76,7 +78,6 @@ void	process_cmd(t_data *data)
 	if (data && check_heredoc_two(data))
 	{
 		heredoc_mult(data);
-		hide_inout(1);
 	}
 	if (data && !data->next && check_builts(data) && !g_env->signal_heredoc)
 	{

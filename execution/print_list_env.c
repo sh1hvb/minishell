@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:05:22 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/30 14:26:31 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/01 15:52:32 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,36 @@
 
 int	is_export_command(const char *x)
 {
-	return (!strcmp(x, "ex"));
+	return (!ft_strcmp(x, "ex"));
 }
 
 int	is_env_command(const char *x)
 {
-	return (!strcmp(x, "en"));
+	return (!ft_strcmp(x, "en"));
 }
 
 void	print_export(t_envp *current)
 {
 	if (strcmp(current->key, "_"))
 	{
-		if (!current->value)
+		if (current->value == NULL)
 			printf("%s\n", current->key);
-		else
+		else if (current->value != NULL)
+		{
 			printf("%s=\"%s\"\n", current->key, current->value);
+		}
 	}
 }
 
 void	print_env(t_envp *current)
 {
 	if (current->value)
-		printf("%s=%s\n", current->key, current->value);
+	{
+		if (!ft_strcmp(current->value, "\"\""))
+			printf("%s=\n", current->key);
+		else
+			printf("%s=%s\n", current->key, current->value);
+	}
 	else
 		printf("%s\n", current->key);
 }
@@ -56,7 +63,7 @@ void	print_env_list(t_envp *a, char *x)
 		}
 		else if (is_env_command(x))
 		{
-			if (current->flag == 0 && !current->value)
+			if (current->flag == 0 && (!current->value))
 			{
 				current = current->next;
 				continue ;

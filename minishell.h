@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/01 12:56:07 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/01 18:55:49 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int					handle_no_first_element(char **arr);
 //utils export
 t_envp				*sort_list(t_envp *lst, int (*cmp)(int, int));
 t_envp				*my_append_env(t_envp *env_list, const char *key,
-						char *value);
+						char *value, int flag);
 void				ft_append(t_data *data, t_envp *g_env, int i);
 /* END UTILS BUILTINS */
 
@@ -182,6 +182,7 @@ void				handle_builts(t_data *data);
 //builtins split
 char				**fill_array_b(char **dst, char *src, char *delimiters,
 						int num_word);
+int					check_key(char *s);
 
 char				**split_with_first_delimiter(char *s, char *delimiters);
 // cd
@@ -199,6 +200,8 @@ int					is_number(char *arg);
 long long			ft_atoi2(char *str);
 void				ft_exit(t_data *data);
 // export
+int					clean_plus_from_key(char *s);
+void				ft_err_export(char *s);
 void				ft_export(t_data *data, t_envp *g_env);
 void				process_arguments(t_data *data, t_envp *g_env, int i);
 void				handle_flag_set(t_data *data, t_envp *g_env, int i,
