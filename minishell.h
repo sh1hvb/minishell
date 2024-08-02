@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/01 18:55:49 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/02 21:15:31 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void				ft_env(void);
 // pwd
 void				ft_pwd(t_data *data);
 // unset;
-void				ft_unset(t_data *data);
+void				ft_unset(char **args);
 void				remove_node(t_envp *head, t_data *data, int i);
 void				condition(t_envp *head);
 // linked list g_env

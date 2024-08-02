@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:13:15 by mchihab           #+#    #+#             */
-/*   Updated: 2024/08/01 19:00:59 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/02 21:16:22 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	handle_builts(t_data *data)
 	if (check_builts(data) == 4)
 		ft_export(data, envtmp);
 	if (check_builts(data) == 5)
-		ft_unset(data);
+		ft_unset(data->args);
 	if (check_builts(data) == 6)
 		ft_env();
 	if (check_builts(data) == 7)

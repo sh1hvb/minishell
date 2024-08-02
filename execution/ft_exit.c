@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:32:03 by smarsi            #+#    #+#             */
-/*   Updated: 2024/07/29 17:03:18 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:20:11 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	ft_exit(t_data *data)
 	ext = g_env->exit_status;
 	if (data && !data->next)
 	{
-		ft_putstr_fd("exit\n", 1);
+		if (data && !data->prev)
+			ft_putstr_fd("exit\n", 1);
 		if ((data->args && data->args[1]))
 		{
 			if (!data->args[1][0] || !ft_atoi2(data->args[1]))
