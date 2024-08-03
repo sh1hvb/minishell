@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:11:52 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/01 15:56:58 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 17:23:16 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ void	get_old_pwd(void)
 		{
 			if (tmp_env && tmp_env->value)
 				free(tmp_env->value);
-			tmp_env->value = tmp;
+			tmp_env->value = ft_strdup(tmp);
 			break ;
 		}
 		tmp_env = tmp_env->next;
 	}
+	free(tmp);
 }
 
 void	set_pwd(char *cwd)
