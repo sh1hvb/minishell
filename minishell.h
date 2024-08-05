@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/03 23:31:58 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/05 12:05:53 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,4 +292,12 @@ int					ft_cd_continue(t_data *data);
 char				*my_strjoin2(char *s1, char *s2);
 int					is_heredoc(t_lexer *lst);
 int					check_error(t_data *data, char *cwd);
+int					pars_lstsize(t_data *lst);
+t_data				*pars_lstnew(char *value, int quotes);
+void				pars_lstclear(t_data **lst);
+void				heredoc_lstadd_back(t_files **lst, t_files *new);
+t_files				*heredoc_lstnew(char *value);
+void				print_expand(t_lexer *lex_tmp);
+void				print_parsing(t_data *data);
+void				print_lexer(t_lexer *lex_tmp);
 #endif

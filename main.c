@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 18:22:40 by mchihab           #+#    #+#             */
-/*   Updated: 2024/08/03 23:19:40 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/05 12:16:30 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_envp	*g_env = NULL;
-
-int		pars_lstsize(t_data *lst);
-
-t_data	*pars_lstnew(char *value, int quotes);
-void	pars_lstclear(t_data **lst);
-void	heredoc_lstadd_back(t_files **lst, t_files *new);
-t_files	*heredoc_lstnew(char *value);
-void	print_expand(t_lexer *lex_tmp);
-void	print_parsing(t_data *data);
-void	print_lexer(t_lexer *lex_tmp);
 
 int	readline_signals(t_lexer **lex, char **prompt)
 {
@@ -54,12 +44,21 @@ int	readline_signals(t_lexer **lex, char **prompt)
 int	minishell_helper(char **prompt, t_lexer **lex, t_data **data)
 {
 	expand(*prompt, lex);
+// ########## if you need to check data expand uncomment this ###############3
+		// t_lexer *lex_tmp = *lex;
+		// print_expand(lex_tmp);
+		// printf("========= end expand\n");
+// ##########################################################################
 	heredoc_counter(*lex);
 	if (parsing(lex, data))
 	{
 		free(*prompt);
 		return (1);
 	}
+// ########## if you need to check data parsing uncomment this ########
+		// print_parsing(*data);
+		// printf("========= end pars\n");
+// ##########################################################################
 	process_cmd(*data);
 	return (0);
 }
@@ -81,6 +80,12 @@ void	minishell(void)
 			continue ;
 		}
 		lexer(prompt, &lex);
+// ########## if you need to check data lexer uncomment this ########
+		// t_lexer *lex_tmp = lex;
+		// print_lexer(lex_tmp);
+		// printf("========= end lexer\n");
+// ##########################################################################
+
 		if (!check_syntax(lex))
 		{
 			if (minishell_helper(&prompt, &lex, &data))
