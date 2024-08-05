@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:00:17 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/28 18:06:19 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/04 17:25:17 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,15 @@ char	*get_path(char *cmd)
 	}
 	ft_freed(allpath);
 	return (ft_strdup(cmd));
+}
+
+void	safe_dup2(int oldfd, int newfd)
+{
+	if (dup2(oldfd, newfd) == -1)
+	{
+		perror("dup2");
+		ft_malloc(0, 1);
+		ft_lstclear_env(g_env);
+		exit(EXIT_FAILURE);
+	}
 }

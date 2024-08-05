@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:54:27 by mchihab           #+#    #+#             */
-/*   Updated: 2024/08/01 19:03:12 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 23:31:26 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_redir(t_data *data, t_files *file)
 			return ;
 		file = ft_lstlast_file(data->redir_in);
 		if (data->last_file == 1)
-			dup2(file->index, 0);
+			safe_dup2(file->index, 0);
 		close(file->index);
 	}
 	if (data && data->redir_out)
@@ -28,7 +28,7 @@ void	check_redir(t_data *data, t_files *file)
 		if (ft_output(data->redir_out))
 			return ;
 		file = ft_lstlast_file(data->redir_out);
-		dup2(file->index, 1);
+		safe_dup2(file->index, 1);
 		close(file->index);
 	}
 	if (data && data->append)
@@ -36,7 +36,7 @@ void	check_redir(t_data *data, t_files *file)
 		if (ft_append_file(data->append))
 			return ;
 		file = ft_lstlast_file(data->append);
-		dup2(file->index, 1);
+		safe_dup2(file->index, 1);
 		close(file->index);
 	}
 }
@@ -45,13 +45,13 @@ void	hide_inout(int a)
 {
 	if (!a)
 	{
-		dup2(0, 199);
-		dup2(1, 200);
+		safe_dup2(0, 199);
+		safe_dup2(1, 200);
 	}
 	else
 	{
-		dup2(199, 0);
-		dup2(200, 1);
+		safe_dup2(199, 0);
+		safe_dup2(200, 1);
 	}
 }
 

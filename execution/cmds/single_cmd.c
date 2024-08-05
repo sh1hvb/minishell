@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:59:51 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/29 21:25:38 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 23:31:26 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	handle_redirections(t_data *data)
 	if (ft_lstlast_file(data->redir_out))
 	{
 		index = ft_lstlast_file(data->redir_out)->index;
-		dup2(index, 1);
+		safe_dup2(index, 1);
 		close(index);
 	}
 	if (ft_lstlast_file(data->redir_in))
 	{
 		index = ft_lstlast_file(data->redir_in)->index;
-		dup2(index, 0);
+		safe_dup2(index, 0);
 		close(index);
 	}
 }

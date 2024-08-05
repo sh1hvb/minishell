@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:07:35 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/31 18:08:32 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 23:31:26 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_input_redirection(t_data *data)
 	}
 	file = ft_lstlast_file(data->redir_in);
 	if (data->last_file == 1)
-		dup2(file->index, 0);
+		safe_dup2(file->index, 0);
 	close(file->index);
 }
 
@@ -39,7 +39,7 @@ void	handle_output_redirection(t_data *data)
 		exit(1);
 	}
 	file = ft_lstlast_file(data->redir_out);
-	dup2(file->index, 1);
+	safe_dup2(file->index, 1);
 	close(file->index);
 }
 
@@ -54,7 +54,7 @@ void	handle_append_redirection(t_data *data)
 		exit(1);
 	}
 	file = ft_lstlast_file(data->append);
-	dup2(file->index, 1);
+	safe_dup2(file->index, 1);
 	close(file->index);
 }
 
