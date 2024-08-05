@@ -44,7 +44,7 @@ This project is a minimalistic shell that mimics basic functionalities of Unix s
     <code>echo &lt;Makefile &lt;minishell.h | grep ;</code>
       </li>
     </ul>
-### Enjoy wth our Git Log Ghraph
+### Enjoy wth our Git Log Graph
  ![GRAPH](https://github.com/sh1hvb/minishell/blob/main/.gif/ezgif.com-crop.gif)
 
 
