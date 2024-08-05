@@ -9,7 +9,6 @@ This project is about creating a simple shell. Yes, your own little bash. You wi
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- 
 ## Subject :
 <ol style="margin-left: 15px;">
   <li style="font-size: 20px; font-weight: 600; color: red;">
