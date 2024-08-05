@@ -1,6 +1,6 @@
 This project is about creating a simple shell. Yes, your own little bash. You will learn a lot about processes and file descriptors.
 
-   ![OUR MINISHELL](https://github.com/sh1hvb/minishell/blob/main/.gif/ezgif-5-92da78d9a8.gif)
+ ![OUR MINISHELL](https://github.com/sh1hvb/minishell/blob/main/.gif/ezgif-5-92da78d9a8.gif)
 
 ## Table of Contents
 - [Subject](#subject)
@@ -9,7 +9,7 @@ This project is about creating a simple shell. Yes, your own little bash. You wi
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [How to Play](#how-to-play)
+- 
 ## Subject :
 <ol style="margin-left: 15px;">
   <li style="font-size: 20px; font-weight: 600; color: red;">
