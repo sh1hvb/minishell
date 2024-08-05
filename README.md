@@ -41,7 +41,7 @@ This project is a minimalistic shell that mimics basic functionalities of Unix s
       <li>Execute in your bash terminal: <code>./minishell </code></li>
        <li>Then, try any command you want. Note that <code>||</code>, <code>&&</code>, and wildcard are not implemented.</li>
       <li>For example:<br>
-    <code>echo &quot;&lt;Makefile&quot; &quot;&lt;minishell.h&quot; &quot;| grep&quot; &quot;;</code>
+    <code>echo &lt;Makefile &lt;minishell.h | grep ;</code>
       </li>
     </ul>
     
