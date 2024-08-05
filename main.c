@@ -44,7 +44,7 @@ int	readline_signals(t_lexer **lex, char **prompt)
 int	minishell_helper(char **prompt, t_lexer **lex, t_data **data)
 {
 	expand(*prompt, lex);
-// ########## if you need to check data expand uncomment this ###############3
+// ########### Uncomment the following lines if you want to check the expanded data : ##############
 		// t_lexer *lex_tmp = *lex;
 		// print_expand(lex_tmp);
 		// printf("========= end expand\n");
@@ -55,7 +55,7 @@ int	minishell_helper(char **prompt, t_lexer **lex, t_data **data)
 		free(*prompt);
 		return (1);
 	}
-// ########## if you need to check data parsing uncomment this ########
+// ########## Uncomment the following lines if you need to check the data parsing : ########
 		// print_parsing(*data);
 		// printf("========= end pars\n");
 // ##########################################################################
@@ -80,7 +80,7 @@ void	minishell(void)
 			continue ;
 		}
 		lexer(prompt, &lex);
-// ########## if you need to check data lexer uncomment this ########
+// ########## Uncomment the following lines if you need to check the lexer data : ########
 		// t_lexer *lex_tmp = lex;
 		// print_lexer(lex_tmp);
 		// printf("========= end lexer\n");
