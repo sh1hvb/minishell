@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:32:03 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/02 21:20:11 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/04 17:59:54 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ void	ft_exit(t_data *data)
 			{
 				ft_putstr_fd(my_strjoin("minishell: exit: ", data->args[1]), 2);
 				ft_putstr_fd(": numeric argument required\n", 2);
-				(ft_malloc(0, 1), ft_lstclear_env(g_env));
-				exit(2);
+				(ft_malloc(0, 1), ft_lstclear_env(g_env), exit(2));
 			}
 			else if (data->args[2])
 			{

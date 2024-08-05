@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:20:32 by mchihab           #+#    #+#             */
-/*   Updated: 2024/08/02 20:20:39 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/05 11:57:37 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,84 +22,40 @@ void	*free_env(t_envp *g_env)
 	g_env = NULL;
 	return (g_env);
 }
-void		ft_unset(char **args)
+
+void	unset_variable(t_envp **save, char *arg)
+{
+	t_envp	*prev;
+
+	g_env = *save;
+	prev = NULL;
+	while (g_env)
+	{
+		if (!ft_strcmp(g_env->key, arg) && ft_strcmp(g_env->key, "_"))
+		{
+			if (prev)
+				prev->next = g_env->next;
+			else
+				*save = g_env->next;
+			free_env(g_env);
+			return ;
+		}
+		prev = g_env;
+		g_env = g_env->next;
+	}
+}
+
+void	ft_unset(char **args)
 {
 	t_envp	*save;
-	t_envp	*prev;
 	int		i;
 
-	i = 1;
 	save = g_env;
-	while (args[i++] && !(prev = NULL))
+	i = 1;
+	while (args[i])
 	{
-		g_env = save;
-		while (g_env)
-		{
-			if (!ft_strcmp(g_env->key, args[i - 1]))
-			{
-				if (prev)
-					prev->next = g_env->next;
-				else
-					save = g_env->next;
-				free_env(g_env);
-				break ;
-			}
-			prev = g_env;
-			g_env = g_env->next;
-		}
+		unset_variable(&save, args[i]);
+		i++;
 	}
 	g_env = save;
-	// return (!(g_env = save));
 }
-// void	condition(t_envp *head)
-// {
-// 	if (!head->prev)
-// 	{
-// 		g_env = head->next;
-// 		if (g_env)
-// 			g_env->prev = NULL;
-// 	}
-// 	else
-// 	{
-// 		head->prev->next = head->next;
-// 		if (head->next)
-// 			head->next->prev = head->prev;
-// 	}
-// }
-
-// void	remove_node(t_envp *head, t_data *data, int i)
-// {
-// 	t_envp	*tmp;
-
-// 	tmp = NULL;
-// 	while (head)
-// 	{
-// 		if (!ft_strcmp(data->args[i], head->key) && ft_strcmp(data->args[i],
-// 				"_"))
-// 		{
-// 			condition(head);
-// 			free(head->key);
-// 			free(head->value);
-// 			tmp = head;
-// 			head = head->next;
-// 			free(tmp);
-// 			break ;
-// 		}
-// 		else
-// 			head = head->next;
-// 	}
-// }
-
-// void	ft_unset(t_data *data)
-// {
-// 	int		i;
-// 	t_envp	*head;
-
-// 	i = 1;
-// 	while (data->args[i])
-// 	{
-// 		head = g_env;
-// 		remove_node(head, data, i);
-// 		i++;
-// 	}
-// }

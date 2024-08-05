@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:07:49 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/02 21:15:31 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 23:31:58 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void				execute_single_cmd(t_data *data);
 void				handle_directory_error(char *cmd);
 char				*check_access_cmd(char **allpath, char *cmd, int i);
 char				*get_path(char *cmd);
+void				safe_dup2(int oldfd, int newfd);
+// void				close(int fd);
 //utils single
 int					handle_file_redirections(t_data *data);
 void				setup_redirections(t_data *data);
@@ -192,8 +194,6 @@ void				cd_home(t_data *data, char *msg);
 void				set_pwd(char *cwd);
 void				get_old_pwd(void);
 // echo
-void				echo_without_flag(t_data *parce);
-void				echo_print(t_data *parce, int i);
 void				ft_echo(t_data *parce);
 // exit
 int					is_number(char *arg);
@@ -212,8 +212,6 @@ void				ft_env(void);
 void				ft_pwd(t_data *data);
 // unset;
 void				ft_unset(char **args);
-void				remove_node(t_envp *head, t_data *data, int i);
-void				condition(t_envp *head);
 // linked list g_env
 int					ft_lstsize_env(t_envp *lst);
 void				ft_lstadd_front_env(t_envp **lst, t_envp *new);

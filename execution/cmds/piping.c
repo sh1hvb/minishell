@@ -6,7 +6,7 @@
 /*   By: mchihab <mchihab@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:58:53 by mchihab           #+#    #+#             */
-/*   Updated: 2024/07/31 18:04:14 by mchihab          ###   ########.fr       */
+/*   Updated: 2024/08/03 23:31:26 by mchihab          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	create_pipes(t_data *data)
 	if (pid == 0)
 	{
 		close(fds[0]);
-		dup2(fds[1], 1);
+		safe_dup2(fds[1], 1);
 		handle_child_redirections(data, fds);
 		handle_child_execution(data);
 	}
 	close(fds[1]);
-	dup2(fds[0], 0);
+	safe_dup2(fds[0], 0);
 	close(fds[0]);
 }
 
